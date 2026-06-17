@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nakshatra Darshan</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='22' fill='%23f59e0b'/><g stroke='%23f59e0b' stroke-width='5' stroke-linecap='round'><line x1='50' y1='5' x2='50' y2='18'/><line x1='50' y1='82' x2='50' y2='95'/><line x1='5' y1='50' x2='18' y2='50'/><line x1='82' y1='50' x2='95' y2='50'/><line x1='18' y1='18' x2='27' y2='27'/><line x1='73' y1='73' x2='82' y2='82'/><line x1='82' y1='18' x2='73' y2='27'/><line x1='18' y1='82' x2='27' y2='73'/></g></svg>">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a;color:#fff;min-height:100vh;padding:2rem 1rem}
+  .app{max-width:720px;margin:0 auto}
+  .hero{text-align:center;margin-bottom:2rem;padding-top:1rem}
+  .sun-icon{margin-bottom:12px}
+  .sun-icon svg{display:block;margin:0 auto}
+  .hero h1{font-size:28px;font-weight:600;margin-bottom:6px;color:#fff;letter-spacing:-0.02em}
+  .hero p{font-size:15px;color:#666}
+  .card{background:#111;border:1px solid #222;border-radius:14px;padding:1.5rem;margin-bottom:1rem}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form-grid.three{grid-template-columns:1fr 1fr 1fr}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:13px;color:#888;font-weight:500}
+  .field input,.field select{width:100%;padding:9px 12px;font-size:14px;border:1px solid #2a2a2a;border-radius:8px;background:#1a1a1a;color:#fff;outline:none;transition:border-color 0.2s}
+  .field input:focus,.field select:focus{border-color:#f59e0b}
+  .field input::placeholder{color:#444}
+  .field select option{background:#1a1a1a;color:#fff}
+  .section-title{font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px}
+  .btn-primary{width:100%;padding:12px;font-size:15px;font-weight:600;background:#f59e0b;color:#0a0a0a;border:none;border-radius:10px;cursor:pointer;margin-top:8px;transition:opacity 0.2s}
+  .btn-primary:hover{opacity:0.88}
+  .btn-primary:disabled{opacity:0.4;cursor:not-allowed}
+  .kundli-wrap{display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:start}
+  .kundli-svg{width:220px;height:220px;flex-shrink:0}
+  .planet-table{width:100%;font-size:13px;border-collapse:collapse}
+  .planet-table th{text-align:left;color:#555;padding:4px 8px 8px 0;font-weight:500;border-bottom:1px solid #222;font-size:12px}
+  .planet-table td{padding:5px 8px 5px 0;border-bottom:1px solid #1e1e1e;color:#ddd;font-size:13px}
+  .planet-table td:first-child{color:#666}
+  .nak-badge{font-size:11px;color:#555;margin-left:4px}
+  .dasha-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #1e1e1e}
+  .dasha-row:last-child{border-bottom:none}
+  .dasha-lord{font-weight:600;font-size:14px;min-width:36px;color:#ddd}
+  .dasha-bar-wrap{flex:1;height:4px;background:#1e1e1e;border-radius:3px;overflow:hidden}
+  .dasha-bar{height:100%;background:#555;border-radius:3px}
+  .dasha-dates{font-size:12px;color:#555;min-width:130px;text-align:right}
+  .dasha-active .dasha-lord{color:#f59e0b}
+  .dasha-active .dasha-bar{background:#f59e0b}
+  .dasha-active-badge{font-size:10px;background:rgba(245,158,11,0.15);color:#f59e0b;padding:1px 7px;border-radius:10px;margin-left:4px;font-weight:600;border:1px solid rgba(245,158,11,0.3)}
+  .reading-section{margin-bottom:1.5rem}
+  .reading-section h3{font-size:15px;font-weight:600;margin-bottom:8px;color:#f59e0b}
+  .reading-text{font-size:14px;line-height:1.85;color:#bbb}
+  .reading-text strong{color:#fff;font-weight:500}
+  .status{font-size:14px;color:#555;text-align:center;padding:2rem;line-height:1.7}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid #2a2a2a;border-top-color:#f59e0b;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:-3px;margin-right:8px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .tab-row{display:flex;gap:0;margin-bottom:1.4rem;border-bottom:1px solid #222}
+  .tab{padding:8px 18px;font-size:13px;font-weight:500;border:none;border-bottom:2px solid transparent;cursor:pointer;background:transparent;color:#555;margin-bottom:-1px;transition:all 0.15s}
+  .tab.active{color:#f59e0b;border-bottom-color:#f59e0b}
+  .tab:hover{color:#ddd}
+  .hidden{display:none}
+  .error{color:#ef4444;font-size:13px;padding:6px 0;margin-top:4px}
+  .api-key-field{display:flex;gap:8px;margin-bottom:10px}
+  .api-key-field input{flex:1;padding:9px 12px;font-size:13px;border:1px solid #2a2a2a;border-radius:8px;background:#1a1a1a;color:#fff;font-family:monospace}
+  .api-key-field input::placeholder{color:#444}
+  .api-key-field button{padding:9px 16px;font-size:13px;background:#f59e0b;color:#0a0a0a;border:none;border-radius:8px;cursor:pointer;font-weight:600;white-space:nowrap}
+  .api-key-field button:hover{opacity:0.88}
+  .key-status{font-size:12px;margin-bottom:10px}
+  .key-ok{color:#22c55e}
+  .key-missing{color:#888}
+  .divider{height:1px;background:#1e1e1e;margin:12px 0}
+  a{color:#f59e0b;text-decoration:none}
+  a:hover{text-decoration:underline}
+  @media(max-width:600px){
+    .form-grid,.form-grid.three{grid-template-columns:1fr}
+    .kundli-wrap{grid-template-columns:1fr}
+    .kundli-svg{width:200px;height:200px;margin:0 auto;display:block}
+    body{padding:1rem 0.75rem}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="hero">
+    <div class="sun-icon">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="11" fill="#f59e0b"/>
+        <line x1="26" y1="2" x2="26" y2="10" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="26" y1="42" x2="26" y2="50" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="2" y1="26" x2="10" y2="26" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="42" y1="26" x2="50" y2="26" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.5" y1="9.5" x2="15.5" y2="15.5" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="36.5" y1="36.5" x2="42.5" y2="42.5" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="42.5" y1="9.5" x2="36.5" y2="15.5" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.5" y1="42.5" x2="15.5" y2="36.5" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1>Nakshatra Darshan</h1>
+    <p>Enter your birth details for a full Jyotish reading — chart, nakshatras, yogas & soul purpose</p>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Anthropic API Key (for AI reading)</div>
+    <div class="api-key-field">
+      <input type="password" id="api-key" placeholder="sk-ant-api03-...">
+      <button onclick="saveKey()">Save key</button>
+    </div>
+    <div id="key-status" class="key-status key-missing">No API key — chart will calculate but AI reading won't work</div>
+    <div style="font-size:12px;color:#555">Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> · Saved in your browser only, never shared</div>
+  </div>
+
+  <div class="card" id="form-card">
+    <div class="section-title">Birth details</div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field"><label>Full name</label><input type="text" id="name" placeholder="Your name"></div>
+      <div class="field"><label>Date of birth</label><input type="date" id="dob"></div>
+    </div>
+    <div class="form-grid three" style="margin-bottom:12px">
+      <div class="field"><label>Time of birth</label><input type="time" id="tob"></div>
+      <div class="field"><label>City / Place</label><input type="text" id="city" placeholder="e.g. Mumbai"></div>
+      <div class="field"><label>Timezone offset</label>
+        <select id="tz">
+          <option value="5.5" selected>IST +5:30</option>
+          <option value="0">UTC +0</option>
+          <option value="1">CET +1</option>
+          <option value="2">EET +2</option>
+          <option value="3">MSK +3</option>
+          <option value="4">GST +4</option>
+          <option value="5.75">NPT +5:45</option>
+          <option value="6">BST +6</option>
+          <option value="7">WIB +7</option>
+          <option value="8">CST +8</option>
+          <option value="-5">EST -5</option>
+          <option value="-6">CST -6</option>
+          <option value="-7">MST -7</option>
+          <option value="-8">PST -8</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field"><label>Latitude</label><input type="number" id="lat" placeholder="e.g. 19.0760" step="0.0001"></div>
+      <div class="field"><label>Longitude</label><input type="number" id="lon" placeholder="e.g. 72.8777" step="0.0001"></div>
+    </div>
+    <div id="form-error" class="error hidden"></div>
+    <button class="btn-primary" id="calc-btn" onclick="calculateChart()">Generate my Kundli →</button>
+  </div>
+
+  <div id="result-area" class="hidden">
+    <div class="card">
+      <div class="tab-row">
+        <button class="tab active" onclick="showTab('chart')">Chart</button>
+        <button class="tab" onclick="showTab('dashas')">Dashas</button>
+        <button class="tab" onclick="showTab('reading')">AI Reading</button>
+      </div>
+
+      <div id="tab-chart">
+        <div class="section-title">North Indian Kundli</div>
+        <div class="kundli-wrap">
+          <svg class="kundli-svg" id="kundli-svg" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg"></svg>
+          <div>
+            <table class="planet-table">
+              <thead><tr><th>Planet</th><th>Sign</th><th>Degree</th><th>Nakshatra</th></tr></thead>
+              <tbody id="planet-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-dashas" class="hidden">
+        <div class="section-title">Vimshottari Dasha periods</div>
+        <div id="dasha-list"></div>
+      </div>
+
+      <div id="tab-reading" class="hidden">
+        <div id="reading-content">
+          <div class="status"><span class="spinner"></span>Generating your personalised reading…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:1.5rem 0 0.5rem;font-size:12px;color:#333">
+    Nakshatra Darshan · Powered by Jyotish wisdom & Claude AI
+  </div>
+</div>
+
+<script>
+const SIGNS=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const PLANETS=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+const PLANET_SYM={Sun:'Su',Moon:'Mo',Mars:'Ma',Mercury:'Me',Jupiter:'Ju',Venus:'Ve',Saturn:'Sa',Rahu:'Ra',Ketu:'Ke'};
+const NAKSHATRAS=['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishtha','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+const NAK_LORDS=['Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me','Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me','Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me'];
+const DASHA_YRS={Ke:7,Ve:20,Su:6,Mo:10,Ma:7,Ra:18,Ju:16,Sa:19,Me:17};
+const DASHA_ORDER=['Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me'];
+
+let savedKey='';
+
+function saveKey(){
+  const k=document.getElementById('api-key').value.trim();
+  if(k){localStorage.setItem('nd_key',k);savedKey=k;updateKeyStatus(true)}
+}
+function updateKeyStatus(ok){
+  const el=document.getElementById('key-status');
+  el.textContent=ok?'✓ API key saved — AI reading enabled':'No API key — chart will calculate but AI reading won\'t work';
+  el.className='key-status '+(ok?'key-ok':'key-missing');
+}
+
+function getNakshatra(lon){
+  const idx=Math.floor(lon/13.3333)%27;
+  const pada=Math.floor((lon%13.3333)/3.3333)+1;
+  return{name:NAKSHATRAS[idx],lord:NAK_LORDS[idx],pada,idx};
+}
+function getSign(lon){return Math.floor(lon/30)%12}
+function getDeg(lon){return lon%30}
+function julianDay(yr,mo,dy,hr){
+  if(mo<=2){yr--;mo+=12}
+  const A=Math.floor(yr/100),B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(yr+4716))+Math.floor(30.6001*(mo+1))+dy+B-1524.5+hr/24;
+}
+function ayanamsa(jd){return 23.85722+0.01360*(jd-2415020)/365.25}
+function solarLon(jd){
+  const T=(jd-2451545)/36525,L0=280.46646+36000.76983*T;
+  const M=(357.52911+35999.05029*T)*Math.PI/180;
+  const C=(1.914602-0.004817*T)*Math.sin(M)+0.019993*Math.sin(2*M);
+  return((L0+C)%360+360)%360;
+}
+function moonLon(jd){
+  const T=(jd-2451545)/36525,L1=218.3165+481267.8813*T;
+  const Mp=(134.9634+477198.8676*T)*Math.PI/180,D=(297.8502+445267.1115*T)*Math.PI/180;
+  const F=(93.2721+483202.0175*T)*Math.PI/180,M=(357.5291+35999.0503*T)*Math.PI/180;
+  return((L1+6.2888*Math.sin(Mp)+1.274*Math.sin(2*D-Mp)+0.6583*Math.sin(2*D)+0.2136*Math.sin(2*Mp)-0.1851*Math.sin(M))%360+360)%360;
+}
+function allPlanets(jd){
+  const T=(jd-2451545)/36525;
+  const sun=solarLon(jd),moon=moonLon(jd);
+  const mars=((355.433+19140.3*T)%360+360)%360;
+  const merc=((252.251+149472.675*T)%360+360)%360;
+  const jup=((34.397+3034.746*T)%360+360)%360;
+  const ven=((181.979+58517.816*T)%360+360)%360;
+  const sat=((50.077+1222.114*T)%360+360)%360;
+  const rahu=((125.0445-1934.1363*T)%360+360)%360;
+  return{Sun:sun,Moon:moon,Mars:mars,Mercury:merc,Jupiter:jup,Venus:ven,Saturn:sat,Rahu:rahu,Ketu:(rahu+180)%360};
+}
+function calcAsc(jd,lat,lon){
+  const GMST=((280.46061837+360.98564736629*(jd-2451545))%360+360)%360;
+  const LST=(GMST+lon)%360,eps=23.4393*Math.PI/180,latR=lat*Math.PI/180,LSTR=LST*Math.PI/180;
+  return(Math.atan2(-Math.cos(LSTR),Math.sin(LSTR)*Math.cos(eps)+Math.tan(latR)*Math.sin(eps))*180/Math.PI%360+360)%360;
+}
+function sid(t,a){return((t-a)%360+360)%360}
+function calcDashas(mLon,dob){
+  const nak=getNakshatra(mLon),frac=(mLon%13.3333)/13.3333;
+  const sl=NAK_LORDS[nak.idx],si=DASHA_ORDER.indexOf(sl),rem=(1-frac)*DASHA_YRS[sl];
+  const add=(d,y)=>{const n=new Date(d);n.setFullYear(n.getFullYear()+Math.floor(y));n.setDate(n.getDate()+Math.round((y%1)*365));return n};
+  const dashas=[];let cur=new Date(dob),end=add(cur,rem);
+  dashas.push({lord:sl,years:rem,start:new Date(cur),end});cur=end;
+  for(let i=1;i<9;i++){const lord=DASHA_ORDER[(si+i)%9],y=DASHA_YRS[lord];end=add(cur,y);dashas.push({lord,years:y,start:new Date(cur),end:new Date(end)});cur=new Date(end)}
+  return dashas;
+}
+
+let chartData=null;
+
+function calculateChart(){
+  const dob=document.getElementById('dob').value,tob=document.getElementById('tob').value;
+  const lat=parseFloat(document.getElementById('lat').value),lon=parseFloat(document.getElementById('lon').value);
+  const tz=parseFloat(document.getElementById('tz').value),name=document.getElementById('name').value.trim();
+  const errEl=document.getElementById('form-error');
+  if(!dob||!tob||isNaN(lat)||isNaN(lon)){errEl.textContent='Please fill in date, time, latitude and longitude.';errEl.classList.remove('hidden');return}
+  errEl.classList.add('hidden');
+  const[yr,mo,dy]=dob.split('-').map(Number),[hr,mn]=tob.split(':').map(Number);
+  const utcHr=(hr+mn/60)-tz,jd=julianDay(yr,mo,dy,utcHr),ayan=ayanamsa(jd);
+  const trop=allPlanets(jd),sidMap={};
+  for(const p in trop)sidMap[p]=sid(trop[p],ayan);
+  sidMap.Ketu=(sidMap.Rahu+180)%360;
+  const ascSid=sid(calcAsc(jd,lat,lon),ayan),lagnaSign=getSign(ascSid);
+  const houseMap={};for(let i=1;i<=12;i++)houseMap[i]=[];
+  const planetData={};
+  PLANETS.forEach(p=>{
+    const l=sidMap[p],sign=getSign(l),house=((sign-lagnaSign+12)%12)+1,deg=getDeg(l),nak=getNakshatra(l);
+    houseMap[house].push(p);planetData[p]={lon:l,sign,house,deg,nakshatra:nak};
+  });
+  const dashas=calcDashas(sidMap.Moon,dob);
+  chartData={name,dob,lagnaSign,ascSid,planetData,houseMap,dashas};
+  drawKundli(houseMap);renderPlanetTable(planetData,lagnaSign,ascSid);renderDashas(dashas);
+  document.getElementById('result-area').classList.remove('hidden');
+  showTab('chart');generateReading();
+}
+
+function drawKundli(houseMap){
+  const svg=document.getElementById('kundli-svg');
+  const s='#333',tc='#fff',ts='#666';
+  const coords=[
+    {x:110,y:10,a:'middle'},{x:10,y:18,a:'start'},{x:10,y:110,a:'start'},
+    {x:10,y:210,a:'start'},{x:110,y:214,a:'middle'},{x:210,y:210,a:'end'},
+    {x:210,y:110,a:'end'},{x:210,y:18,a:'end'},{x:100,y:68,a:'middle'},
+    {x:152,y:68,a:'middle'},{x:164,y:110,a:'start'},{x:110,y:158,a:'middle'}
+  ];
+  let h=`<rect width="220" height="220" fill="#111" stroke="${s}" stroke-width="0.8"/>
+  <line x1="0" y1="0" x2="110" y2="110" stroke="${s}" stroke-width="0.8"/>
+  <line x1="220" y1="0" x2="110" y2="110" stroke="${s}" stroke-width="0.8"/>
+  <line x1="0" y1="220" x2="110" y2="110" stroke="${s}" stroke-width="0.8"/>
+  <line x1="220" y1="220" x2="110" y2="110" stroke="${s}" stroke-width="0.8"/>`;
+  for(let i=1;i<=12;i++){
+    const c=coords[i-1],ps=houseMap[i]||[];
+    let txt='';
+    ps.forEach((p,j)=>{txt+=`<tspan x="${c.x}" dy="${j===0?0:11}">${PLANET_SYM[p]}</tspan>`});
+    if(txt)h+=`<text x="${c.x}" y="${c.y}" text-anchor="${c.a}" font-size="9.5" fill="${tc}" font-family="-apple-system,sans-serif" font-weight="500">${txt}</text>`;
+    h+=`<text x="${c.x}" y="${c.y+(ps.length?ps.length*10+3:0)}" text-anchor="${c.a}" font-size="7.5" fill="${ts}" font-family="-apple-system,sans-serif">${i}</text>`;
+  }
+  svg.innerHTML=h;
+}
+
+function renderPlanetTable(pd,lagnaSign,asc){
+  const tbody=document.getElementById('planet-tbody');
+  let rows=`<tr><td>Ascendant</td><td>${SIGNS[lagnaSign]}</td><td>${asc.toFixed(1)}°</td><td>${getNakshatra(asc).name}</td></tr>`;
+  rows+=PLANETS.map(p=>{const d=pd[p];return`<tr><td>${p}</td><td>${SIGNS[d.sign]}</td><td>${d.deg.toFixed(1)}°</td><td>${d.nakshatra.name}<span class="nak-badge">H${d.house}</span></td></tr>`}).join('');
+  tbody.innerHTML=rows;
+}
+
+function renderDashas(dashas){
+  const now=new Date();
+  document.getElementById('dasha-list').innerHTML=dashas.map(d=>{
+    const active=now>=d.start&&now<d.end,pct=Math.min(100,(d.years/20)*100);
+    const s=d.start.toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+    const e=d.end.toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+    return`<div class="dasha-row${active?' dasha-active':''}">
+      <div class="dasha-lord">${d.lord}${active?'<span class="dasha-active-badge">now</span>':''}</div>
+      <div class="dasha-bar-wrap"><div class="dasha-bar" style="width:${pct}%"></div></div>
+      <div class="dasha-dates">${s} – ${e} · ${d.years.toFixed(1)}y</div>
+    </div>`;
+  }).join('');
+}
+
+async function generateReading(){
+  const key=savedKey||localStorage.getItem('nd_key')||'';
+  if(!key){document.getElementById('reading-content').innerHTML=`<div class="status">Add your Anthropic API key above to generate the AI reading.</div>`;return}
+  const{name,lagnaSign,planetData,dashas}=chartData;
+  const now=new Date(),active=dashas.find(d=>now>=d.start&&now<d.end);
+  const summary=`Name: ${name||'Native'}\nLagna: ${SIGNS[lagnaSign]}\n`+PLANETS.map(p=>{const d=planetData[p];return`${p}: House ${d.house}, ${SIGNS[d.sign]} ${d.deg.toFixed(1)}°, ${d.nakshatra.name} nakshatra`}).join('\n')+`\nCurrent Dasha: ${active?active.lord+' (ends '+active.end.toLocaleDateString('en-IN',{month:'short',year:'numeric'})+')':'N/A'}`;
+  const prompt=`You are a master Vedic astrologer. Analyze this birth chart and provide a structured reading with these sections:\n\n1. **Ascendant & Core Identity** — Lagna sign, nakshatra, core personality\n2. **Key Yogas** — all major yogas present and their effects\n3. **Nakshatra Analysis** — Moon and Ascendant nakshatras, mind and soul\n4. **House Axis Analysis** — Dharma (1-5-9), Artha (2-6-10), Moksha (4-8-12), Kama (3-7-11) trikonas\n5. **Soul Purpose & Transformation** — Rahu-Ketu axis, what to release and evolve toward\n6. **Current Dasha** — what this period activates and what to focus on now\n\nChart:\n${summary}\n\nWrite in flowing prose, deeply insightful, specific to this chart. Format with bold headings. 700-900 words.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    if(data.error){document.getElementById('reading-content').innerHTML=`<div class="status">API error: ${data.error.message}</div>`;return}
+    renderReading(data.content?.[0]?.text||'No reading generated.');
+  }catch(e){
+    document.getElementById('reading-content').innerHTML=`<div class="status">Error connecting to API. Check your key and try again.</div>`;
+  }
+}
+
+function renderReading(text){
+  const parts=text.split(/\n\n+/);let html='';
+  parts.forEach(s=>{
+    const m=s.match(/^\*\*(.+?)\*\*/);
+    if(m){const body=s.replace(/^\*\*(.+?)\*\*\s*/,'').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');html+=`<div class="reading-section"><h3>${m[1]}</h3><p class="reading-text">${body}</p></div>`}
+    else{const c=s.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').trim();if(c)html+=`<p class="reading-text" style="margin-bottom:1rem">${c}</p>`}
+  });
+  document.getElementById('reading-content').innerHTML=html;
+}
+
+function showTab(name){
+  ['chart','dashas','reading'].forEach(t=>{document.getElementById('tab-'+t).classList.toggle('hidden',t!==name)});
+  document.querySelectorAll('.tab').forEach((btn,i)=>{btn.classList.toggle('active',['chart','dashas','reading'][i]===name)});
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const k=localStorage.getItem('nd_key');
+  if(k){document.getElementById('api-key').value=k;savedKey=k;updateKeyStatus(true)}
+});
+</script>
+</body>
+</html>
