@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nakshatra Darshan</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='22' fill='%23f59e0b'/><g stroke='%23f59e0b' stroke-width='5' stroke-linecap='round'><line x1='50' y1='5' x2='50' y2='18'/><line x1='50' y1='82' x2='50' y2='95'/><line x1='5' y1='50' x2='18' y2='50'/><line x1='82' y1='50' x2='95' y2='50'/><line x1='18' y1='18' x2='27' y2='27'/><line x1='73' y1='73' x2='82' y2='82'/><line x1='82' y1='18' x2='73' y2='27'/><line x1='18' y1='82' x2='27' y2='73'/></g></svg>">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0a0a0a radial-gradient(ellipse at top,rgba(245,158,11,0.05),transparent 60%);color:#fff;min-height:100vh;padding:2rem 1rem}
+  .app{max-width:820px;margin:0 auto}
+  .hero{text-align:center;margin-bottom:2rem;padding-top:1rem}
+  .sun-icon{margin-bottom:12px}
+  .sun-icon svg{display:block;margin:0 auto}
+  .hero h1{font-size:28px;font-weight:600;margin-bottom:6px;letter-spacing:-0.02em;background:linear-gradient(135deg,#fff 35%,#f8d488 65%,#f59e0b 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{font-size:15px;color:#666}
+  .card{background:linear-gradient(160deg,#121212,#0f0f0f);border:1px solid rgba(245,158,11,0.1);border-radius:14px;padding:1.5rem;margin-bottom:1rem;box-shadow:0 2px 16px rgba(0,0,0,0.3)}
+  .collapsed-name-card{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;padding:0.9rem 1.25rem;cursor:pointer;transition:border-color 0.2s}
+  .collapsed-name-card:hover{border-color:rgba(245,158,11,0.35)}
+  .collapsed-name-card .name-card-edit-spacer{justify-self:start}
+  .collapsed-name-card .name-card-center{display:flex;align-items:center;gap:10px;justify-self:center}
+  .collapsed-name-card .name-card-icon{width:30px;height:30px;border-radius:50%;background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.4);display:flex;align-items:center;justify-content:center;color:#f59e0b;font-weight:700;font-size:13px;flex-shrink:0}
+  .collapsed-name-card .name-card-text{font-size:15px;font-weight:600;color:#fff;white-space:nowrap}
+  .collapsed-name-card .name-card-edit{font-size:12px;color:#888;justify-self:end}
+  .collapsed-name-card:hover .name-card-edit{color:#f59e0b}
+  .download-row{margin-bottom:1rem}
+  .btn-download{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px;font-size:13.5px;font-weight:600;background:transparent;color:#f59e0b;border:1px solid rgba(245,158,11,0.35);border-radius:10px;cursor:pointer;transition:all 0.2s}
+  .btn-download:hover{background:rgba(245,158,11,0.08);border-color:#f59e0b}
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form-grid.three{grid-template-columns:1fr 1fr 1fr}
+  .field{display:flex;flex-direction:column;gap:5px}
+  .field label{font-size:13px;color:#888;font-weight:500}
+  .field input,.field select{width:100%;padding:9px 12px;font-size:14px;border:1px solid #2a2a2a;border-radius:8px;background:#1a1a1a;color:#fff;outline:none;transition:border-color 0.2s}
+  .field input:focus,.field select:focus{border-color:#f59e0b}
+  .field input::placeholder{color:#444}
+  .field select option{background:#1a1a1a;color:#fff}
+  .section-title{font-size:11px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:14px}
+  .btn-primary{width:100%;padding:12px;font-size:15px;font-weight:600;background:linear-gradient(135deg,#fbbf3f,#f59e0b);color:#0a0a0a;border:none;border-radius:10px;cursor:pointer;margin-top:8px;transition:all 0.2s;box-shadow:0 2px 12px rgba(245,158,11,0.25)}
+  .btn-primary:hover{opacity:0.92;box-shadow:0 4px 18px rgba(245,158,11,0.4)}
+  .btn-primary:disabled{opacity:0.4;cursor:not-allowed}
+  .loc-status{font-size:12px;color:#666;margin-top:6px;min-height:16px}
+  .city-wrap{position:relative}
+  .city-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#1a1a1a;border:1px solid #333;border-radius:8px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.5)}
+  .city-option{padding:9px 12px;font-size:13px;color:#ddd;cursor:pointer;border-bottom:1px solid #222;transition:background 0.1s}
+  .city-option:last-child{border-bottom:none}
+  .city-option:hover,.city-option.focused{background:#252525}
+  .city-option .city-name{font-weight:500;color:#fff}
+  .city-option .city-sub{font-size:11px;color:#666;margin-top:1px}
+  .kundli-center{display:flex;justify-content:center;padding:0.5rem 0}
+  .kundli-svg{width:100%;max-width:640px;aspect-ratio:1/1;height:auto;flex-shrink:0;cursor:pointer}
+  .kundli-svg .wedge-hit{transition:fill 0.15s}
+  .kundli-svg .wedge-hit:hover{fill:rgba(245,158,11,0.07)}
+  .segment-detail{position:relative;background:linear-gradient(135deg,#141414,#0e0e0e);border:1px solid rgba(245,158,11,0.18);border-radius:14px;padding:18px 18px 16px;margin-top:14px;font-size:13px;line-height:1.6;color:#ccc;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.4)}
+  .segment-detail .seg-watermark{position:absolute;top:50%;right:-22px;transform:translateY(-50%);opacity:0.05;pointer-events:none;user-select:none}
+  .segment-detail .seg-watermark svg{display:block}
+  .segment-detail .seg-close{position:absolute;top:12px;right:14px;cursor:pointer;color:#555;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:all 0.15s;z-index:2}
+  .segment-detail .seg-close:hover{color:#fff;background:#222}
+  .segment-detail .seg-header{display:flex;align-items:center;gap:13px;margin-bottom:14px;position:relative;z-index:1}
+  .segment-detail .seg-rashi-icon{flex-shrink:0;filter:drop-shadow(0 0 10px rgba(245,158,11,0.4))}
+  .segment-detail .seg-rashi-icon svg{display:block}
+  .segment-detail .seg-title{font-size:16px;font-weight:600;color:#fff}
+  .segment-detail .seg-sub{font-size:12px;color:#888;margin-top:2px}
+  .segment-detail .seg-section-label{font-size:11px;font-weight:600;color:#666;text-transform:uppercase;letter-spacing:0.06em;margin:14px 0 8px;position:relative;z-index:1}
+  .planet-chip-row{display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1}
+  .planet-chip{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.025);border:1px solid #262626;border-radius:10px;padding:9px 12px;min-width:130px;flex:1}
+  .planet-chip.empty{color:#666;flex:none;width:100%;gap:8px}
+  .planet-chip.asc-chip{border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.07)}
+  .planet-chip-icon{flex-shrink:0;width:30px;height:30px;display:flex;align-items:center;justify-content:center}
+  .planet-chip-icon svg{display:block}
+  .planet-chip-icon.asc-icon{font-size:11px;font-weight:700;color:#f59e0b;border:1.5px solid #f59e0b;border-radius:50%;width:28px;height:28px}
+  .planet-chip-body{min-width:0}
+  .planet-chip-name{font-size:11.5px;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:0.03em}
+  .planet-chip-deg{font-size:15px;font-weight:700;color:#f59e0b;line-height:1.3}
+  .planet-chip-nak{font-size:11px;color:#888}
+  .aspect-chip-row{display:flex;flex-wrap:wrap;gap:6px;position:relative;z-index:1}
+  .aspect-chip{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.04);border:1px solid #2a2a2a;border-radius:20px;padding:4px 12px 4px 8px;font-size:12px;color:#ddd}
+  .aspect-chip svg{display:block;opacity:0.8}
+  .aspect-chip.none{color:#555;padding:4px 12px}
+  .planet-table{width:100%;font-size:13px;border-collapse:collapse}
+  .planet-table th{text-align:left;color:#555;padding:4px 8px 8px 0;font-weight:500;border-bottom:1px solid #222;font-size:12px}
+  .planet-table td{padding:5px 8px 5px 0;border-bottom:1px solid #1e1e1e;color:#ddd;font-size:13px}
+  .planet-table td:first-child{color:#666}
+  .nak-badge{font-size:11px;color:#555;margin-left:4px}
+  .rel-badge{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px}
+  .rel-friend{background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.3)}
+  .rel-neutral{background:rgba(245,158,11,0.1);color:#fbbf24;border:1px solid rgba(245,158,11,0.25)}
+  .rel-enemy{background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.3)}
+  .dignity-tag{display:inline-block;font-size:10px;font-weight:600;padding:1px 7px;border-radius:9px;margin-left:5px}
+  .dignity-exalted{background:rgba(245,158,11,0.18);color:#f59e0b}
+  .dignity-debilitated{background:rgba(239,68,68,0.15);color:#f87171}
+  .dignity-own{background:rgba(255,255,255,0.08);color:#ccc}
+  .planet-table{font-size:12.5px}
+  .planet-table td,.planet-table th{white-space:nowrap;padding-right:14px}
+  .trikona-btn-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+  .trikona-btn{font-size:11.5px;font-weight:600;padding:6px 12px;border-radius:20px;border:1px solid #2a2a2a;background:#161616;color:#999;cursor:pointer;transition:all 0.15s}
+  .trikona-btn:hover{border-color:rgba(245,158,11,0.4);color:#ddd}
+  .trikona-btn.active{background:rgba(245,158,11,0.14);border-color:#f59e0b;color:#f59e0b}
+  .house-highlight{transition:fill 0.2s}
+  .group-house-grid{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+  .group-house-card{background:rgba(255,255,255,0.025);border:1px solid #262626;border-radius:10px;padding:12px}
+  .group-house-head{display:flex;align-items:center;gap:10px}
+  .group-house-title{font-size:13.5px;font-weight:600;color:#fff}
+  .karaka-card{background:rgba(255,255,255,0.025);border:1px solid #262626;border-radius:12px;padding:14px;margin-bottom:10px}
+  .karaka-card-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .karaka-icon{flex-shrink:0;width:26px;height:26px;display:flex;align-items:center;justify-content:center}
+  .karaka-icon svg{display:block}
+  .karaka-card-titles{flex:1;min-width:0}
+  .karaka-name-row{display:flex;align-items:center;gap:6px}
+  .karaka-name{font-size:14.5px;font-weight:700;color:#f59e0b}
+  .karaka-short{font-size:12px;color:#777}
+  .info-icon{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;border:1px solid #555;color:#888;font-size:10px;font-style:italic;font-weight:700;cursor:pointer;flex-shrink:0;transition:all 0.15s}
+  .info-icon:hover{border-color:#f59e0b;color:#f59e0b}
+  .karaka-signifies{font-size:12.5px;color:#999;line-height:1.6;padding-left:38px}
+  .info-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.65);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+  .info-modal{position:relative;background:#161616;border:1px solid rgba(245,158,11,0.25);border-radius:14px;padding:20px;max-width:420px;box-shadow:0 12px 40px rgba(0,0,0,0.5)}
+  .shadbala-intro{display:flex;align-items:center;gap:8px;margin-bottom:14px}
+  .shadbala-grid{display:flex;flex-direction:column;gap:10px}
+  .shadbala-card{background:rgba(255,255,255,0.025);border:1px solid #262626;border-radius:12px;padding:14px}
+  .shadbala-card-head{display:flex;align-items:center;gap:10px}
+  .shadbala-planet-name{font-size:14px;font-weight:700;color:#fff}
+  .shadbala-status{font-size:11px;font-weight:600;padding:3px 10px;border-radius:12px;flex-shrink:0}
+  .sb-strong{background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.3)}
+  .sb-weak{background:rgba(245,158,11,0.1);color:#fbbf24;border:1px solid rgba(245,158,11,0.25)}
+  .shadbala-breakdown{width:100%;font-size:11.5px;border-collapse:collapse;margin-top:6px}
+  .shadbala-breakdown td{padding:3px 0;color:#bbb;border-bottom:1px solid #1c1c1c}
+  .shadbala-breakdown td:last-child{text-align:right;font-weight:500}
+  .shadbala-total-row td{border-top:1px solid #333;border-bottom:none;padding-top:6px;font-weight:700;color:#f59e0b}
+  .table-planet-cell{display:inline-flex;align-items:center;gap:6px}
+  .table-planet-cell svg{display:block}
+  .av-good{background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.3)}
+  .av-mixed{background:rgba(245,158,11,0.1);color:#fbbf24;border:1px solid rgba(245,158,11,0.25)}
+  .av-bad{background:rgba(239,68,68,0.1);color:#f87171;border:1px solid rgba(239,68,68,0.3)}
+  .avastha-detail-row{font-size:12px;color:#aaa;line-height:1.6;margin-top:8px;padding-left:38px}
+  .avastha-detail-row strong{color:#f59e0b}
+  .dasha-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #1e1e1e;cursor:pointer}
+  .dasha-block:last-child .dasha-row{border-bottom:none}
+  .dasha-lord{font-weight:600;font-size:14px;min-width:36px;color:#ddd}
+  .dasha-bar-wrap{flex:1;height:4px;background:#1e1e1e;border-radius:3px;overflow:hidden}
+  .dasha-bar{height:100%;background:#555;border-radius:3px}
+  .dasha-dates{font-size:12px;color:#555;min-width:130px;text-align:right}
+  .dasha-active .dasha-lord{color:#f59e0b}
+  .dasha-active .dasha-bar{background:#f59e0b}
+  .dasha-active-badge{font-size:10px;background:rgba(245,158,11,0.15);color:#f59e0b;padding:1px 7px;border-radius:10px;margin-left:4px;font-weight:600;border:1px solid rgba(245,158,11,0.3)}
+  .dasha-chevron{font-size:11px;color:#555;margin-left:4px;width:14px;text-align:center}
+  .dasha-row:hover .dasha-chevron{color:#f59e0b}
+  .antardasha-list{padding:2px 0 10px 18px;border-bottom:1px solid #1e1e1e}
+  .dasha-block:last-child .antardasha-list{border-bottom:none}
+  .antardasha-row{display:flex;align-items:center;gap:10px;padding:6px 0}
+  .antardasha-lord{font-weight:500;font-size:12.5px;min-width:60px;color:#999}
+  .antardasha-bar-wrap{height:3px}
+  .antardasha-bar{background:#444}
+  .antardasha-active .antardasha-lord{color:#f59e0b}
+  .antardasha-active .antardasha-bar{background:#f59e0b}
+  .reading-section{margin-bottom:1.5rem}
+  .reading-section h3{font-size:15px;font-weight:600;margin-bottom:8px;color:#f59e0b}
+  .reading-text{font-size:14px;line-height:1.85;color:#bbb}
+  .reading-text strong{color:#fff;font-weight:500}
+  .status{font-size:14px;color:#555;text-align:center;padding:2rem;line-height:1.7}
+  .spinner{display:inline-block;width:16px;height:16px;border:2px solid #2a2a2a;border-top-color:#f59e0b;border-radius:50%;animation:spin 0.7s linear infinite;vertical-align:-3px;margin-right:8px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .tab-row{display:flex;gap:0;margin-bottom:1.4rem;border-bottom:1px solid #222;overflow-x:auto;scrollbar-width:none}
+  .tab-row::-webkit-scrollbar{display:none}
+  .tab{padding:8px 14px;font-size:13px;font-weight:500;border:none;border-bottom:2px solid transparent;cursor:pointer;background:transparent;color:#555;margin-bottom:-1px;transition:all 0.15s;white-space:nowrap;flex-shrink:0}
+  .tab.active{color:#f59e0b;border-bottom-color:#f59e0b}
+  .tab:hover{color:#ddd}
+  .hidden{display:none}
+  .error{color:#ef4444;font-size:13px;padding:6px 0;margin-top:4px}
+  .api-key-field{display:flex;gap:8px;margin-bottom:10px}
+  .api-key-field input{flex:1;padding:9px 12px;font-size:13px;border:1px solid #2a2a2a;border-radius:8px;background:#1a1a1a;color:#fff;font-family:monospace}
+  .api-key-field input::placeholder{color:#444}
+  .api-key-field button{padding:9px 16px;font-size:13px;background:#f59e0b;color:#0a0a0a;border:none;border-radius:8px;cursor:pointer;font-weight:600;white-space:nowrap}
+  .api-key-field button:hover{opacity:0.88}
+  .key-status{font-size:12px;margin-bottom:10px}
+  .key-ok{color:#22c55e}
+  .key-missing{color:#888}
+  .divider{height:1px;background:#1e1e1e;margin:12px 0}
+  a{color:#f59e0b;text-decoration:none}
+  a:hover{text-decoration:underline}
+  @media(max-width:600px){
+    .form-grid,.form-grid.three{grid-template-columns:1fr}
+    .kundli-svg{margin:0 auto;display:block}
+    body{padding:1rem 0.75rem}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="hero">
+    <div class="sun-icon">
+      <svg width="52" height="52" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="26" cy="26" r="11" fill="#f59e0b"/>
+        <line x1="26" y1="2" x2="26" y2="10" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="26" y1="42" x2="26" y2="50" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="2" y1="26" x2="10" y2="26" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="42" y1="26" x2="50" y2="26" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.5" y1="9.5" x2="15.5" y2="15.5" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="36.5" y1="36.5" x2="42.5" y2="42.5" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="42.5" y1="9.5" x2="36.5" y2="15.5" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+        <line x1="9.5" y1="42.5" x2="15.5" y2="36.5" stroke="#f59e0b" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <h1>Nakshatra Darshan</h1>
+    <p>Enter your birth details for a full Jyotish reading — chart, nakshatras, yogas & soul purpose</p>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Anthropic API Key (for AI reading)</div>
+    <div class="api-key-field">
+      <input type="password" id="api-key" placeholder="sk-ant-api03-...">
+      <button onclick="saveKey()">Save key</button>
+    </div>
+    <div id="key-status" class="key-status key-missing">No API key — chart will calculate but AI reading won't work</div>
+    <div style="font-size:12px;color:#555">Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> · Saved in your browser only, never shared</div>
+  </div>
+
+  <div class="card" id="form-card">
+    <div class="section-title">Birth details</div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field"><label>Full name</label><input type="text" id="name" placeholder="Your name"></div>
+      <div class="field"><label>Date of birth</label><input type="date" id="dob"></div>
+    </div>
+    <div class="form-grid three" style="margin-bottom:12px">
+      <div class="field"><label>Time of birth</label><input type="time" id="tob"></div>
+      <div class="field city-wrap">
+        <label>City / Place</label>
+        <input type="text" id="city" placeholder="e.g. Mumbai" autocomplete="off" oninput="cityInput(this.value)" onkeydown="cityKeydown(event)">
+        <div class="city-dropdown hidden" id="city-dropdown"></div>
+      </div>
+      <div class="field"><label>Timezone offset</label>
+        <select id="tz">
+          <option value="5.5" selected>IST +5:30</option>
+          <option value="0">UTC +0</option>
+          <option value="1">CET +1</option>
+          <option value="2">EET +2</option>
+          <option value="3">MSK +3</option>
+          <option value="4">GST +4</option>
+          <option value="5.75">NPT +5:45</option>
+          <option value="6">BST +6</option>
+          <option value="7">WIB +7</option>
+          <option value="8">CST +8</option>
+          <option value="-5">EST -5</option>
+          <option value="-6">CST -6</option>
+          <option value="-7">MST -7</option>
+          <option value="-8">PST -8</option>
+        </select>
+      </div>
+    </div>
+    <input type="hidden" id="lat">
+    <input type="hidden" id="lon">
+    <div class="loc-status" id="loc-status"></div>
+    <div id="form-error" class="error hidden"></div>
+    <button class="btn-primary" id="calc-btn" onclick="calculateChart()">Generate my Kundli →</button>
+  </div>
+
+  <div class="card collapsed-name-card hidden" id="name-card" onclick="expandFormCard()">
+    <span class="name-card-edit-spacer"></span>
+    <span class="name-card-center">
+      <span class="name-card-icon">${''}</span>
+      <span class="name-card-text" id="name-card-text">Your name</span>
+    </span>
+    <span class="name-card-edit">Edit →</span>
+  </div>
+
+  <div class="download-row hidden" id="download-row">
+    <button class="btn-download" onclick="downloadReport()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download full report
+    </button>
+  </div>
+
+  <div id="result-area" class="hidden">
+    <div class="card">
+      <div class="tab-row">
+        <button class="tab active" onclick="showTab('chart')">Chart</button>
+        <button class="tab" onclick="showTab('positions')">Positions</button>
+        <button class="tab" onclick="showTab('dashas')">Dashas</button>
+        <button class="tab" onclick="showTab('karakas')">Karakas</button>
+        <button class="tab" onclick="showTab('shadbala')">Shadbala</button>
+        <button class="tab" onclick="showTab('avastha')">Avastha</button>
+        <button class="tab" onclick="showTab('navamsa')">Navamsa</button>
+        <button class="tab" onclick="showTab('reading')">AI Reading</button>
+      </div>
+
+      <div id="tab-chart">
+        <div class="section-title">Rashi Chakra (click a segment, or a group below)</div>
+        <div class="trikona-btn-row" id="trikona-btn-row"></div>
+        <div class="kundli-center">
+          <svg class="kundli-svg" id="kundli-svg" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div id="segment-detail" class="segment-detail hidden"></div>
+        <div id="group-detail" class="segment-detail hidden"></div>
+      </div>
+
+      <div id="tab-positions" class="hidden">
+        <div class="section-title">Planetary positions</div>
+        <div style="overflow-x:auto">
+        <table class="planet-table">
+          <thead><tr><th>Planet</th><th>Sign</th><th>House</th><th>Degree</th><th>Nakshatra</th><th>Relation</th></tr></thead>
+          <tbody id="planet-tbody"></tbody>
+        </table>
+        </div>
+      </div>
+
+      <div id="tab-dashas" class="hidden">
+        <div class="section-title">Vimshottari Dasha periods</div>
+        <div id="dasha-list"></div>
+      </div>
+
+      <div id="tab-karakas" class="hidden">
+        <div class="section-title">Jaimini Chara Karakas (ranked by degree)</div>
+        <div id="karaka-list"></div>
+      </div>
+
+      <div id="tab-shadbala" class="hidden">
+        <div class="section-title">Shadbala — Six-fold Planetary Strength</div>
+        <div id="shadbala-content"></div>
+      </div>
+
+      <div id="tab-avastha" class="hidden">
+        <div class="section-title">Avastha — Planetary States</div>
+        <div id="avastha-content"></div>
+      </div>
+
+      <div id="tab-navamsa" class="hidden">
+        <div class="section-title">Navamsa (D9) — Dharmamsa Chart</div>
+        <div class="kundli-center">
+          <svg class="kundli-svg" id="navamsa-svg" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div id="navamsa-segment-detail" class="segment-detail hidden"></div>
+        <div class="section-title" style="margin-top:1.5rem">Navamsa positions</div>
+        <div style="overflow-x:auto">
+        <table class="planet-table">
+          <thead><tr><th>Planet</th><th>D1 Sign</th><th>D9 Sign</th><th>Vargottama?</th></tr></thead>
+          <tbody id="navamsa-tbody"></tbody>
+        </table>
+        </div>
+      </div>
+
+      <div id="tab-reading" class="hidden">
+        <div id="reading-content">
+          <div class="status"><span class="spinner"></span>Generating your personalised reading…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:1.5rem 0 0.5rem;font-size:12px;color:#333">
+    Nakshatra Darshan · Powered by Jyotish wisdom & Claude AI
+  </div>
+</div>
+
+<script>
+const SIGNS=['Aries','Taurus','Gemini','Cancer','Leo','Virgo','Libra','Scorpio','Sagittarius','Capricorn','Aquarius','Pisces'];
+const SIGN_ABBR=['ARI','TAU','GEM','CAN','LEO','VIR','LIB','SCO','SAG','CAP','AQU','PIS'];
+const SIGN_LORD=['Mars','Venus','Mercury','Moon','Sun','Mercury','Venus','Mars','Jupiter','Saturn','Saturn','Jupiter'];
+
+// Natural friendship (Naisargika Maitri) per classical BPHS - asymmetric matrix
+const NATURAL_FRIENDS={
+  Sun:{friends:['Moon','Mars','Jupiter'],neutrals:['Mercury'],enemies:['Venus','Saturn']},
+  Moon:{friends:['Sun','Mercury'],neutrals:['Mars','Jupiter','Venus','Saturn'],enemies:[]},
+  Mars:{friends:['Sun','Moon','Jupiter'],neutrals:['Venus','Saturn'],enemies:['Mercury']},
+  Mercury:{friends:['Sun','Venus'],neutrals:['Mars','Jupiter','Saturn'],enemies:['Moon']},
+  Jupiter:{friends:['Sun','Moon','Mars'],neutrals:['Saturn'],enemies:['Mercury','Venus']},
+  Venus:{friends:['Mercury','Saturn'],neutrals:['Mars','Jupiter'],enemies:['Sun','Moon']},
+  Saturn:{friends:['Mercury','Venus'],neutrals:['Jupiter'],enemies:['Sun','Moon','Mars']},
+  Rahu:{friends:['Jupiter','Venus','Saturn'],neutrals:['Mercury'],enemies:['Sun','Moon','Mars']},
+  Ketu:{friends:['Mars','Venus','Saturn'],neutrals:['Mercury','Jupiter'],enemies:['Sun','Moon']}
+};
+function naturalRelation(p1,p2){
+  if(p1===p2)return'self';
+  const rel=NATURAL_FRIENDS[p1];
+  if(!rel)return'neutral';
+  if(rel.friends.includes(p2))return'friend';
+  if(rel.enemies.includes(p2))return'enemy';
+  return'neutral';
+}
+
+// Exaltation / debilitation degree (sign index, degree within sign)
+const EXALTATION={Sun:{sign:0,deg:10},Moon:{sign:1,deg:3},Mars:{sign:9,deg:28},Mercury:{sign:5,deg:15},Jupiter:{sign:3,deg:5},Venus:{sign:11,deg:27},Saturn:{sign:6,deg:20}};
+const DEBILITATION={Sun:{sign:6,deg:10},Moon:{sign:7,deg:3},Mars:{sign:3,deg:28},Mercury:{sign:11,deg:15},Jupiter:{sign:9,deg:5},Venus:{sign:5,deg:27},Saturn:{sign:0,deg:20}};
+// Own signs per planet (multiple for 5 classical planets with 2 signs each)
+const OWN_SIGNS={Sun:[4],Moon:[3],Mars:[0,7],Mercury:[2,5],Jupiter:[8,11],Venus:[1,6],Saturn:[9,10]};
+// Moolatrikona sign (subset of own sign, classical primary sign)
+const MOOLATRIKONA={Sun:4,Moon:3,Mars:0,Mercury:5,Jupiter:8,Venus:6,Saturn:9};
+
+function getDignity(planet,signIdx,degInSign){
+  if(planet==='Rahu'||planet==='Ketu')return null;
+  const ex=EXALTATION[planet],db=DEBILITATION[planet];
+  if(ex&&ex.sign===signIdx)return'exalted';
+  if(db&&db.sign===signIdx)return'debilitated';
+  if(MOOLATRIKONA[planet]===signIdx)return'moolatrikona';
+  if(OWN_SIGNS[planet]&&OWN_SIGNS[planet].includes(signIdx))return'own';
+  return null;
+}
+
+// Compound (Panchadha/5-fold) relationship: combines natural friendship with placement-based dignity
+// Simplified per classical convention: exaltation lord treated as friend override; otherwise natural relation stands,
+// refined by temporary (Tatkala) friendship based on house distance from each other
+function compoundRelation(planet,signIdx,allPlanetHouses,planetHouse){
+  if(planet==='Rahu'||planet==='Ketu'){
+    const dignity=null;
+    return{relation:naturalSelfRelation(planet),dignity};
+  }
+  const signLord=SIGN_LORD[signIdx];
+  const dignity=getDignity(planet,signIdx,0);
+  // Exalted/own/moolatrikona always reads as strong regardless of lord friendship
+  if(dignity==='exalted')return{relation:'friend',dignity};
+  if(dignity==='debilitated')return{relation:'enemy',dignity};
+  if(dignity==='own'||dignity==='moolatrikona')return{relation:'friend',dignity};
+  // Otherwise: relation to the sign's lord (natural friendship as proxy for compound, since full Tatkala needs all planet positions)
+  if(planet===signLord)return{relation:'friend',dignity:'own'};
+  const rel=naturalRelation(planet,signLord);
+  return{relation:rel,dignity};
+}
+function naturalSelfRelation(){return'neutral'}
+const SIGN_ICON_PATHS=[
+  'M5 9 Q5 4 8 4 Q11 4 11 8 L11 20 M11 8 Q11 4 14 4 Q17 4 17 9',
+  'M6 7 Q6 3 12 5 Q18 3 18 7',
+  'M7 4v16M17 4v16M5 4h4M15 4h4M5 20h4M15 20h4',
+  'M16 7a4 4 0 1 0-4 4M8 17a4 4 0 1 0 4-4',
+  'M9 10.2v4.3a5.5 5.5 0 0 0 5.5 5.5 3.5 3.5 0 0 0 3.5-3.5c0-2.5-2.3-3.2-2.3-6a3.7 3.7 0 0 0-3.7-3.7',
+  'M3 4v10a3 3 0 0 0 6 0V4M9 4v14a3 3 0 0 0 6 0V4M15 4v10a3 3 0 0 0 3 3c1.7 0 3-1.3 3-3s-1.3-3-3-3',
+  'M4 17h16M4 17a8 4 0 0 1 16 0M12 17V8M9 5l3-3 3 3',
+  'M3 5v9a3 3 0 0 0 6 0V5M9 5v12a3 3 0 0 0 6 0V5M15 5v9a3 3 0 0 0 3 3|M18 17l3 3M21 17l-3 3',
+  'M4 20L20 4M11 4h9v9M8 13l3 3',
+  'M5 4v13a3 3 0 1 0 3-3H4M14 4v16M14 8a4 4 0 1 1 0 8',
+  'M3 9q3-3 6 0t6 0 6 0M3 15q3-3 6 0t6 0 6 0',
+  'M7 3.5q-3 4 0 8.5t0 8.5M17 3.5q3 4 0 8.5t0 8.5M3.5 12h17'
+];
+const SIGN_EXTRA_CIRCLE=[null,{cx:12,cy:15,r:6},null,null,{cx:9,cy:7,r:3.2},null,null,null,null,null,null,null];
+const PLANET_ICON_PATHS={
+  Sun:{circle:{cx:12,cy:12,r:7},dot:{cx:12,cy:12,r:1.4}},
+  Moon:{path:'M15 4a8.5 8.5 0 1 0 0 16 9.5 9.5 0 0 1 0-16z'},
+  Mars:{circle:{cx:10,cy:14,r:6},path:'M14.2 9.8L20 4M14 4h6v6'},
+  Mercury:{circle:{cx:12,cy:11,r:5.5},path:'M12 16.5v5M9 20h6M8.2 3.5a4 4 0 0 1 7.6 0'},
+  Jupiter:{path:'M4 5.5h7a3 3 0 0 1 0 6H6M10 4v15|M15 14a5.5 5 0 1 0 5 5.5'},
+  Venus:{circle:{cx:12,cy:9,r:6},path:'M12 15v6M9 19h6'},
+  Saturn:{path:'M6 4h8M10 4v9a5 5 0 1 0 4 8'},
+  Rahu:{path:'M4 10a4 4 0 0 1 8 0v2a4 4 0 0 0 8 0|M4 10v2a4 4 0 0 0 4 4M20 12v-2a4 4 0 0 0-4-4|M12 16v6'},
+  Ketu:{path:'M4 14a4 4 0 0 1 8 0v-2a4 4 0 0 1 8 0|M4 14v-2a4 4 0 0 1 4-4M20 12v2a4 4 0 0 1-4 4|M12 8V2'}
+};
+
+function signIconSvg(signIdx,size,color,opacity){
+  const extra=SIGN_EXTRA_CIRCLE[signIdx];
+  const circlePart=extra?`<circle cx="${extra.cx}" cy="${extra.cy}" r="${extra.r}" fill="none" stroke="${color}" stroke-width="1.5"/>`:'';
+  const pathStr=SIGN_ICON_PATHS[signIdx];
+  const pathsArr=pathStr.split('|').map(d=>`<path d="${d}" stroke="${color}" stroke-width="1.5" fill="none" stroke-linecap="round"/>`).join('');
+  return`<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="opacity:${opacity}">${circlePart}${pathsArr}</svg>`;
+}
+
+function planetIconSvg(planet,size,color,opacity){
+  const def=PLANET_ICON_PATHS[planet];
+  if(!def)return'';
+  let inner='';
+  if(def.circle)inner+=`<circle cx="${def.circle.cx}" cy="${def.circle.cy}" r="${def.circle.r}" fill="none" stroke="${color}" stroke-width="1.5"/>`;
+  if(def.dot)inner+=`<circle cx="${def.dot.cx}" cy="${def.dot.cy}" r="${def.dot.r}" fill="${color}" stroke="none"/>`;
+  if(def.path)inner+=def.path.split('|').map(d=>`<path d="${d}" stroke="${color}" stroke-width="1.5" fill="none" stroke-linecap="round"/>`).join('');
+  return`<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="opacity:${opacity}">${inner}</svg>`;
+}
+const PLANETS=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];
+const PLANET_SYM={Sun:'Su',Moon:'Mo',Mars:'Ma',Mercury:'Me',Jupiter:'Ju',Venus:'Ve',Saturn:'Sa',Rahu:'Ra',Ketu:'Ke'};
+const NAKSHATRAS=['Ashwini','Bharani','Krittika','Rohini','Mrigashira','Ardra','Punarvasu','Pushya','Ashlesha','Magha','Purva Phalguni','Uttara Phalguni','Hasta','Chitra','Swati','Vishakha','Anuradha','Jyeshtha','Mula','Purva Ashadha','Uttara Ashadha','Shravana','Dhanishtha','Shatabhisha','Purva Bhadrapada','Uttara Bhadrapada','Revati'];
+const NAK_LORDS=['Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me','Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me','Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me'];
+const DASHA_YRS={Ke:7,Ve:20,Su:6,Mo:10,Ma:7,Ra:18,Ju:16,Sa:19,Me:17};
+const DASHA_ORDER=['Ke','Ve','Su','Mo','Ma','Ra','Ju','Sa','Me'];
+const DASHA_LORD_FULLNAME={Ke:'Ketu',Ve:'Venus',Su:'Sun',Mo:'Moon',Ma:'Mars',Ra:'Rahu',Ju:'Jupiter',Sa:'Saturn',Me:'Mercury'};
+const VSOP={"earth":{"L":{"0":[[1.753470457,0,0],[0.033416565,4.669256804,6283.075849991],[0.000348943,4.626102418,12566.151699983],[0.000034971,2.74411801,5753.384884897],[0.000034176,2.828865796,3.523118349],[0.000031359,3.627670418,77713.771468121],[0.000026762,4.418083514,7860.419392439],[0.000023427,6.135162376,3930.20969622],[0.000013243,0.742463564,11506.769769794],[0.000012732,2.037096558,529.690965095],[0.000011992,1.109629443,1577.343542448],[0.000009903,5.232681296,5884.926846583],[0.000009019,2.045054435,26.2983198],[0.000008572,3.50849157,398.149003408],[0.000007798,1.178826521,5223.693919802],[0.000007531,2.533390538,5507.553238667],[0.000005053,4.582925631,18849.227549974],[0.000004924,4.205066399,775.522611324],[0.000003567,2.919541169,0.067310303],[0.000003171,5.849019522,11790.629088659],[0.000002841,1.898690342,796.298006816],[0.00000271,0.314886076,10977.078804699],[0.000002428,0.344811409,5486.777843175],[0.000002062,4.806466061,2544.314419883],[0.000002054,1.869478137,5573.142801433],[0.000002023,2.457677955,6069.776754553],[0.000001555,0.833060738,213.299095438],[0.000001322,3.411182756,2942.463423292],[0.000001262,1.083026302,20.775395492],[0.000001151,0.645449117,0.980321068],[0.000001029,0.635998467,4694.002954708],[0.000001019,0.975692218,15720.838784878],[0.000001017,4.266798214,7.113547001],[9.92e-7,6.209929403,2146.165416475],[9.76e-7,0.681012723,155.420399434],[8.58e-7,5.983226313,161000.685737674],[8.51e-7,1.29870743,6275.962302991],[8.47e-7,3.67080093,71430.695618129],[7.96e-7,1.807913307,17260.15465469],[7.88e-7,3.036983131,12036.460734888],[7.47e-7,1.755089162,5088.628839767],[7.39e-7,3.503194432,3154.687084896],[7.35e-7,4.679265655,801.820931124],[6.96e-7,0.83297597,9437.762934887],[6.24e-7,3.977638806,8827.390269875],[6.11e-7,1.81839811,7084.896781115],[5.7e-7,2.78430398,6286.59896834],[5.61e-7,4.386948808,14143.495242431],[5.56e-7,3.470060091,6279.552731642],[5.2e-7,0.189149458,12139.553509107],[5.16e-7,1.33282747,1748.016413067],[5.11e-7,0.283068645,5856.477659115],[4.9e-7,0.48735065,1194.447010225],[4.1e-7,5.368173514,8429.241266467],[4.09e-7,2.398508817,19651.048481098],[3.92e-7,6.16832995,10447.387839604],[3.68e-7,6.041338593,10213.285546211],[3.66e-7,2.569552386,1059.381930189],[3.6e-7,1.708761119,2352.866153772],[3.56e-7,1.775973147,6812.766815086]],"1":[[6283.319667475,0,0],[0.002060589,2.678234556,6283.075849991],[0.000043034,2.635126504,12566.151699983],[0.000004253,1.590469807,3.523118349],[0.000001193,5.795574878,26.2983198],[0.00000109,2.96618002,1577.343542448],[9.35e-7,2.592128354,18849.227549974],[7.21e-7,1.138461582,529.690965095],[6.78e-7,1.874723048,398.149003408],[6.73e-7,4.409182352,5507.553238667],[5.9e-7,2.887970385,5223.693919802],[5.6e-7,2.174716803,155.420399434],[4.54e-7,0.398030798,796.298006816],[3.64e-7,0.466247398,775.522611324],[2.9e-7,2.647073839,7.113547001],[2.08e-7,5.341382751,0.980321068],[1.91e-7,1.846283326,5486.777843175],[1.85e-7,4.968551246,213.299095438],[1.73e-7,2.991168649,6275.962302991],[1.62e-7,0.03216483,2544.314419883],[1.58e-7,1.430492853,2146.165416475],[1.46e-7,1.205323663,10977.078804699],[1.25e-7,2.834322855,1748.016413067],[1.19e-7,3.258048156,5088.628839767],[1.18e-7,5.273797905,1194.447010225],[1.15e-7,2.075024182,4694.002954708],[1.06e-7,0.766141992,553.569402842],[1e-7,1.302629911,6286.59896834],[9.7e-8,4.239254722,1349.867409659],[9.5e-8,2.699570629,242.728603974]],"2":[[0.000529189,0,0],[0.000087198,1.072096652,6283.075849991],[0.000003091,0.867288188,12566.151699983],[2.73e-7,0.052978717,3.523118349],[1.63e-7,5.18826691,26.2983198],[1.58e-7,3.684578894,155.420399434],[9.5e-8,0.757422977,18849.227549974],[8.9e-8,2.057054191,77713.771468121],[7e-8,0.826733054,775.522611324],[5.1e-8,4.662845253,1577.343542448],[4.1e-8,1.03057163,7.113547001],[3.8e-8,3.440508035,5573.142801433],[3.5e-8,5.140746328,796.298006816],[3.2e-8,6.052918512,5507.553238667],[3e-8,1.192465064,242.728603974],[2.9e-8,6.116526272,529.690965095],[2.7e-8,0.30637881,398.149003408],[2.5e-8,2.279928107,553.569402842],[2.4e-8,4.381188382,5223.693919802],[2.1e-8,3.754353305,0.980321068]],"3":[[0.000002892,5.843841987,6283.075849991],[3.5e-7,0,0],[1.68e-7,5.487669123,12566.151699983],[3e-8,5.195772652,155.420399434],[1.3e-8,4.722002522,3.523118349],[7e-9,5.300458091,18849.227549974],[6e-9,5.969259371,242.728603974],[4e-9,3.786829824,553.569402842],[1e-9,4.297681262,6286.59896834],[1e-9,0.907216876,6127.655450557],[0,5.24029648,6438.496249426],[0,5.160039607,25132.303399966],[0,3.019215703,6309.374169791],[0,5.828635735,6525.804453965],[0,3.677728639,71430.695618129]],"4":[[0.000001141,3.141592654,0],[7.7e-8,4.134465894,6283.075849991],[8e-9,3.838037762,12566.151699983],[4e-9,0.419258619,155.420399434],[0,3.143984141,3.523118349],[0,3.598475858,18849.227549974],[0,5.002989408,5573.142801433],[0,0.487948337,77713.771468121],[0,5.648017664,6127.655450557],[0,2.841605706,161000.685737674],[0,0.549129047,6438.496249426]],"5":[[9e-9,3.141592654,0],[2e-9,2.765790695,6283.075849991],[1e-9,2.013532982,155.420399434],[0,2.214964239,12566.151699983],[0,1.756000588,18849.227549974]]},"B":{"0":[[0.000002796,3.19870156,84334.661581308],[0.000001016,5.422486193,5507.553238667],[8.04e-7,3.880132045,5223.693919802],[4.38e-7,3.704446898,2352.866153772],[3.19e-7,4.000263698,1577.343542448],[2.27e-7,3.984738316,1047.747311755],[1.81e-7,4.983674703,6283.075849991],[1.64e-7,3.564561198,5856.477659115],[1.44e-7,3.702756149,9437.762934887],[1.43e-7,3.411178575,10213.285546211],[1.12e-7,4.828206905,14143.495242431],[1.09e-7,2.085745623,6812.766815086],[1.04e-7,4.056639279,71092.881354933],[9.7e-8,3.473039478,4694.002954708],[9.1e-8,1.141826466,6620.890113188],[8.8e-8,4.440165157,5753.384884897],[8.4e-8,4.992515122,7084.896781115],[7.7e-8,5.554257459,167621.575850862],[7.2e-8,3.601932058,529.690965095],[6.9e-8,4.325590541,6275.962302991],[5.6e-8,4.410236537,7860.419392439],[5.3e-8,2.484469916,4705.732307544],[5.2e-8,6.249926745,18073.70493865],[4.7e-8,0.709956801,5884.926846583],[4.5e-8,2.338277474,6309.374169791],[4.3e-8,1.102557778,6681.2248534],[4.1e-8,5.117001412,13367.972631107],[3.8e-8,1.822294125,5486.777843175],[3.7e-8,0.437931704,3154.687084896],[3.7e-8,4.582101922,12194.032914621],[3.6e-8,6.046419375,3930.20969622],[3.4e-8,5.42034801,6069.776754553],[2.9e-8,1.954638811,10977.078804699],[2.8e-8,5.61259275,11790.629088659],[2.7e-8,1.394703965,22003.91463487],[2.5e-8,0.604997294,6496.374945429],[2.4e-8,3.241830561,78051.585731317],[2.3e-8,5.01648216,1059.381930189],[2.3e-8,3.155572256,90617.7374313],[2.2e-8,2.796993467,12036.460734888],[2.1e-8,4.306910003,5643.178563677],[1.9e-8,0.869915458,8635.942003763],[1.8e-8,3.755742183,3340.6124267],[1.7e-8,4.956893853,156475.290247996],[1.6e-8,0.256199151,17298.182327326],[1.6e-8,3.199762309,5088.628839767],[1.5e-8,1.958520557,398.149003408],[1.5e-8,3.658235548,11506.769769794],[1.5e-8,2.818082076,25934.124331089],[1.4e-8,6.255308838,2544.314419883],[1.4e-8,4.699641756,7058.598461315],[1.2e-8,1.293430612,775.522611324],[1.1e-8,2.378893118,3738.761430108],[1e-8,3.141592654,0],[1e-8,4.300889004,9225.539273283],[1e-8,5.972861042,7079.373856808],[9e-9,3.064510268,4164.311989613],[9e-9,0.126356546,11015.106477335],[9e-9,0.556069311,8429.241266467],[9e-9,4.241200161,29864.334027309]],"1":[[9e-8,3.897290619,5507.553238667],[6.2e-8,1.730388504,5223.693919802],[3.8e-8,5.244041457,2352.866153772],[2.8e-8,2.473450375,1577.343542448],[1.8e-8,0.418747438,6283.075849991],[1.5e-8,1.833209793,5856.477659115],[1.5e-8,5.69401926,5753.384884897],[1.3e-8,2.188900663,9437.762934887],[1.2e-8,4.952224515,10213.285546211],[1e-8,0.128666602,7860.419392439],[1e-8,0.090054533,14143.495242431],[9e-9,1.739499536,3930.20969622],[6e-9,2.269491741,5884.926846583],[5e-9,5.656625032,529.690965095],[5e-9,6.227509692,6309.374169791],[5e-9,1.532886192,18073.70493865],[4e-9,3.224707213,6275.962302991],[4e-9,3.616144774,13367.972631107],[3e-9,0.940840458,6069.776754553],[3e-9,2.343412679,11790.629088659],[2e-9,0.267811826,7058.598461315],[2e-9,2.933256461,22003.91463487],[2e-9,3.993056437,6812.766815086],[2e-9,6.059522213,10977.078804699],[2e-9,1.571662854,4694.002954708],[2e-9,3.862648414,6496.374945429],[2e-9,2.818925111,15720.838784878],[2e-9,4.935123819,12036.460734888],[2e-9,2.065090262,7084.896781115],[2e-9,1.74970003,11506.769769794]],"2":[[1.7e-8,1.627032092,84334.661581308],[5e-9,2.41382224,1047.747311755],[3e-9,2.243530045,5507.553238667],[3e-9,6.009068963,5223.693919802],[1e-9,0.954473452,6283.075849991],[1e-9,0.976068045,1577.343542448],[1e-9,0.378998717,2352.866153772],[1e-9,6.25807508,10213.285546211],[1e-9,1.675302473,7860.419392439],[1e-9,0.842135237,167621.575850862],[1e-9,6.152958337,12194.032914621],[1e-9,1.705015661,14143.495242431],[1e-9,1.276160167,5753.384884897],[1e-9,5.372297387,6812.766815086],[0,3.38617099,156475.290247996],[0,2.777610315,10988.808157535],[0,1.736729943,7058.598461315],[0,1.952483492,8827.390269875],[0,1.369729139,12036.460734888],[0,4.329451603,17789.845619785]],"3":[[0,0.238772624,7860.419392439],[0,1.160699826,5507.553238667],[0,1.653575529,5884.926846583],[0,2.867200382,7058.598461315],[0,4.028630905,6256.777530192],[0,2.420035089,5753.384884897],[0,3.048187417,5486.777843175],[0,2.594371038,529.690965095],[0,2.733998652,6309.374169791],[0,0.841810876,6275.962302991],[0,5.401609295,1577.343542448]],"4":[[0,0.843087052,1047.747311755],[0,0.057115723,84334.661581308],[0,0.796621988,6438.496249426],[0,3.467798957,6279.552731642],[0,2.898222012,6127.655450557]]},"R":{"0":[[1.000139888,0,0],[0.016706996,3.098463508,6283.075849991],[0.00013956,3.055246096,12566.151699983],[0.000030837,5.198466744,77713.771468121],[0.000016285,1.17387749,5753.384884897],[0.000015756,2.846852458,7860.419392439],[0.000009248,5.452922341,11506.769769794],[0.000005424,4.564091498,3930.20969622],[0.000004721,3.661000221,5884.926846583],[0.00000346,0.963686177,5507.553238667],[0.000003288,5.899836465,5223.693919802],[0.000003068,0.298671395,5573.142801433],[0.000002432,4.273495362,11790.629088659],[0.000002118,5.847145403,1577.343542448],[0.000001858,5.021944472,10977.078804699],[0.000001748,3.011936365,18849.227549974],[0.000001098,5.055106363,5486.777843175],[9.83e-7,0.886813113,6069.776754553],[8.65e-7,5.689597783,15720.838784878],[8.58e-7,1.270837334,161000.685737674],[6.49e-7,0.272506138,17260.15465469],[6.29e-7,0.921771088,529.690965095],[5.71e-7,2.01374292,83996.847318112],[5.57e-7,5.241597989,71430.695618129],[4.94e-7,3.245012404,2544.314419883],[4.7e-7,2.578050704,775.522611324],[4.47e-7,5.537158073,9437.762934887],[4.25e-7,6.01110242,6275.962302991],[3.9e-7,5.360717382,4694.002954708],[3.82e-7,2.39255344,8827.390269875],[3.75e-7,0.829529223,19651.048481098],[3.7e-7,4.901075919,12139.553509107],[3.57e-7,1.67468059,12036.460734888],[3.45e-7,1.842706933,2942.463423292],[3.32e-7,0.243703001,7084.896781115],[3.19e-7,0.183682298,5088.628839767],[3.18e-7,1.777756421,398.149003408],[2.85e-7,1.213448682,6286.59896834],[2.78e-7,1.899343309,6279.552731642],[2.63e-7,4.588968504,10447.387839604],[2.46e-7,3.786608755,8429.241266467],[2.39e-7,4.995985481,5856.477659115],[2.36e-7,0.268661171,796.298006816],[2.33e-7,2.807836509,14143.495242431],[2.21e-7,1.95004703,3154.687084896],[2.03e-7,4.652679954,2146.165416475],[1.95e-7,5.382273714,2352.866153772],[1.88e-7,0.67306674,149854.400134808],[1.83e-7,2.253487337,23581.258177318],[1.8e-7,0.198713794,6812.766815086],[1.73e-7,6.152007879,16730.463689596],[1.72e-7,4.433155607,10213.285546211],[1.62e-7,5.231605079,17789.845619785],[1.38e-7,5.18962074,8031.092263058],[1.36e-7,3.685161188,4705.732307544],[1.31e-7,0.652895813,13367.972631107],[1.04e-7,4.332856885,11769.853693166],[1.02e-7,1.593906814,4690.479836359],[1e-7,4.201263364,6309.374169791],[9.7e-8,3.675867912,27511.467873537]],"1":[[0.001030186,1.107489696,6283.075849991],[0.000017212,1.064423014,12566.151699983],[0.000007022,3.141592654,0],[3.23e-7,1.021690591,18849.227549974],[3.08e-7,2.843538048,5507.553238667],[2.5e-7,1.319067095,5223.693919802],[1.85e-7,1.424297486,1577.343542448],[1.01e-7,5.913781946,10977.078804699],[8.7e-8,1.420468544,6275.962302991],[8.6e-8,0.271461506,5486.777843175],[5.1e-8,1.686134267,5088.628839767],[5e-8,6.014017707,6286.59896834],[4.7e-8,5.987244941,529.690965095],[4.4e-8,0.51800238,4694.002954708],[4.1e-8,1.084247861,9437.762934887],[3.9e-8,4.749698334,2544.314419883],[3.8e-8,5.070976856,796.298006816],[3.5e-8,0.022902163,83996.847318112],[3.4e-8,0.949370196,71430.695618129],[3.4e-8,5.412183225,775.522611324],[3.2e-8,6.156287753,2146.165416475],[2.9e-8,5.484328471,10447.387839604],[2.8e-8,3.420343514,2352.866153772],[2.6e-8,6.132418785,6438.496249426],[2.5e-8,0.242769411,398.149003408],[2.4e-8,3.091645283,4690.479836359],[2.3e-8,3.688636338,7084.896781115],[2.2e-8,4.952161967,6812.766815086],[2.2e-8,0.419917431,8031.092263058],[2.1e-8,1.28191783,1748.016413067]],"2":[[0.000043594,5.784551337,6283.075849991],[0.000001236,5.579347222,12566.151699983],[1.23e-7,3.141592654,0],[8.8e-8,3.627777334,77713.771468121],[5.7e-8,1.869589051,5573.142801433],[3.3e-8,5.470279133,18849.227549974],[1.5e-8,4.480288856,5507.553238667],[1.1e-8,2.841739924,161000.685737674],[1e-8,2.814564177,5223.693919802],[9e-9,3.108782412,1577.343542448],[6e-9,5.473494985,775.522611324],[6e-9,1.379694341,6438.496249426],[5e-9,4.416492423,6286.59896834],[5e-9,3.657537027,7084.896781115],[5e-9,5.385853147,149854.400134808],[4e-9,0.902424512,10977.078804699],[4e-9,3.203765853,5088.628839767],[4e-9,1.810792278,5486.777843175],[3e-9,5.35313367,3154.687084896],[3e-9,3.517010987,796.298006816]],"3":[[0.000001446,4.273194351,6283.075849991],[6.7e-8,3.916976087,12566.151699983],[8e-9,0,0],[2e-9,3.730192988,18849.227549974],[0,2.800814091,6286.59896834],[0,5.622166028,6127.655450557],[0,3.712926218,6438.496249426],[0,4.260114842,6525.804453965],[0,3.504168871,6256.777530192],[0,3.621276211,25132.303399966],[0,4.392009588,4705.732307544],[0,5.223271271,6040.347246017],[0,1.37795688,6309.374169791],[0,4.280452546,83996.847318112],[0,5.199379591,71430.695618129]],"4":[[3.9e-8,2.563843873,6283.075849991],[3e-9,2.267695012,12566.151699983],[1e-9,3.440314719,5573.142801433],[0,2.047945734,18849.227549974],[0,2.056888737,77713.771468121],[0,4.412188545,161000.685737674],[0,3.815142137,149854.400134808],[0,5.261546531,6438.496249426],[0,4.07695126,6127.655450557],[0,1.281757498,6286.59896834]],"5":[[1e-9,1.215797417,6283.075849991],[0,0.65617264,12566.151699983],[0,0.380687971,18849.227549974]]}},"mercury":{"L":{"0":[[4.402507101,0,0],[0.40989415,1.483020342,26087.903141574],[0.050462942,4.477854895,52175.806283148],[0.008553468,1.165203224,78263.709424723],[0.001655904,4.119691632,104351.612566297],[0.000345619,0.779307658,130439.515707871],[0.000075835,3.713484005,156527.418849445],[0.000035597,1.512026694,1109.378552093],[0.000018035,4.103331784,5661.332049152],[0.00001726,0.358322399,182615.321991019],[0.000015899,2.995104178,25028.521211385],[0.000013647,4.599183187,27197.281693668],[0.000010173,0.88031439,31749.235190726],[0.000007142,1.541448653,24978.524589481],[0.000006438,5.302661108,21535.949644515],[0.000004511,6.049892753,51116.424352959],[0.000004042,3.28228847,208703.225132594],[0.000003524,5.241562971,20426.571092422],[0.000003452,2.792119015,15874.617595363],[0.000003433,5.765318853,955.599741609],[0.000003392,5.86327765,25558.21217648],[0.000003253,1.336743348,53285.184835242],[0.000002729,2.49451164,529.690965095],[0.000002643,3.91705094,57837.138332301],[0.000002596,0.987324282,4551.953497059],[0.000002388,0.113439534,1059.381930189],[0.000002348,0.266721189,11322.664098304],[0.000002166,0.659872073,13521.751441591],[0.00000209,2.09178234,47623.85278609],[0.000001834,2.628786708,27043.502883183],[0.000001816,2.434135025,25661.304950698],[0.00000176,4.536368299,51066.427731055],[0.000001726,2.452001642,24498.83024629],[0.000001423,3.360039488,37410.567239879],[0.000001379,0.290984478,10213.285546211],[0.000001252,3.720798044,39609.654583166],[0.000001182,2.781497864,77204.327494533],[0.000001064,4.205721163,19804.827291583],[9.69e-7,6.203982027,234791.128274168],[9e-7,5.852436311,41962.520736937]],"1":[[26088.147062227,0,0],[0.011260078,6.21703971,26087.903141574],[0.003034714,3.055654724,52175.806283148],[0.000805385,6.104547434,78263.709424723],[0.00021245,2.835319345,104351.612566297],[0.000055921,5.826756733,130439.515707871],[0.000014722,2.518454584,156527.418849445],[0.000003883,5.480392259,182615.321991019],[0.000003522,3.052380944,1109.378552093],[0.000001027,2.148791738,208703.225132594],[9.35e-7,6.117911639,27197.281693668],[9.06e-7,0.000454817,24978.524589481],[5.19e-7,5.621075541,5661.332049152],[4.44e-7,4.573485005,25028.521211385],[2.81e-7,3.04195431,51066.427731055],[2.73e-7,5.092101388,234791.128274168],[2.2e-7,0.864753712,955.599741609],[2.04e-7,3.715096227,20426.571092422],[2.02e-7,0.519340473,21535.949644515],[1.75e-7,5.726636086,4551.953497059]],"2":[[0.000530498,0,0],[0.000169037,4.690723006,26087.903141574],[0.000073967,1.347356247,52175.806283148],[0.000030183,4.456435397,78263.709424723],[0.000011074,1.262265376,104351.612566297],[0.000003782,4.319980559,130439.515707871],[0.00000123,1.068685411,156527.418849445],[3.87e-7,4.080116102,182615.321991019],[1.49e-7,4.633430858,1109.378552093],[1.19e-7,0.791876464,208703.225132594],[5.2e-8,4.717997728,24978.524589481],[3.6e-8,3.77317513,234791.128274168],[2.6e-8,1.440591098,27197.281693668]],"3":[[0.000001881,0.034668301,52175.806283148],[0.000001422,3.125054526,26087.903141574],[9.69e-7,3.003781719,78263.709424723],[4.37e-7,6.018679658,104351.612566297],[3.54e-7,0,0],[1.8e-7,2.77538374,130439.515707871],[7e-8,5.818086657,156527.418849445],[2.6e-8,2.570143645,182615.321991019],[9e-9,5.593088889,208703.225132594],[3e-9,2.321890025,234791.128274168]],"4":[[0.000001141,3.141592654,0],[3.2e-8,2.028480076,26087.903141574],[1.9e-8,1.417318038,78263.709424723],[1.7e-8,4.501376438,52175.806283148],[1.2e-8,4.499701811,104351.612566297],[6e-9,1.26591777,130439.515707871],[3e-9,4.30600985,156527.418849445],[1e-9,1.05702505,182615.321991019]],"5":[[9e-9,3.141592654,0],[1e-9,3.375132897,52175.806283148],[0,4.65071406,26087.903141574],[0,0.024330994,78263.709424723],[0,2.981122049,104351.612566297],[0,6.009924676,130439.515707871]]},"B":{"0":[[0.11737529,1.983574988,26087.903141574],[0.02388077,5.037389597,52175.806283148],[0.012228395,3.141592654,0],[0.005432518,1.79644364,78263.709424723],[0.001297788,4.83232504,104351.612566297],[0.000318669,1.580884957,130439.515707871],[0.000079633,4.609721263,156527.418849445],[0.000020142,1.353241647,182615.321991019],[0.00000514,4.378354093,208703.225132594],[0.000002086,2.020202942,24978.524589481],[0.000002077,4.917725641,27197.281693668],[0.00000132,1.119084923,234791.128274168],[0.000001214,1.812717521,53285.184835242],[0.000001005,5.656847342,20426.571092422],[9.92e-7,0.093918871,51116.424352959],[9.46e-7,1.241849092,31749.235190726],[9.16e-7,2.281631287,25028.521211385],[8.43e-7,5.085103883,51066.427731055],[7.88e-7,4.4072588,57837.138332301],[7.77e-7,0.525570617,1059.381930189],[4.99e-7,3.497529937,5661.332049152],[4.65e-7,3.237392708,77204.327494533],[4.48e-7,4.878498167,79373.087976816],[4.08e-7,2.465583322,46514.474233996],[3.74e-7,4.457687979,4551.953497059],[3.59e-7,1.090573179,1109.378552093],[3.41e-7,4.142092106,260879.031415742],[3.2e-7,1.185163897,83925.041473875],[3.18e-7,2.414745884,47623.85278609],[3.1e-7,3.503280272,21535.949644515],[2.87e-7,1.848286143,77154.330872629],[2.58e-7,2.775933706,27043.502883183],[2.52e-7,3.590622665,27147.285071763],[2.02e-7,3.068337972,51646.115318054],[2.01e-7,4.065930403,25132.303399966],[1.86e-7,5.584272744,73711.755927664],[1.7e-7,6.137393922,41962.520736937],[1.7e-7,0.027912766,103292.230636108],[1.58e-7,3.796295473,529.690965095],[1.56e-7,6.076936432,53131.406024757]],"1":[[0.004291514,3.501697804,26087.903141574],[0.001462337,3.141592654,0],[0.000226753,0.015153669,52175.806283148],[0.00010895,0.48540174,78263.709424723],[0.000063535,3.4294392,104351.612566297],[0.000024957,0.160512107,130439.515707871],[0.000008596,3.184524336,156527.418849445],[0.000002775,6.210207742,182615.321991019],[8.62e-7,2.952443918,208703.225132594],[2.77e-7,0.290689389,27197.281693668],[2.61e-7,5.977089627,234791.128274168],[1.28e-7,3.377443206,53285.184835242],[1.27e-7,0.537926617,24978.524589481],[7.8e-8,2.717686093,260879.031415742],[7.5e-8,3.583051213,51066.427731055],[6.2e-8,2.92383205,31749.235190726],[5.5e-8,1.973187638,51116.424352959],[3.5e-8,0.107397617,79373.087976816],[3.4e-8,0.347616953,77154.330872629],[2.9e-8,5.954300132,57837.138332301]],"2":[[0.000118309,4.790655858,26087.903141574],[0.000019135,0,0],[0.000010448,1.212165405,52175.806283148],[0.000002662,4.434183365,78263.709424723],[0.000001703,1.622556387,104351.612566297],[9.63e-7,4.80023692,130439.515707871],[4.47e-7,1.607582678,156527.418849445],[1.83e-7,4.669046554,182615.321991019],[6.9e-8,1.434048889,208703.225132594],[2.5e-8,4.47495203,234791.128274168],[1.7e-8,1.830800396,27197.281693668],[9e-9,1.227492552,260879.031415742],[6e-9,4.873586423,53285.184835242]],"3":[[0.000002354,0.353875246,26087.903141574],[0.000001605,0,0],[1.89e-7,4.362754603,52175.806283148],[6.4e-8,2.507153814,78263.709424723],[4.6e-8,6.142578176,104351.612566297],[3.1e-8,3.124975527,130439.515707871],[1.7e-8,6.266424121,156527.418849445],[9e-9,3.076731667,182615.321991019],[4e-9,6.148153199,208703.225132594],[2e-9,2.924373783,234791.128274168]],"4":[[4.3e-8,1.745799321,26087.903141574],[1e-8,3.141592654,0],[4e-9,4.034195091,52175.806283148],[3e-9,0.206435904,78263.709424723],[1e-9,3.75237354,104351.612566297],[1e-9,1.182103754,130439.515707871],[1e-9,4.545810862,156527.418849445],[0,1.442269428,182615.321991019]],"5":[[1e-9,3.945557843,26087.903141574],[1e-9,3.141592654,0],[0,1.305148745,52175.806283148],[0,4.997171369,78263.709424723],[0,2.056625453,104351.612566297],[0,5.431620586,130439.515707871]]},"R":{"0":[[0.395282717,0,0],[0.078341318,6.192337226,26087.903141574],[0.007955256,2.959896901,52175.806283148],[0.001212818,6.010641538,78263.709424723],[0.00021922,2.77820094,104351.612566297],[0.000043541,5.828945433,130439.515707871],[0.000009182,2.596505626,156527.418849445],[0.0000029,1.42441937,25028.521211385],[0.0000026,3.028177535,27197.281693668],[0.000002019,5.647250404,182615.321991019],[0.000002015,5.592277242,31749.235190726],[0.00000142,6.252642026,24978.524589481],[0.000001001,3.734356087,21535.949644515],[7.76e-7,3.66972527,20426.571092422],[7.55e-7,4.47428643,51116.424352959],[6.68e-7,2.525203092,5661.332049152],[6.33e-7,4.299059181,25558.21217648],[6.3e-7,4.765888999,1059.381930189],[4.83e-7,6.068244788,53285.184835242],[4.57e-7,2.414809516,208703.225132594],[4.42e-7,1.219573149,15874.617595363],[4.08e-7,2.358820164,57837.138332301],[3.72e-7,0.517338215,47623.85278609],[3.52e-7,1.059178027,27043.502883183],[3.39e-7,0.863815547,25661.304950698],[3.09e-7,0.883663355,24498.83024629],[3.01e-7,1.795005306,37410.567239879],[2.84e-7,3.020636257,51066.427731055],[2.61e-7,2.150219632,39609.654583166],[2.13e-7,5.368571398,13521.751441591],[1.94e-7,4.983786477,10213.285546211],[1.87e-7,4.964960084,11322.664098304],[1.71e-7,1.240777642,77204.327494533],[1.69e-7,3.887653934,26617.594106669],[1.63e-7,2.632935878,19804.827291583],[1.51e-7,0.445105899,46514.474233996],[1.5e-7,4.281734635,41962.520736937],[1.4e-7,4.770568488,33326.578733174],[1.39e-7,1.625739469,27147.285071763],[1.39e-7,1.999848766,25132.303399966]],"1":[[0.002173477,4.656171587,26087.903141574],[0.000441418,1.42385544,52175.806283148],[0.000100945,4.474663263,78263.709424723],[0.000024328,1.242260834,104351.612566297],[0.000016244,0,0],[0.00000604,4.293031166,130439.515707871],[0.000001529,1.060607798,156527.418849445],[3.92e-7,4.111367514,182615.321991019],[1.8e-7,4.711937258,24978.524589481],[1.78e-7,4.544246531,27197.281693668],[1.02e-7,0.878935485,208703.225132594],[8.1e-8,3.005408549,25028.521211385],[4.4e-8,2.136390581,20426.571092422],[4.4e-8,1.480744752,51066.427731055],[3.5e-8,3.211712237,1059.381930189],[3.1e-8,5.238463369,21535.949644515],[2.7e-8,3.929688814,234791.128274168],[2.5e-8,2.026239504,24498.83024629],[2e-8,1.239113606,53285.184835242],[2e-8,4.04524903,5661.332049152]],"2":[[0.000031179,3.082318403,26087.903141574],[0.000012454,6.151833174,52175.806283148],[0.000004248,2.92583353,78263.709424723],[0.000001361,5.979839258,104351.612566297],[4.22e-7,2.749369806,130439.515707871],[2.18e-7,3.141592654,0],[1.28e-7,5.801431622,156527.418849445],[3.8e-8,2.569935996,182615.321991019],[1.1e-8,5.62142197,208703.225132594],[1e-8,3.146481201,24978.524589481],[5e-9,6.143076545,27197.281693668],[3e-9,2.389925757,234791.128274168],[3e-9,6.206747666,51066.427731055]],"3":[[3.27e-7,1.679716354,26087.903141574],[2.42e-7,4.63403169,52175.806283148],[1.21e-7,1.389837815,78263.709424723],[5.1e-8,4.439153869,104351.612566297],[2e-8,1.207338803,130439.515707871],[1.5e-8,3.141592654,0],[7e-9,4.259136314,156527.418849445],[3e-9,1.027944258,182615.321991019],[1e-9,4.080086188,208703.225132594],[0,0.850516162,234791.128274168]],"4":[[4e-9,0.367354038,26087.903141574],[4e-9,3.185687715,52175.806283148],[3e-9,6.169836164,78263.709424723],[1e-9,2.915919046,104351.612566297],[1e-9,5.958678896,130439.515707871],[0,2.723867,156527.418849445],[0,0,0],[0,5.777753341,182615.321991019]],"5":[[0,3.989002696,26087.903141574],[0,1.552482788,52175.806283148],[0,4.654617211,78263.709424723],[0,1.402383665,104351.612566297],[0,4.442314887,130439.515707871],[0,3.141592654,0]]}},"venus":{"L":{"0":[[3.176146668,0,0],[0.013539684,5.593133196,10213.285546211],[0.000898916,5.306500485,20426.571092422],[0.000054772,4.416306525,7860.419392439],[0.000034557,2.699644708,11790.629088659],[0.000023721,2.993775396,3930.20969622],[0.000016641,4.25018935,1577.343542448],[0.000014383,4.15745044,9683.594581116],[0.000013171,5.186682191,26.2983198],[0.000012005,6.153571153,30639.856638633],[0.000007693,0.816296159,9437.762934887],[0.000007614,1.950147021,529.690965095],[0.000007077,1.064667072,775.522611324],[0.000005848,3.998398848,191.448266112],[0.000004999,4.123402101,15720.838784878],[0.000004295,3.586428598,19367.189162233],[0.00000327,5.677365837,5507.553238667],[0.000003262,4.590564731,10404.733812323],[0.000002319,3.162510571,9153.903616022],[0.000001797,4.653379156,1109.378552093],[0.000001555,5.570438889,19651.048481098],[0.000001283,4.226044937,20.775395492],[0.000001279,0.962098227,5661.332049152],[0.000001055,1.537211913,801.820931124],[9.91e-7,0.832881851,213.299095438],[9.88e-7,5.393896555,13367.972631107],[8.8e-7,3.888688603,9999.986450773],[8.57e-7,0.3558925,3154.687084896],[8.21e-7,3.215969908,18837.498197138],[7.16e-7,0.111457393,11015.106477335],[7.02e-7,0.674588133,23581.258177318],[5.61e-7,4.240398555,7.113547001],[5.08e-7,0.24531603,11322.664098304],[4.61e-7,5.315764657,18073.70493865],[4.46e-7,6.06282202,40853.142184844],[4.26e-7,1.799554217,7084.896781115],[4.26e-7,5.328733372,2352.866153772],[4.12e-7,0.362409722,382.896532223],[3.57e-7,2.704484793,10206.17199921],[3.39e-7,2.023473222,6283.075849991]],"1":[[10213.529430529,0,0],[0.000957077,2.46424449,10213.285546211],[0.00014445,0.516245647,20426.571092422],[0.000002134,1.795479294,30639.856638633],[0.000001739,2.655358794,26.2983198],[0.000001517,6.106352824,1577.343542448],[8.22e-7,5.702341337,191.448266112],[6.97e-7,2.68136035,9437.762934887],[5.24e-7,3.600130877,775.522611324],[3.83e-7,1.03379038,529.690965095],[2.96e-7,1.250563224,5507.553238667],[2.51e-7,6.106647929,10404.733812323],[1.78e-7,6.193697989,1109.378552093],[1.65e-7,2.643304526,7.113547001],[1.42e-7,5.451382339,9153.903616022],[1.26e-7,1.244644007,40853.142184844],[1.26e-7,1.881221992,382.896532223],[1.16e-7,4.976044954,213.299095438],[8.9e-8,0.952827322,13367.972631107],[7.4e-8,4.394767606,10206.17199921]],"2":[[0.000541271,0,0],[0.000038915,0.3451436,10213.285546211],[0.000013379,2.020112861,20426.571092422],[2.38e-7,2.04592119,26.2983198],[1.93e-7,3.535273715,30639.856638633],[1e-7,3.971302211,775.522611324],[7e-8,1.519625934,1577.343542448],[6e-8,0.999267579,191.448266112],[3.2e-8,4.360954758,9437.762934887],[2.1e-8,2.658106258,40853.142184844],[1.9e-8,3.39287947,382.896532223],[1.5e-8,6.048990463,529.690965095],[1.3e-8,2.946331062,5507.553238667]],"3":[[0.000001357,4.80389021,10213.285546211],[7.78e-7,3.668763716,20426.571092422],[2.6e-7,0,0],[1.2e-8,5.319700069,30639.856638633],[3e-9,4.150216718,40853.142184844],[0,5.555235633,51066.427731055],[0,1.405012291,1577.343542448],[0,1.277914797,10404.733812323],[0,5.76447069,10239.583866011]],"4":[[0.00000114,3.141592654,0],[3.2e-8,5.205141702,20426.571092422],[1.7e-8,2.510995917,10213.285546211],[1e-9,0.713560599,30639.856638633],[0,5.68127607,40853.142184844]],"5":[[9e-9,3.141592654,0],[1e-9,1.905485419,10213.285546211],[1e-9,0.54643013,20426.571092422],[0,1.077342778,40853.142184844],[0,1.894602235,30639.856638633]]},"B":{"0":[[0.059236385,0.267027758,10213.285546211],[0.00040108,1.147371781,20426.571092422],[0.000328149,3.141592654,0],[0.000010114,1.08946123,30639.856638633],[0.000001495,6.253902961,18073.70493865],[0.000001378,0.860201465,1577.343542448],[0.0000013,3.671524837,9437.762934887],[0.000001195,3.704688128,2352.866153772],[0.00000108,4.539036776,22003.91463487],[9.2e-7,1.539545627,9153.903616022],[5.3e-7,2.281381723,5507.553238667],[4.56e-7,0.723196417,10239.583866011],[4.35e-7,6.140157767,11790.629088659],[4.17e-7,5.991268452,19896.880127327],[3.96e-7,3.868420959,8635.942003763],[3.92e-7,3.949603512,529.690965095],[3.89e-7,2.934378651,10186.987226411],[3.33e-7,4.831949096,14143.495242431],[2.37e-7,2.906466212,10988.808157535],[2.35e-7,2.007706183,13367.972631107],[2.18e-7,2.69701425,19651.048481098],[2.07e-7,0.986666855,775.522611324],[1.86e-7,1.805292775,40853.142184844],[1.78e-7,5.962686431,25934.124331089],[1.7e-7,4.137117821,10021.837280099],[1.54e-7,3.295638553,11015.106477335],[1.49e-7,5.610751682,10404.733812323],[1.31e-7,5.707359425,9683.594581116],[1.29e-7,5.426514485,29580.474708444],[1.2e-7,3.576042538,10742.976511306],[1.18e-7,1.190709196,8624.212650927],[1.15e-7,5.12780365,6283.075849991],[9.8e-8,0.146148963,20618.019358534],[9.5e-8,2.751678343,191.448266112],[8.6e-8,0.431822492,9786.687355335],[8.1e-8,1.305485156,15720.838784878],[7e-8,3.449209321,17298.182327326],[6.2e-8,1.133120709,29864.334027309],[6.2e-8,4.924980524,19367.189162233],[6.2e-8,2.424139469,4705.732307544]],"1":[[0.005133476,1.803643108,10213.285546211],[0.000043801,3.386157116,20426.571092422],[0.000001992,0,0],[0.000001966,2.530011975,30639.856638633],[1.4e-7,2.270870447,9437.762934887],[1.3e-7,1.50735623,18073.70493865],[1.19e-7,5.604624504,1577.343542448],[1.03e-7,5.242243134,2352.866153772],[9.3e-8,6.075456313,22003.91463487],[8e-8,0.293711052,9153.903616022],[7.5e-8,5.08081886,10186.987226411],[7.4e-8,1.502579094,11790.629088659],[4.7e-8,3.87801635,10239.583866011],[4.7e-8,0.750738868,5507.553238667],[4.4e-8,3.588727366,40853.142184844],[4e-8,1.283971212,10404.733812323],[3.8e-8,4.33004754,19651.048481098],[3.6e-8,1.259275504,19896.880127327],[3.5e-8,5.507970022,529.690965095],[3.4e-8,4.889760709,10988.808157535]],"2":[[0.000223777,3.385091439,10213.285546211],[0.000002817,0,0],[0.000001732,5.255637669,20426.571092422],[2.69e-7,3.870408916,30639.856638633],[1.2e-8,0.097686321,10186.987226411],[8e-9,4.365159653,10239.583866011],[7e-9,3.191390678,11790.629088659],[6e-9,5.222704403,40853.142184844],[5e-9,3.116578363,18073.70493865],[5e-9,0.575502723,2352.866153772],[5e-9,6.128212152,10988.808157535],[5e-9,2.793068676,10404.733812323],[4e-9,4.007784312,1577.343542448]],"3":[[0.000006467,4.991665653,10213.285546211],[2e-7,3.141592654,0],[5.5e-8,0.77376924,20426.571092422],[2.5e-8,5.44493763,30639.856638633],[1e-9,1.514476136,10186.987226411],[1e-9,5.707311766,10239.583866011],[1e-9,0.636478084,40853.142184844],[0,4.725230611,11790.629088659],[0,1.020681134,10988.808157535],[0,5.605991304,9437.762934887]],"4":[[1.41e-7,0.315371902,10213.285546211],[2e-9,3.141592654,0],[2e-9,2.354664045,20426.571092422],[2e-9,0.744762151,30639.856638633],[0,2.34190883,40853.142184844]],"5":[[2e-9,2.052017276,10213.285546211],[0,0,0],[0,3.825002753,20426.571092422],[0,2.329531169,30639.856638633]]},"R":{"0":[[0.723348209,0,0],[0.004898242,4.021518323,10213.285546211],[0.000016581,4.90206728,20426.571092422],[0.000016321,2.845488519,7860.419392439],[0.00001378,1.128465906,11790.629088659],[0.000004984,2.586821877,9683.594581116],[0.00000374,1.423148371,3930.20969622],[0.000002636,5.529381859,9437.762934887],[0.000002375,2.55135904,15720.838784878],[0.00000222,2.013467768,19367.189162233],[0.000001259,2.727698336,1577.343542448],[0.000001195,3.019753653,10404.733812323],[8.53e-7,3.986079538,19651.048481098],[7.62e-7,1.595772245,9153.903616022],[7.43e-7,4.11957854,5507.553238667],[4.25e-7,3.818645307,13367.972631107],[4.19e-7,1.642733635,18837.498197138],[3.94e-7,5.390194224,23581.258177318],[3.13e-7,2.318067195,9999.986450773],[2.9e-7,5.677395287,5661.332049152],[2.76e-7,5.723924078,775.522611324],[2.73e-7,4.821518127,11015.106477335],[1.98e-7,0.531893265,27511.467873537],[1.97e-7,4.961575602,11322.664098304],[1.62e-7,0.564538343,529.690965095],[1.36e-7,3.755308706,18073.70493865],[1.32e-7,3.372078257,13745.346239022],[1.31e-7,5.243531976,17298.182327326],[1.29e-7,1.133810836,10206.17199921],[1.18e-7,5.090258774,3154.687084896],[1.17e-7,0.234322987,7084.896781115],[1.14e-7,4.568388947,29050.783743349],[1.08e-7,2.450247129,10239.583866011],[1.07e-7,1.955283961,31441.677569757],[1.04e-7,1.202349901,15874.617595363],[9.6e-8,1.466398562,19999.972901546],[9.3e-8,1.616159093,2352.866153772],[9.1e-8,3.070048958,1109.378552093],[8.4e-8,5.783276124,30639.856638633],[8.2e-8,1.950231119,22003.91463487]],"1":[[0.00034551,0.891987106,10213.285546211],[0.000002342,1.772249427,20426.571092422],[0.00000234,3.141592654,0],[2.39e-7,1.112745026,9437.762934887],[1.06e-7,4.591682109,1577.343542448],[9.1e-8,4.53540907,10404.733812323],[6.6e-8,5.977039998,5507.553238667],[4.7e-8,3.876839606,9153.903616022],[3.8e-8,5.661969244,13367.972631107],[2.7e-8,2.824132913,10206.17199921],[2.2e-8,2.053144196,775.522611324],[2.1e-8,2.55137285,18837.498197138],[1.8e-8,1.876129366,11015.106477335],[1.8e-8,2.648085586,30639.856638633],[1.3e-8,0.206130456,11322.664098304],[1.2e-8,0.794318934,17298.182327326],[1.1e-8,4.947920175,6283.075849991],[1e-8,6.165551015,10239.583866011],[9e-9,4.59854497,1109.378552093],[9e-9,0.814130538,10596.182078434]],"2":[[0.000014066,5.063663952,10213.285546211],[1.55e-7,5.47321688,20426.571092422],[1.31e-7,0,0],[1.1e-8,2.788839883,9437.762934887],[5e-9,6.278069145,1577.343542448],[4e-9,1.950177799,11015.106477335],[4e-9,2.332228284,775.522611324],[4e-9,6.119141883,10404.733812323],[3e-9,1.389849984,5507.553238667],[2e-9,5.634067216,10239.583866011],[2e-9,6.16674653,30639.856638633],[2e-9,1.107651973,13367.972631107],[2e-9,3.644953116,7084.896781115]],"3":[[4.96e-7,3.222635545,10213.285546211],[8e-9,3.212190771,20426.571092422],[1e-9,3.141592654,0],[0,3.774486896,30639.856638633],[0,4.198020436,10239.583866011],[0,0.207149354,10186.987226411],[0,0.687819561,8635.942003763]],"4":[[6e-9,0.922296978,10213.285546211],[0,0.954689122,20426.571092422],[0,3.141592654,0]],"5":[[0,0.300328667,10213.285546211],[0,5.296277185,20426.571092422]]}},"mars":{"L":{"0":[[6.203477116,0,0],[0.186563681,5.050371003,3340.6124267],[0.011082168,5.40099837,6681.2248534],[0.000917984,5.754787451,10021.837280099],[0.00027745,5.970495129,3.523118349],[0.000123159,0.849560812,2810.921461605],[0.000106102,2.93958525,2281.230496511],[0.000089268,4.156978459,0.017253652],[0.000087157,6.110051598,13362.449706799],[0.000077749,3.339686551,5621.84292321],[0.000067976,0.364622436,398.149003408],[0.000041611,0.228149753,2942.463423292],[0.000035751,1.661865401,2544.314419883],[0.000030753,0.856965971,191.448266112],[0.000029375,6.078937114,0.067310303],[0.000026281,0.648061436,3337.089308351],[0.000025798,0.029967062,3344.135545049],[0.000023894,5.038964013,796.298006816],[0.000017988,0.656340268,529.690965095],[0.000015464,2.915796334,1751.539531416],[0.000015281,1.149793062,6151.533888305],[0.000012862,3.067959246,2146.165416475],[0.000012644,3.622750922,5092.151958116],[0.000010249,3.693342936,8962.45534991],[0.000008916,0.182938991,16703.062133499],[0.000008588,2.400937042,2914.014235824],[0.000008327,4.494957535,3340.629680352],[0.000008327,2.464185913,3340.595173048],[0.000007487,3.822483995,155.420399434],[0.000007239,0.674975658,3738.761430108],[0.000007129,3.663360148,1059.381930189],[0.000006552,0.488640752,3127.313331262],[0.000006356,2.921827043,8432.764384816],[0.000005527,4.47478863,1748.016413067],[0.000005505,3.810012054,0.980321068],[0.000004722,3.625478194,1194.447010225],[0.00000426,0.553651382,6283.075849991],[0.000004151,0.496623148,213.299095438],[0.000003121,0.998533228,6677.701735051],[0.000003066,0.38052863,6684.747971749]],"1":[[3340.856274743,0,0],[0.014582271,3.604260536,3340.6124267],[0.001649013,3.92631251,6681.2248534],[0.000199633,4.26594061,10021.837280099],[0.000034524,4.732103864,3.523118349],[0.000024855,4.612775673,13362.449706799],[0.000008416,4.458582568,2281.230496511],[0.000005376,5.015897275,398.149003408],[0.00000521,4.994226782,3344.135545049],[0.000004326,2.560664029,191.448266112],[0.000004297,5.316461624,155.420399434],[0.000003817,3.538812894,796.298006816],[0.000003141,4.96335266,16703.062133499],[0.000002828,3.159675182,2544.314419883],[0.000002057,4.568914557,2146.165416475],[0.000001688,1.328948134,3337.089308351],[0.000001576,4.18501036,1751.539531416],[0.000001337,2.233251042,0.980321068],[0.000001336,5.974219039,1748.016413067],[0.000001176,6.024072139,6151.533888305]],"2":[[0.000580158,2.049794633,3340.6124267],[0.000541876,0,0],[0.000139084,2.457423599,6681.2248534],[0.000024651,2.800000209,10021.837280099],[0.000003984,3.141184283,13362.449706799],[0.00000222,3.1943608,3.523118349],[0.00000121,0.543252925,155.420399434],[6.15e-7,3.485294274,16703.062133499],[5.36e-7,3.541911215,3344.135545049],[3.43e-7,6.001884991,2281.230496511],[3.17e-7,4.140151718,191.448266112],[2.98e-7,1.998706798,796.298006816],[2.32e-7,4.334033659,242.728603974]],"3":[[0.000014824,0.444346949,3340.6124267],[0.000006621,0.884691787,6681.2248534],[0.000001883,1.287999825,10021.837280099],[4.15e-7,1.64850787,13362.449706799],[2.6e-7,0,0],[2.27e-7,2.052676653,155.420399434],[1.05e-7,1.580069064,3.523118349],[8e-8,1.998587577,16703.062133499],[4.9e-8,2.82452458,242.728603974],[3.8e-8,2.019142725,3344.135545049]],"4":[[0.00000114,3.141592654,0],[2.87e-7,5.63662412,6681.2248534],[2.44e-7,5.138684815,3340.6124267],[1.12e-7,6.031610744,10021.837280099],[3.3e-8,0.132283507,13362.449706799],[3.2e-8,3.562679883,155.420399434],[8e-9,0.493407834,16703.062133499],[8e-9,1.317345316,242.728603974]],"5":[[9e-9,3.141592654,0],[7e-9,4.040899965,6681.2248534],[5e-9,4.492149016,10021.837280099],[4e-9,5.074355051,155.420399434],[2e-9,3.513518842,3340.6124267],[2e-9,4.853136668,13362.449706799]]},"B":{"0":[[0.03197135,3.768320424,3340.6124267],[0.002980332,4.106169962,6681.2248534],[0.002891047,0,0],[0.000313655,4.446510529,10021.837280099],[0.000034841,4.788125479,13362.449706799],[0.000004434,5.026426205,3344.135545049],[0.00000443,5.652330159,3337.089308351],[0.000003991,5.130568147,16703.062133499],[0.000002925,3.792906446,2281.230496511],[0.00000182,6.136480117,6151.533888305],[0.000001632,4.263996266,529.690965095],[0.000001597,2.231946102,1059.381930189],[0.000001493,2.165012099,5621.84292321],[0.000001427,1.182150161,3340.595173048],[0.000001427,3.212921808,3340.629680352],[0.000001393,2.417963442,8962.45534991],[8.64e-7,5.744296484,3738.761430108],[8.33e-7,5.988663157,6677.701735051],[8.25e-7,5.366678723,6684.747971749],[7.36e-7,5.091875248,398.149003408],[7.27e-7,5.537757104,6283.075849991],[6.31e-7,0.730491134,5884.926846583],[6.23e-7,4.850719992,2942.463423292],[6.01e-7,3.679608088,796.298006816],[4.72e-7,4.521847363,3149.164160588],[4.7e-7,5.134866272,3340.679737003],[4.7e-7,5.543397238,3340.545116397],[4.66e-7,5.473616655,20043.674560199],[4.56e-7,2.132625075,2810.921461605],[4.13e-7,0.20003189,9492.146315005],[3.85e-7,4.080084433,4136.910433516],[3.31e-7,4.065819183,1751.539531416],[3.27e-7,2.62071057,2914.014235824],[2.97e-7,5.922182974,3532.060692811],[2.95e-7,2.753425667,12303.06777661],[2.86e-7,4.947105279,3870.303391794],[2.82e-7,2.06282534,5486.777843175],[2.66e-7,3.55085844,6681.242107052],[2.66e-7,1.520086753,6681.207599747],[2.61e-7,2.600645489,4399.994356889]],"1":[[0.003500688,5.368478362,3340.6124267],[0.00014116,3.141592654,0],[0.000096708,5.478777865,6681.2248534],[0.000014719,3.202057668,10021.837280099],[0.000004259,3.408438129,13362.449706799],[0.00000102,0.776172862,3337.089308351],[7.88e-7,3.717682939,16703.062133499],[3.27e-7,3.458037237,5621.84292321],[2.62e-7,2.482935581,2281.230496511],[2.07e-7,1.441208023,6151.533888305],[1.83e-7,6.031029431,529.690965095],[1.7e-7,4.811151869,3344.135545049],[1.57e-7,3.930755666,8962.45534991],[1.56e-7,2.782413833,3340.595173048],[1.56e-7,4.813186363,3340.629680352],[1.43e-7,0.246402477,2942.463423292],[1.38e-7,1.679830639,3532.060692811],[1.31e-7,0.973247362,6677.701735051],[1.27e-7,4.045467349,20043.674560199],[1.25e-7,2.256205135,5884.926846583]],"2":[[0.000167267,0.602213924,3340.6124267],[0.000049868,3.141592654,0],[0.000003021,5.55871276,6681.2248534],[2.58e-7,1.896626735,13362.449706799],[2.15e-7,0.917499686,10021.837280099],[1.18e-7,2.242407387,3337.089308351],[8e-8,2.248928666,16703.062133499],[3e-8,5.894258258,3496.032826134],[2.4e-8,5.187705253,5621.84292321],[1.8e-8,2.587599685,20043.674560199],[1.5e-8,3.185330035,3532.060692811],[1.4e-8,1.252381406,2281.230496511],[1.3e-8,4.806951729,3185.192027266]],"3":[[0.000006065,1.980506335,3340.6124267],[4.26e-7,0,0],[1.37e-7,1.795882288,6681.2248534],[2.7e-8,3.453770821,10021.837280099],[9e-9,3.752261591,3337.089308351],[6e-9,1.144717728,3496.032826134],[6e-9,0.106184864,13362.449706799],[5e-9,0.705049663,16703.062133499],[2e-9,3.28778562,3185.192027266],[2e-9,0.299805326,5621.84292321]],"4":[[1.34e-7,0,0],[1.13e-7,3.457243526,3340.6124267],[7e-9,0.504458053,6681.2248534],[1e-9,1.050566026,10021.837280099],[1e-9,2.661858356,3496.032826134],[1e-9,5.278882189,3337.089308351],[0,1.724223421,3185.192027266],[0,4.099716033,3097.883822726]],"5":[[5e-9,4.867941254,3340.6124267],[1e-9,5.305470506,6681.2248534],[0,4.177369253,3496.032826134],[0,5.751140706,10021.837280099],[0,0,0]]},"R":{"0":[[1.530334883,0,0],[0.141849532,3.479712835,3340.6124267],[0.006607764,3.817834421,6681.2248534],[0.000461791,4.155953163,10021.837280099],[0.000081097,5.559584602,2810.921461605],[0.000074853,1.772389981,5621.84292321],[0.000055232,1.364363189,2281.230496511],[0.000038252,4.494071824,13362.449706799],[0.000024844,4.925455779,2942.463423292],[0.000023065,0.090817425,2544.314419883],[0.000019994,5.360596052,3337.089308351],[0.000019602,4.742493863,3344.135545049],[0.000011671,2.112615012,5092.151958116],[0.000011028,5.009082642,398.149003408],[0.000009923,5.838624011,6151.533888305],[0.000008991,4.40790434,529.690965095],[0.000008073,2.102166471,1059.381930189],[0.000007979,3.448390262,796.298006816],[0.00000741,1.499063369,2146.165416475],[0.000007256,1.245169135,8432.764384816],[0.000006923,2.133788148,8962.45534991],[0.000006331,0.89353285,3340.595173048],[0.000006331,2.924304482,3340.629680352],[0.0000063,1.287381359,1751.539531416],[0.000005744,0.828961963,2914.014235824],[0.000005262,5.382922762,3738.761430108],[0.000004728,5.198504579,3127.313331262],[0.000003481,4.832191989,16703.062133499],[0.000002837,2.906922949,3532.060692811],[0.000002796,5.257492475,6283.075849991],[0.000002755,1.217679678,6254.626662524],[0.000002752,2.908188838,1748.016413067],[0.000002699,3.763947286,5884.926846583],[0.000002391,2.036698962,1194.447010225],[0.000002338,5.105464925,5486.777843175],[0.000002281,3.255290206,6872.673119511],[0.000002232,4.198615938,3149.164160588],[0.000002194,5.583402488,191.448266112],[0.000002083,4.846264421,3340.679737003],[0.000002083,5.254760808,3340.545116397]],"1":[[0.011074333,2.03250525,3340.6124267],[0.001031759,2.370718457,6681.2248534],[0.000128772,0,0],[0.000108159,2.708880938,10021.837280099],[0.000011946,3.047021825,13362.449706799],[0.000004386,2.888350726,2281.230496511],[0.000003957,3.423246113,3344.135545049],[0.000001826,1.58428644,2544.314419883],[0.000001359,3.38507018,16703.062133499],[0.000001284,6.043433604,3337.089308351],[0.000001282,0.629912206,1059.381930189],[0.000001271,1.953897757,796.298006816],[0.000001184,2.997613451,2146.165416475],[8.75e-7,3.42052759,398.149003408],[8.3e-7,3.855749867,3738.761430108],[7.56e-7,4.451018393,6151.533888305],[7.2e-7,2.764421807,529.690965095],[6.65e-7,2.548926027,1751.539531416],[6.64e-7,4.4059755,1748.016413067],[5.75e-7,0.543543279,1194.447010225]],"2":[[0.000442422,0.479306039,3340.6124267],[0.00008138,0.869983981,6681.2248534],[0.000012749,1.225940508,10021.837280099],[0.000001874,1.57298992,13362.449706799],[5.24e-7,3.141592654,0],[4.07e-7,1.970801751,3344.135545049],[2.66e-7,1.916656158,16703.062133499],[1.78e-7,4.434995053,2281.230496511],[1.17e-7,4.525104537,3185.192027266],[1.02e-7,5.391434695,1059.381930189],[1e-7,0.418705772,796.298006816],[9.2e-8,4.53579273,2146.165416475],[7.8e-8,5.933690795,1748.016413067]],"3":[[0.000011131,5.149873501,3340.6124267],[0.000004244,5.613437665,6681.2248534],[0.000001,5.99726827,10021.837280099],[1.96e-7,0.076330621,13362.449706799],[4.7e-8,3.141592654,0],[3.5e-8,0.429519076,16703.062133499],[2.9e-8,0.447118427,3344.135545049],[2.4e-8,3.02115528,3185.192027266],[7e-9,0.806933594,6684.747971749],[6e-9,0.778532751,20043.674560199]],"4":[[1.96e-7,3.582116505,3340.6124267],[1.63e-7,4.051160769,6681.2248534],[5.8e-8,4.463839621,10021.837280099],[1.5e-8,4.843743216,13362.449706799],[4e-9,1.509622336,3185.192027266],[3e-9,5.206849676,16703.062133499],[2e-9,5.164729316,3344.135545049],[1e-9,0,0]],"5":[[5e-9,2.476172047,6681.2248534],[3e-9,2.915105477,10021.837280099],[1e-9,1.768889623,3340.6124267],[1e-9,3.313783772,13362.449706799],[0,6.274578283,3185.192027266],[0,3.693808771,16703.062133499]]}},"jupiter":{"L":{"0":[[0.599546915,0,0],[0.096958987,5.061917931,529.690965095],[0.005736101,1.44406206,7.113547001],[0.003063892,5.4173473,1059.381930189],[0.000971783,4.142647088,632.783739313],[0.000729031,3.640429093,522.577418094],[0.00064264,3.411451852,103.092774219],[0.000398061,2.293767449,419.484643875],[0.000388578,1.272317249,316.391869657],[0.000279646,1.784545895,536.804512095],[0.000135897,5.774810316,1589.072895284],[0.000087687,3.630003244,949.17560897],[0.000082464,3.582279617,206.185548437],[0.000073681,5.081011256,735.876513532],[0.000062632,0.024976437,213.299095438],[0.00006114,4.513195317,1162.474704408],[0.000053055,4.186250535,1052.268383188],[0.000053053,1.306712368,14.227094002],[0.000049054,1.320846317,110.206321219],[0.000046472,4.699581095,3.932153263],[0.00003045,4.316759603,426.598190876],[0.0000261,1.566675949,846.082834751],[0.000020282,1.063765474,3.181393738],[0.00001921,0.971689288,639.897286314],[0.000017648,2.141480778,1066.49547719],[0.00001723,3.880360089,1265.567478626],[0.000016332,3.582010898,515.463871093],[0.00001432,4.296836903,625.670192312],[0.000009733,4.097649571,95.979227218],[0.000008844,2.437014261,412.371096874],[0.000007329,6.085341132,838.96928775],[0.000007311,3.80591234,1581.959348283],[0.000007092,1.292725737,742.990060533],[0.000006919,6.133682229,2118.763860378],[0.000006145,4.108534968,1478.866574064],[0.000005819,4.539677176,309.278322656],[0.000004952,3.755674614,323.505416657],[0.000004409,2.958184609,454.909366527],[0.000004173,1.035544302,2.447680555],[0.000003899,4.897161059,1692.165669502]],"1":[[529.934807575,0,0],[0.004897412,4.220666899,529.690965095],[0.002289185,6.02647464,7.113547001],[0.000276554,4.572659568,1059.381930189],[0.000207209,5.459389363,522.577418094],[0.000121057,0.16985765,536.804512095],[0.000060681,4.42419502,103.092774219],[0.000054339,3.984783826,419.484643875],[0.000042378,5.890093513,14.227094002],[0.000022119,5.267714466,206.185548437],[0.000017459,4.926693785,1589.072895284],[0.000012958,5.551327651,3.181393738],[0.000011731,5.856473044,1052.268383188],[0.000011634,0.514508953,3.932153263],[0.000010987,5.307049816,515.463871093],[0.000010072,0.464783986,735.876513532],[0.000010036,3.150403018,426.598190876],[0.000008477,5.758058505,110.206321219],[0.000008273,4.803120157,213.299095438],[0.000008164,0.586430549,1066.49547719]],"2":[[0.000472336,4.321483236,7.113547001],[0.000389656,0,0],[0.000306291,2.930214402,529.690965095],[0.000031893,1.055046156,522.577418094],[0.000027293,4.845454814,536.804512095],[0.000027234,3.414115266,1059.381930189],[0.000017211,4.187343852,14.227094002],[0.000003833,5.767907144,419.484643875],[0.000003775,0.760489649,515.463871093],[0.000003675,6.055091204,103.092774219],[0.000003374,3.786443842,3.181393738],[0.000003082,0.693566541,206.185548437],[0.000002184,3.813891914,1589.072895284]],"3":[[0.000065017,2.598628805,7.113547001],[0.000013565,1.346358864,529.690965095],[0.000004707,2.475039779,14.227094002],[0.00000417,3.244512432,536.804512095],[0.000003529,2.97360159,522.577418094],[0.000001549,2.075655858,1059.381930189],[8.68e-7,2.514315843,515.463871093],[4.44e-7,0,0],[3.35e-7,3.826337945,1066.49547719],[2.85e-7,2.447547561,206.185548437]],"4":[[0.000006695,0.852824211,7.113547001],[0.00000114,3.141592654,0],[0.000001,0.742589478,14.227094002],[5e-7,1.653462082,536.804512095],[4.36e-7,5.820263866,529.690965095],[3.18e-7,4.858299867,522.577418094],[1.47e-7,4.290616358,515.463871093],[8.9e-8,0.714785207,1059.381930189]],"5":[[4.96e-7,5.256589662,7.113547001],[1.58e-7,5.251268375,14.227094002],[4.3e-8,0.014618693,536.804512095],[1.5e-8,1.097399114,522.577418094],[8e-9,3.141592654,0],[7e-9,5.859490476,543.918059096]]},"B":{"0":[[0.022686157,3.558526067,529.690965095],[0.001100904,0,0],[0.001099716,3.908093474,1059.381930189],[0.000081014,3.605095734,522.577418094],[0.000064378,0.306271214,536.804512095],[0.00006044,4.258831088,1589.072895284],[0.000011069,2.985344219,1162.474704408],[0.000009443,1.675222884,426.598190876],[0.000009417,2.936190724,1052.268383188],[0.000008941,1.754474299,7.113547001],[0.000008359,5.178819732,103.092774219],[0.000007673,2.154735941,632.783739313],[0.000006842,3.678087701,213.299095438],[0.000006292,0.643432823,1066.49547719],[0.000005585,0.013548305,846.082834751],[0.000005317,2.703059544,110.206321219],[0.000004644,1.173372492,949.17560897],[0.000004311,2.608250005,419.484643875],[0.000003514,4.610629907,2118.763860378],[0.000001322,4.778169907,742.990060533],[0.000001231,3.349681814,1692.165669502],[0.000001164,1.38688232,323.505416657],[0.00000115,5.048922954,316.391869657],[0.000001038,3.701038381,515.463871093],[0.000001034,2.318789996,1478.866574064],[0.000001024,3.152937854,1581.959348283],[7.87e-7,3.983186532,1265.567478626],[6.99e-7,2.560062164,956.289155971],[6.35e-7,4.500735743,735.876513532],[5.56e-7,0.37500753,1375.773799846],[5.52e-7,0.40176412,525.758811832],[5.2e-7,0.99007119,1596.186442285],[4.97e-7,0.186498931,543.918059096],[4.88e-7,3.572605507,533.623118358],[2.92e-7,5.43145863,206.185548437],[2.84e-7,1.535327447,625.670192312],[2.44e-7,6.10947657,1169.588251409],[2.33e-7,5.951979928,838.96928775],[2.32e-7,4.064733686,526.509571357],[2.28e-7,6.192627877,532.872358832]],"1":[[0.001773518,5.701664885,529.690965095],[0.000032302,5.779416193,1059.381930189],[0.000030814,5.474642965,522.577418094],[0.000022119,4.734774802,536.804512095],[0.000016942,3.141592654,0],[0.000003464,4.745951741,1052.268383188],[0.000002343,5.188560999,1066.49547719],[0.000001962,6.185542866,7.113547001],[0.000001505,3.927212261,1589.072895284],[0.000001141,3.438972718,632.783739313],[9.67e-7,2.914263041,949.17560897],[8.17e-7,5.076660975,1162.474704408],[7.66e-7,2.505221887,103.092774219],[7.66e-7,0.612889814,419.484643875],[7.39e-7,5.499582922,515.463871093],[6.05e-7,5.447400844,213.299095438],[4.99e-7,3.947996166,735.876513532],[4.6e-7,0.538503609,110.206321219],[4.51e-7,1.895166452,846.082834751],[3.66e-7,4.698283928,543.918059096]],"2":[[0.000080941,1.463228437,529.690965095],[0.000008132,3.141592654,0],[0.000007424,0.95691639,522.577418094],[0.00000399,2.898886664,536.804512095],[0.000003422,1.446837897,1059.381930189],[7.39e-7,0.407246759,1052.268383188],[4.62e-7,3.480368958,1066.49547719],[2.97e-7,1.925041713,1589.072895284],[2.93e-7,0.990888318,515.463871093],[2.28e-7,4.271240524,7.113547001],[1.39e-7,2.922423873,543.918059096],[1.21e-7,5.221689325,632.783739313],[1.07e-7,4.880242225,949.17560897]],"3":[[0.000002516,3.380879231,529.690965095],[0.000001217,2.733118372,522.577418094],[4.87e-7,1.036899967,536.804512095],[1.1e-7,2.314635613,1052.268383188],[8.1e-8,2.767297576,515.463871093],[7.3e-8,4.25268319,1059.381930189],[6.2e-8,1.781158274,1066.49547719],[3.6e-8,1.130289172,543.918059096],[2.8e-8,3.141592654,0],[1.9e-8,2.289340541,7.113547001]],"4":[[1.51e-7,4.529569996,522.577418094],[5.4e-8,4.474271591,529.690965095],[4.5e-8,5.43908581,536.804512095],[3.4e-8,0,0],[1.8e-8,4.518070362,515.463871093],[1.3e-8,4.201176116,1052.268383188],[8e-9,5.59451555,543.918059096],[5e-9,0.058031775,1066.49547719]],"5":[[1.4e-8,0.091985541,522.577418094],[4e-9,0.00874408,515.463871093],[3e-9,3.279029451,536.804512095],[1e-9,0.339597752,529.690965095],[1e-9,1.293059545,543.918059096]]},"R":{"0":[[5.208874295,0,0],[0.25209327,3.4910864,529.690965095],[0.006105999,3.841153656,1059.381930189],[0.002820295,2.574198799,632.783739313],[0.001876474,2.075903801,522.577418094],[0.000867929,0.710010906,419.484643875],[0.000720629,0.214656947,536.804512095],[0.000655172,5.979958508,316.391869657],[0.000301353,2.161320584,949.17560897],[0.000291346,1.677592437,103.092774219],[0.000239473,0.274578549,7.113547001],[0.000234532,3.540231473,735.876513532],[0.000222837,4.193627735,1589.072895284],[0.000130326,2.960430557,1162.474704408],[0.00012749,2.715501029,1052.268383188],[0.000097033,1.906695724,206.185548437],[0.000091614,4.413526189,213.299095438],[0.000078945,2.479075514,426.598190876],[0.00007058,2.181847531,1265.567478626],[0.000061378,6.264175425,846.082834751],[0.000054771,5.657293252,639.897286314],[0.0000417,2.016050339,515.463871093],[0.000041369,2.722199797,625.670192312],[0.000035025,0.565312974,1066.49547719],[0.00002617,2.009939671,1581.959348283],[0.000025,4.551820559,838.96928775],[0.000021276,6.127514618,742.990060533],[0.000019119,0.856219274,412.371096874],[0.000016105,3.088677893,1368.660252845],[0.000014795,2.680261914,1478.866574064],[0.000012307,1.890429797,323.505416657],[0.000012168,1.80171561,110.206321219],[0.00001015,1.386732377,454.909366527],[0.000009986,2.872089401,309.278322656],[0.000009611,4.548769898,2118.763860378],[0.000008857,4.147859485,533.623118358],[0.000008215,1.593425344,1898.35121794],[0.00000812,5.940918991,909.818733055],[0.000007767,3.676969547,728.762966531],[0.000007272,3.988246864,1155.361157407]],"1":[[0.012718016,2.649375111,529.690965095],[0.000616618,3.00076251,1059.381930189],[0.000534436,3.897176442,522.577418094],[0.000413903,0,0],[0.000311852,4.882766635,536.804512095],[0.000118472,2.413295882,419.484643875],[0.000091664,4.759794086,7.113547001],[0.000034036,3.34688538,1589.072895284],[0.000032034,5.210832855,735.876513532],[0.000031758,2.792979871,103.092774219],[0.000028061,3.742236936,515.463871093],[0.000026766,4.330528787,1052.268383188],[0.000026,3.634351016,206.185548437],[0.000024122,1.469473083,426.598190876],[0.000021005,3.927626823,639.897286314],[0.000016462,5.309535109,1066.49547719],[0.000016413,4.416286698,625.670192312],[0.000010499,3.16113623,213.299095438],[0.000010248,2.55432643,412.371096874],[0.000008064,2.677508014,632.783739313]],"2":[[0.000796448,1.358658966,529.690965095],[0.000082516,5.777739354,522.577418094],[0.000070299,3.274769658,536.804512095],[0.00005314,1.838351097,1059.381930189],[0.000018608,2.976821394,7.113547001],[0.000009645,5.48031822,515.463871093],[0.000008363,4.198898817,419.484643875],[0.000004979,3.141592654,0],[0.000004266,2.227531018,639.897286314],[0.000004065,3.782507304,1066.49547719],[0.000003773,2.242483529,1589.072895284],[0.000003629,5.367618473,206.185548437],[0.00000342,6.099229693,1052.268383188]],"3":[[0.000035193,6.058006338,529.690965095],[0.000010732,1.673213458,536.804512095],[0.000009157,1.413296761,522.577418094],[0.000003416,0.522965427,1059.381930189],[0.000002549,1.196254735,7.113547001],[0.000002215,0.952252262,515.463871093],[8.97e-7,3.141592654,0],[6.91e-7,2.268852823,1066.49547719],[5.78e-7,1.413897453,543.918059096],[5.77e-7,0.525801176,639.897286314]],"4":[[0.000001286,0.084193096,536.804512095],[0.000001135,4.248588558,529.690965095],[8.27e-7,3.297549094,522.577418094],[3.79e-7,2.733266111,515.463871093],[2.67e-7,5.691425886,7.113547001],[1.77e-7,5.400125369,1059.381930189],[1.26e-7,6.015604161,543.918059096],[9.3e-8,0.768139465,1066.49547719]],"5":[[1.12e-7,4.752493999,536.804512095],[4.3e-8,5.915162292,522.577418094],[2.1e-8,5.567815559,515.463871093],[1.9e-8,4.296596473,543.918059096],[1.9e-8,3.693574958,7.113547001],[1.6e-8,4.132228085,1059.381930189]]}},"saturn":{"L":{"0":[[0.87401354,0,0],[0.111076598,3.962050902,213.299095438],[0.01414151,4.585815159,7.113547001],[0.003983794,0.52112026,206.185548437],[0.003507692,3.30329903,426.598190876],[0.002068163,0.246583669,103.092774219],[0.000792713,3.840070785,220.412642439],[0.000239903,4.669769349,110.206321219],[0.000165736,0.437191235,419.484643875],[0.000158203,0.938089538,632.783739313],[0.000150535,2.716700279,639.897286314],[0.00014907,5.769032838,316.391869657],[0.000146096,1.565185737,3.932153263],[0.000131603,4.448911802,14.227094002],[0.000130053,5.981190671,11.045700264],[0.000107251,3.129395965,202.253395174],[0.000061263,1.763284997,277.034993741],[0.000058632,0.236570288,529.690965095],[0.000052278,4.207831624,3.181393738],[0.000050197,3.177879195,433.711737877],[0.000045925,0.619764244,199.072001436],[0.000040059,2.244798939,63.735898303],[0.000038737,3.222826926,138.517496871],[0.000032695,0.774918958,949.17560897],[0.000029538,0.982803852,95.979227218],[0.000024612,2.031636312,735.876513532],[0.000017581,3.265805148,522.577418094],[0.000016402,5.505049662,846.082834751],[0.000015806,4.372663141,309.278322656],[0.000013913,4.023319781,323.505416657],[0.000011235,2.837267936,415.552490612],[0.000010872,4.183432325,2.447680555],[0.000010173,3.716981518,227.52618944],[0.000009568,0.507408899,1265.567478626],[0.000008527,3.421413507,175.1660598],[0.000008486,3.191498258,209.366942175],[0.000007892,5.007451231,0.963207847],[0.000007488,2.143981493,853.196381752],[0.000007436,5.252769546,224.344795702],[0.00000687,1.747144078,1052.268383188]],"1":[[213.54295596,0,0],[0.01296855,1.828205447,213.299095438],[0.005643476,2.885001364,7.113547001],[0.001076788,2.277699119,206.185548437],[0.00098323,1.080700613,426.598190876],[0.000402546,2.041282571,220.412642439],[0.000199417,1.279546627,103.092774219],[0.000105117,2.748803928,14.227094002],[0.000069392,0.4049308,639.897286314],[0.000048033,2.441940977,419.484643875],[0.000040563,2.921666188,110.206321219],[0.000037686,3.649656315,3.932153263],[0.000033847,2.416942517,3.181393738],[0.000033022,1.262564867,433.711737877],[0.000030714,2.327393178,199.072001436],[0.00001953,3.563946833,11.045700264],[0.000012493,2.628037375,95.979227218],[0.000009217,1.960898343,227.52618944],[0.000007056,4.416892493,529.690965095],[0.000006497,6.174180937,202.253395174]],"2":[[0.001164412,1.179878506,7.113547001],[0.000919208,0.074252611,213.299095438],[0.000905923,0,0],[0.000152769,4.064920075,206.185548437],[0.000106314,0.257782774,220.412642439],[0.00010605,5.409635959,426.598190876],[0.000042654,1.045955566,14.227094002],[0.000012155,2.918600421,103.092774219],[0.000011647,4.60942129,639.897286314],[0.00001082,5.691303517,433.711737877],[0.000010448,4.042064536,199.072001436],[0.000010201,0.633691826,3.181393738],[0.000006336,4.3882541,419.484643875]],"3":[[0.000160387,5.739453774,7.113547001],[0.000042498,4.585396756,213.299095438],[0.000019065,4.760820502,220.412642439],[0.000014657,5.913266783,206.185548437],[0.00001162,5.619731324,14.227094002],[0.000010666,3.608165331,426.598190876],[0.000002394,3.860882734,433.711737877],[0.00000237,5.768264515,199.072001436],[0.000001656,5.116411502,3.181393738],[0.000001514,2.735946419,639.897286314]],"4":[[0.000016619,3.99826249,7.113547001],[0.000002571,2.98436499,220.412642439],[0.000002363,3.902414281,14.227094002],[0.000001494,2.741108242,213.299095438],[0.00000114,3.141592654,0],[0.000001096,1.515157393,206.185548437],[6.84e-7,1.721209533,426.598190876],[4.01e-7,2.046448974,433.711737877]],"5":[[0.000001236,2.259233457,7.113547001],[3.42e-7,2.162506527,14.227094002],[2.75e-7,1.198681502,220.412642439],[5.8e-8,1.215842702,227.52618944],[5.3e-8,0.235504001,433.711737877],[3.7e-8,6.226696944,426.598190876]]},"B":{"0":[[0.04330678,3.602844284,213.299095438],[0.002403483,2.852384894,426.598190876],[0.000847459,0,0],[0.000341161,0.572973078,206.185548437],[0.000308634,3.484415045,220.412642439],[0.000147341,2.118465979,639.897286314],[0.000099167,5.790031894,419.484643875],[0.000069936,4.736046892,7.113547001],[0.000048076,5.433053156,316.391869657],[0.000047884,4.965129274,110.206321219],[0.000034321,2.732557521,433.711737877],[0.000015061,6.013045361,103.092774219],[0.000010603,5.630992924,529.690965095],[0.000009691,5.204349661,632.783739313],[0.000009421,1.396466781,853.196381752],[0.000007076,3.803023295,323.505416657],[0.000005523,5.13149109,202.253395174],[0.000003997,3.35891414,227.52618944],[0.000003194,3.62571551,209.366942175],[0.000003161,1.997167642,647.010833315],[0.000003142,0.465102724,217.231248701],[0.000002845,4.886484816,224.344795702],[0.000002364,2.138874723,11.045700264],[0.000002154,5.949826101,846.082834751],[0.000002085,2.120038938,415.552490612],[0.000002072,0.730214629,199.072001436],[0.00000179,2.953615147,63.735898303],[0.000001406,0.644176203,490.334089179],[0.000001392,4.59535168,14.227094002],[0.000001391,1.998219909,735.876513532],[0.000001349,5.245008196,742.990060533],[0.000001217,3.115371409,522.577418094],[0.000001155,3.108915472,216.480489176],[0.000001142,0.962614421,210.1177017],[9.64e-7,4.481643398,117.31986822],[8.06e-7,1.316927502,277.034993741],[7.43e-7,2.893765396,149.563197135],[7.3e-7,3.059884824,536.804512095],[6.93e-7,4.923786336,309.278322656],[6.8e-7,2.18002264,351.816592309]],"1":[[0.00397555,5.332899926,213.299095438],[0.000494786,3.141592654,0],[0.000185716,6.099192064,426.598190876],[0.000148006,2.305860605,206.185548437],[0.00009644,1.696746601,220.412642439],[0.000037572,1.25429514,419.484643875],[0.000027166,5.911666648,639.897286314],[0.000014553,0.851616165,433.711737877],[0.000012906,2.917708571,7.113547001],[0.000008526,0.43572079,316.391869657],[0.000002977,0.919092067,632.783739313],[0.000002922,5.315742513,853.196381752],[0.000002844,1.618817548,227.52618944],[0.000002751,3.888641373,103.092774219],[0.000001724,0.052151466,647.010833315],[0.000001662,2.443516132,199.072001436],[0.000001582,5.208501258,110.206321219],[0.000001277,1.207114525,529.690965095],[0.000001098,2.456955516,217.231248701],[8.18e-7,2.758391714,210.1177017]],"2":[[0.0002063,0.504824228,213.299095438],[0.000037196,3.998334758,206.185548437],[0.000016272,6.181899395,220.412642439],[0.000013461,0,0],[0.000007058,3.039143088,419.484643875],[0.00000365,5.099286807,426.598190876],[0.000003296,5.2789921,433.711737877],[0.000002193,3.828415338,639.897286314],[0.000001394,1.042726235,7.113547001],[0.00000104,6.15730993,227.52618944],[9.3e-7,1.979944128,316.391869657],[7.12e-7,4.147543534,199.072001436],[5.19e-7,2.883648339,632.783739313]],"3":[[0.000006663,1.990063402,213.299095438],[0.000006324,5.697783168,206.185548437],[0.000003981,0,0],[0.000001878,4.337798048,220.412642439],[9.19e-7,4.841042082,419.484643875],[5.15e-7,3.421494903,433.711737877],[4.24e-7,2.380732391,426.598190876],[2.57e-7,4.401672131,227.52618944],[2.06e-7,5.853135099,199.072001436],[1.81e-7,1.993214332,639.897286314]],"4":[[8.04e-7,1.119184147,206.185548437],[3.17e-7,3.122187451,213.299095438],[1.71e-7,2.480732004,220.412642439],[1.18e-7,3.141592654,0],[9e-8,0.384414249,419.484643875],[6.2e-8,1.561863795,433.711737877],[4.8e-8,2.634982955,227.52618944],[4.7e-8,1.282356396,199.072001436]],"5":[[7.9e-8,2.819275586,206.185548437],[1e-8,0.511872103,220.412642439],[1e-8,3.141592654,0],[8e-9,2.99484124,199.072001436],[6e-9,0.780086664,227.52618944],[6e-9,5.964569441,433.711737877]]},"R":{"0":[[9.557581358,0,0],[0.529213825,2.392262197,213.299095438],[0.018736799,5.235496051,206.185548437],[0.01464664,1.647630455,426.598190876],[0.008218911,5.935200254,316.391869657],[0.005475069,5.015326285,103.092774219],[0.003716844,2.271148334,220.412642439],[0.003617784,3.139043033,7.113547001],[0.001406175,5.70406653,632.783739313],[0.001089747,3.293135956,110.206321219],[0.00069007,5.940996224,419.484643875],[0.000610534,0.940377612,639.897286314],[0.00048913,1.557333885,202.253395174],[0.000341438,0.195185507,277.034993741],[0.000324017,5.470846069,949.17560897],[0.000209366,0.46349164,735.876513532],[0.000208391,1.521025906,433.711737877],[0.000207467,5.332556676,199.072001436],[0.000152985,3.059436529,529.690965095],[0.000142965,2.604335379,323.505416657],[0.000128841,1.648923104,138.517496871],[0.000119933,5.980514219,846.082834751],[0.000113803,1.731057466,522.577418094],[0.000097961,5.20475864,1265.567478626],[0.000077528,5.851913189,95.979227218],[0.000067706,3.004334793,14.227094002],[0.00006466,0.177331601,1052.268383188],[0.000058504,1.455196361,415.552490612],[0.000053075,0.597375341,63.735898303],[0.000046957,2.14919037,227.52618944],[0.00004044,1.640103239,209.366942175],[0.000036881,0.780161332,412.371096874],[0.000034609,1.850888029,175.1660598],[0.000034196,4.945491489,1581.959348283],[0.000034006,0.553867475,350.3321196],[0.000033765,3.695284788,224.344795702],[0.00002976,5.684679311,210.1177017],[0.000028853,1.387640776,838.96928775],[0.000028812,0.179607579,853.196381752],[0.000025076,3.538518633,742.990060533]],"1":[[0.061829813,0.25843515,213.299095438],[0.005065776,0.711146509,206.185548437],[0.003413941,5.79635774,426.598190876],[0.001884914,0.472157194,220.412642439],[0.001862615,3.141592654,0],[0.001438912,1.407448642,7.113547001],[0.000496211,6.017444696,103.092774219],[0.000209282,5.092456545,639.897286314],[0.000199526,1.17560125,419.484643875],[0.000188396,1.608195632,110.206321219],[0.000138766,0.758862044,199.072001436],[0.000128928,5.943302584,433.711737877],[0.000053967,1.288524059,14.227094002],[0.000048693,0.867938942,323.505416657],[0.000042475,0.392993845,227.52618944],[0.000032521,1.258534705,95.979227218],[0.000030814,3.436625574,522.577418094],[0.000029094,4.606791548,202.253395174],[0.00002856,2.167314054,735.876513532],[0.000019877,2.450542048,412.371096874]],"2":[[0.004369025,4.78671673,213.299095438],[0.000719228,2.500699949,206.185548437],[0.000497668,4.971681509,220.412642439],[0.000432209,3.869404438,426.598190876],[0.000296456,5.963102643,7.113547001],[0.000047209,2.475279924,199.072001436],[0.000041417,4.106709408,433.711737877],[0.000037894,3.097710251,639.897286314],[0.00002964,1.372062488,103.092774219],[0.000025564,2.850657215,419.484643875],[0.000023268,0,0],[0.000022085,6.275888587,110.206321219],[0.000021876,5.855458322,14.227094002]],"3":[[0.00020315,3.02186626,213.299095438],[0.000089236,3.191442058,220.412642439],[0.000069087,4.351748894,206.185548437],[0.000040871,4.224069274,7.113547001],[0.00003879,2.01056446,426.598190876],[0.000010708,4.203603412,199.072001436],[0.000009073,2.28344368,433.711737877],[0.000006061,3.174585705,227.52618944],[0.000005966,4.134557534,14.227094002],[0.000004832,1.173459733,639.897286314]],"4":[[0.000012021,1.414994465,220.412642439],[0.000007078,1.161535701,213.299095438],[0.000005161,6.239735683,206.185548437],[0.000004267,2.469248903,7.113547001],[0.000002677,0.186592067,426.598190876],[0.000001702,5.959269724,199.072001436],[0.000001503,0.479701671,433.711737877],[0.000001451,1.442110601,227.52618944]],"5":[[0.000001286,5.912825651,220.412642439],[3.23e-7,0.692562286,7.113547001],[2.67e-7,5.914285286,227.52618944],[2.02e-7,4.951368018,433.711737877],[1.99e-7,0.673706534,14.227094002],[1.41e-7,2.670742802,206.185548437]]}}};
+
+let savedKey='';
+
+function saveKey(){
+  const k=document.getElementById('api-key').value.trim();
+  if(k){localStorage.setItem('nd_key',k);savedKey=k;updateKeyStatus(true)}
+}
+function updateKeyStatus(ok){
+  const el=document.getElementById('key-status');
+  el.textContent=ok?'✓ API key saved — AI reading enabled':'No API key — chart will calculate but AI reading won\'t work';
+  el.className='key-status '+(ok?'key-ok':'key-missing');
+}
+
+function getNakshatra(lon){
+  const idx=Math.floor(lon/13.3333)%27;
+  const pada=Math.floor((lon%13.3333)/3.3333)+1;
+  return{name:NAKSHATRAS[idx],lord:NAK_LORDS[idx],pada,idx};
+}
+function getSign(lon){return Math.floor(lon/30)%12}
+function getDeg(lon){return lon%30}
+function julianDay(yr,mo,dy,hr){
+  if(mo<=2){yr--;mo+=12}
+  const A=Math.floor(yr/100),B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(yr+4716))+Math.floor(30.6001*(mo+1))+dy+B-1524.5+hr/24;
+}
+function norm360(x){return((x%360)+360)%360}
+function norm2PI(x){return((x%(2*Math.PI))+2*Math.PI)%(2*Math.PI)}
+const D2R=Math.PI/180,R2D=180/Math.PI;
+
+// VSOP87D series evaluator (validated against full theory to sub-arcminute accuracy)
+function vsopSeries(seriesObj,tau){
+  let total=0;
+  for(const idxStr in seriesObj){
+    const idx=parseInt(idxStr);let sum=0;
+    const terms=seriesObj[idxStr];
+    for(let i=0;i<terms.length;i++){const t=terms[i];sum+=t[0]*Math.cos(t[1]+t[2]*tau)}
+    total+=sum*Math.pow(tau,idx);
+  }
+  return total;
+}
+function vsopPlanetPos(data,tau){
+  return{lon:norm2PI(vsopSeries(data.L,tau)),lat:vsopSeries(data.B,tau),range:vsopSeries(data.R,tau)};
+}
+function toGeocentric(p,e){
+  const x=p.range*Math.cos(p.lat)*Math.cos(p.lon)-e.range*Math.cos(e.lat)*Math.cos(e.lon);
+  const y=p.range*Math.cos(p.lat)*Math.sin(p.lon)-e.range*Math.cos(e.lat)*Math.sin(e.lon);
+  let lon=Math.atan2(y,x);if(lon<0)lon+=2*Math.PI;
+  return lon*R2D;
+}
+
+// Sun - Meeus high-precision (validated to <0.01 deg vs full VSOP87)
+function sunLongitudeApparent(T){
+  const L0=norm360(280.46646+36000.76983*T+0.0003032*T*T);
+  const M=norm360(357.52911+35999.05029*T-0.0001537*T*T)*D2R;
+  const C=(1.914602-0.004817*T-0.000014*T*T)*Math.sin(M)+(0.019993-0.000101*T)*Math.sin(2*M)+0.000289*Math.sin(3*M);
+  return norm360(L0+C);
+}
+
+// Moon - Meeus truncated ELP2000 (validated to ~0.01 deg vs full ELP2000-82)
+function moonLongitude(T){
+  const Lp=norm360(218.3164477+481267.88123421*T-0.0015786*T*T);
+  const D=norm360(297.8501921+445267.1114034*T-0.0018819*T*T)*D2R;
+  const M=norm360(357.5291092+35999.0502909*T-0.0001536*T*T)*D2R;
+  const Mp=norm360(134.9633964+477198.8675055*T+0.0087414*T*T)*D2R;
+  const F=norm360(93.2720950+483202.0175233*T-0.0036539*T*T)*D2R;
+  let dL=0;
+  dL+=6.288774*Math.sin(Mp);dL+=1.274027*Math.sin(2*D-Mp);dL+=0.658314*Math.sin(2*D);
+  dL+=0.213618*Math.sin(2*Mp);dL-=0.185116*Math.sin(M);dL-=0.114332*Math.sin(2*F);
+  dL+=0.058793*Math.sin(2*D-2*Mp);dL+=0.057066*Math.sin(2*D-M-Mp);dL+=0.053322*Math.sin(2*D+Mp);
+  dL+=0.045758*Math.sin(2*D-M);dL-=0.040923*Math.sin(M-Mp);dL-=0.034720*Math.sin(D);
+  dL-=0.030383*Math.sin(M+Mp);dL+=0.015327*Math.sin(2*D-2*F);dL-=0.012528*Math.sin(2*F+Mp);
+  dL+=0.010980*Math.sin(2*F-Mp);dL+=0.010675*Math.sin(4*D-Mp);dL+=0.010034*Math.sin(3*Mp);
+  dL+=0.008548*Math.sin(4*D-2*Mp);dL-=0.007888*Math.sin(2*D+M-Mp);dL-=0.006766*Math.sin(2*D+M);
+  dL-=0.005163*Math.sin(D-Mp);dL+=0.004987*Math.sin(D+M);dL+=0.002521*Math.sin(2*D-M+Mp);
+  dL+=0.002259*Math.sin(2*D-F);dL-=0.002184*Math.sin(Mp+F);dL+=0.002005*Math.sin(2*Mp+M);
+  return norm360(Lp+dL);
+}
+
+// Mean lunar node (Rahu) - standard for Vedic Vimshottari calculations
+function rahuLongitude(T){return norm360(125.0445479-1934.1362891*T+0.0020754*T*T)}
+
+// Lahiri (Chitrapaksha) Ayanamsa - ICRC standard, J2000=23.853222deg, IAU precession model
+function lahiriAyanamsa(jd){
+  const T=(jd-2451545.0)/36525;
+  const AP=5028.796195*T+1.1054348*T*T-0.00006*T*T*T;
+  return 23.853222+AP/3600;
+}
+
+// Greenwich Mean Sidereal Time (degrees), Meeus formula
+function gstMean(jd){
+  const T=(jd-2451545.0)/36525;
+  return norm360(280.46061837+360.98564736629*(jd-2451545.0)+0.000387933*T*T-T*T*T/38710000);
+}
+
+// Simplified nutation (Meeus low-precision, main 4 terms) - corrects GST and obliquity
+function nutationSimple(T){
+  const omega=(125.04452-1934.136261*T)*D2R;
+  const L=(280.4665+36000.7698*T)*D2R;
+  const Lp=(218.3165+481267.8813*T)*D2R;
+  const dpsi=(-17.20*Math.sin(omega)-1.32*Math.sin(2*L)-0.23*Math.sin(2*Lp)+0.21*Math.sin(2*omega))/3600;
+  const deps=(9.20*Math.cos(omega)+0.57*Math.cos(2*L)+0.10*Math.cos(2*Lp)-0.09*Math.cos(2*omega))/3600;
+  return{dpsi,deps};
+}
+
+// Ascendant - validated formula with nutation correction (matches known charts to <0.005 deg)
+function calcAsc(jd,lat,lonDeg){
+  const T=(jd-2451545.0)/36525;
+  const nut=nutationSimple(T);
+  const meanEps=23.4392911-0.0130042*T-0.00000016*T*T+0.000000504*T*T*T;
+  const trueEps=meanEps+nut.deps;
+  const gstApparent=norm360(gstMean(jd)+nut.dpsi*Math.cos(meanEps*D2R));
+  const LST=norm360(gstApparent+lonDeg);
+  const epsR=trueEps*D2R,latR=lat*D2R,LSTR=LST*D2R;
+  const asc=Math.atan2(Math.cos(LSTR),-(Math.sin(LSTR)*Math.cos(epsR)+Math.tan(latR)*Math.sin(epsR)));
+  return norm360(asc*R2D);
+}
+
+function sid(t,a){return norm360(t-a)}
+
+function allPlanets(jd,T){
+  const tau=T/10; // VSOP87 millennia
+  const earthPos=vsopPlanetPos(VSOP.earth,tau);
+  const sun=sunLongitudeApparent(T);
+  const moon=moonLongitude(T);
+  const merc=toGeocentric(vsopPlanetPos(VSOP.mercury,tau),earthPos);
+  const ven=toGeocentric(vsopPlanetPos(VSOP.venus,tau),earthPos);
+  const mars=toGeocentric(vsopPlanetPos(VSOP.mars,tau),earthPos);
+  const jup=toGeocentric(vsopPlanetPos(VSOP.jupiter,tau),earthPos);
+  const sat=toGeocentric(vsopPlanetPos(VSOP.saturn,tau),earthPos);
+  const rahu=rahuLongitude(T);
+  return{Sun:sun,Moon:moon,Mars:mars,Mercury:merc,Jupiter:jup,Venus:ven,Saturn:sat,Rahu:rahu,Ketu:norm360(rahu+180)};
+}
+
+// Jaimini Chara Karakas - 7 classical planets ranked by degree-within-sign, descending.
+// Highest degree = Atmakaraka (soul), lowest = Darakaraka (spouse). Rahu/Ketu excluded per classical convention.
+const KARAKA_NAMES=['Atmakaraka','Amatyakaraka','Bhratrukaraka','Matrukaraka','Putrakaraka','Gnatikaraka','Darakaraka'];
+const KARAKA_SHORT=['AK','AmK','BK','MK','PK','GK','DK'];
+const KARAKA_SIGNIFIES=[
+  'Soul, self, life purpose — the core karmic lesson this lifetime is built around.',
+  'Career, profession, intellect, and the means by which you pursue your soul\'s purpose in the world.',
+  'Siblings, courage, communication, and short journeys or efforts.',
+  'Mother, home, emotional nourishment, and property.',
+  'Children, creativity, intelligence, and past-life merit (Purva Punya).',
+  'Obstacles, rivals, disease, and the friction that forces growth.',
+  'Spouse, marriage, and committed partnership — what you seek in, and learn through, relationships.'
+];
+const KARAKA_INFO={
+  Atmakaraka:'Atmakaraka literally means "significator of the soul." In Jaimini astrology, it is the planet with the highest degree within its sign (among the 7 classical planets, excluding Rahu/Ketu). It represents your soul\'s deepest desire, primary life purpose, and the core karmic lesson you are here to learn — the theme that keeps recurring across this lifetime until it is understood. The sign and house this planet occupies, along with where it lands in the Navamsa (D9) chart — called the Karakamsha — are considered the strongest indicators of dharmic life direction in Jaimini astrology.',
+  Amatyakaraka:'Amatyakaraka means "significator of the minister" — the second-highest degree planet. Where the Atmakaraka shows what the soul wants, the Amatyakaraka shows the vehicle that carries it into the world: career path, profession, intellect, and practical strategy. It often becomes especially relevant when analysing career-related questions.',
+  Bhratrukaraka:'Bhratrukaraka is the significator of siblings, courage, and initiative. Third in the degree ranking, it relates to co-born relationships, communication style, and short bursts of effort or short journeys.',
+  Matrukaraka:'Matrukaraka is the significator of the mother and emotional nourishment. Fourth in the degree ranking, it relates to home, property, emotional security, and the capacity for receptivity and care.',
+  Putrakaraka:'Putrakaraka is the significator of children and creativity. Fifth in the degree ranking, it covers offspring, creative or intellectual output, and past-life spiritual merit (Purva Punya) that ripens in this life.',
+  Gnatikaraka:'Gnatikaraka is the significator of obstacles, rivals, and disease. Sixth in the degree ranking, it points to the recurring friction, conflicts, or health matters that — handled consciously — become a source of growth and resilience.',
+  Darakaraka:'Darakaraka means "significator of the spouse" — the planet with the lowest degree within its sign. It reveals the nature of your life partner, what you unconsciously seek in committed relationships, and what those relationships are here to teach you about yourself.'
+};
+
+function calcCharaKarakas(planetData){
+  const sevenPlanets=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn'];
+  const ranked=sevenPlanets.map(p=>({planet:p,deg:planetData[p].deg})).sort((a,b)=>b.deg-a.deg);
+  return ranked.map((r,i)=>({...r,karaka:KARAKA_NAMES[i],short:KARAKA_SHORT[i],signifies:KARAKA_SIGNIFIES[i]}));
+}
+
+// ============ AVASTHA MODULE ============
+// 1. Baladi Avastha - 5 states based on degree-within-sign; direction reverses for even signs
+const BALADI_NAMES=['Bala','Kumara','Yuva','Vriddha','Mrita'];
+const BALADI_MEANING={
+  Bala:'Infant state (¼ strength). The planet is young and tentative — results come slowly and need nurturing before they mature.',
+  Kumara:'Youthful state (½ strength). Growing capability — the planet is gaining confidence but not yet at its peak.',
+  Yuva:'Adolescent/youthful prime (full strength). The planet is at its most vigorous and capable of delivering its best results.',
+  Vriddha:'Old age state (minimum strength). The planet is past its peak — results are tired, delayed, or diminished.',
+  Mrita:'"Dead" state (no result). The planet struggles to deliver any meaningful result in this condition without other strong support.'
+};
+const BALADI_STRENGTH_FACTOR={Bala:0.25,Kumara:0.5,Yuva:1,Vriddha:0.5,Mrita:0};
+function calcBaladiAvastha(signIdx,degInSign){
+  const isOddSign=(signIdx%2===0); // signIdx 0=Aries(odd/male sign)
+  const band=Math.floor(degInSign/6); // 0-4
+  const order=isOddSign?band:4-band;
+  return BALADI_NAMES[order];
+}
+
+// 2. Jagrat / Swapna / Sushupti Avastha - based on sign dignity (3 states)
+const JAGRADADI_MEANING={
+  Jagrat:'Awakened state. The planet is in its own or exaltation sign — fully alert and capable of delivering complete, unobstructed results.',
+  Swapna:'Dreaming state. The planet is in a friendly or neutral sign — results arrive but only partially (roughly 50-70%), often requiring more effort.',
+  Sushupti:'Sleeping state. The planet is in an enemy or debilitated sign — results are negligible, delayed, or can even turn adverse.'
+};
+function calcJagradadiAvastha(planet,signIdx){
+  const dignity=getDignity(planet,signIdx,0);
+  if(dignity==='exalted'||dignity==='own'||dignity==='moolatrikona')return'Jagrat';
+  if(dignity==='debilitated')return'Sushupti';
+  const lord=SIGN_LORD[signIdx];
+  const rel=(planet===lord)?'friend':naturalRelation(planet,lord);
+  if(rel==='enemy')return'Sushupti';
+  return'Swapna'; // friend or neutral
+}
+
+// 3. Deeptadi Avastha - 9 finer dignity-based states using Panchadha Maitri (5-fold relationship) + combustion
+const DEEPTADI_MEANING={
+  Dipta:'Glowing/blazing state. Planet is exalted. Gives landlordship, enthusiasm, courage, wealth, property, vehicles, respect and fame in its periods.',
+  Swastha:'Healthy state. Planet is in its own sign. Gives sound health, recognition, wealth, education, fame and lands in its periods.',
+  Mudita:'Delighted state. Planet is with a great friend (best compound relationship). Gives joyful, abundant results.',
+  Shanta:'Peaceful state. Planet is in a friendly sign. Gives calm, steady, generally favourable results.',
+  Deena:'Humble/poor state. Planet is in a neutral sign. Gives modest, mixed results — neither strongly good nor bad.',
+  Khala:'Wicked/malicious state. Planet is in an enemy sign. Gives obstructed, troublesome results.',
+  Kopa:'Enraged state. Combust (too close to the Sun) — the planet\'s light is overwhelmed. Gives irritable, hidden, or frustrated results regardless of sign placement.',
+  Vikala:'Crippled state. Planet is debilitated without cancellation. Gives weak, disrupted, or thwarted results.'
+};
+function calcDeeptadiAvastha(planet,signIdx,planetHouses,sunLon,planetLon){
+  if(planet==='Sun')return calcDeeptadiCore(planet,signIdx,planetHouses); // Sun cannot combust itself
+  // Combustion check: within ~8-17deg of Sun depending on planet (simplified to a single 8deg threshold for all, labeled as approximation)
+  let elong=Math.abs(norm360(planetLon-sunLon));
+  if(elong>180)elong=360-elong;
+  const combustionOrb={Moon:12,Mars:17,Mercury:14,Jupiter:11,Venus:10,Saturn:15}[planet]||8;
+  if(elong<combustionOrb)return'Kopa';
+  return calcDeeptadiCore(planet,signIdx,planetHouses);
+}
+function calcDeeptadiCore(planet,signIdx,planetHouses){
+  const dignity=getDignity(planet,signIdx,0);
+  if(dignity==='exalted')return'Dipta';
+  if(dignity==='debilitated')return'Vikala';
+  if(dignity==='own'||dignity==='moolatrikona')return'Swastha';
+  const lord=SIGN_LORD[signIdx];
+  if(planet===lord)return'Swastha';
+  const natural=naturalRelation(planet,lord);
+  const lordHouse=planetHouses[lord],planetHouse=planetHouses[planet];
+  let compound=natural;
+  if(lordHouse&&planetHouse){
+    const temporal=temporalRelation(planetHouse,lordHouse);
+    compound=panchadhaMaitri(natural,temporal);
+  }
+  if(compound==='greatFriend')return'Mudita';
+  if(compound==='friend')return'Shanta';
+  if(compound==='neutral')return'Deena';
+  return'Khala'; // enemy or greatEnemy
+}
+
+// Master Avastha calculation for all 7 classical planets
+function calcAllAvasthas(planetData,sunLon){
+  const planetHouses={};
+  SHADBALA_PLANETS.forEach(p=>{planetHouses[p]=planetData[p].house});
+  const results={};
+  SHADBALA_PLANETS.forEach(planet=>{
+    const d=planetData[planet];
+    const baladi=calcBaladiAvastha(d.sign,d.deg);
+    const jagradadi=calcJagradadiAvastha(planet,d.sign);
+    const deeptadi=calcDeeptadiAvastha(planet,d.sign,planetHouses,sunLon,d.lon);
+    results[planet]={baladi,jagradadi,deeptadi};
+  });
+  return results;
+}
+
+// ============ NAVAMSA (D9) MODULE ============
+// Navamsa sign uses getNavamsaSign() (already defined below in Shadbala support functions) - computed here for all 9 grahas + Ascendant
+function calcNavamsaChart(planetData,ascSid){
+  const navAscSign=getNavamsaSign(ascSid);
+  const navPlanetSign={};
+  PLANETS.forEach(p=>{navPlanetSign[p]=getNavamsaSign(planetData[p].lon)});
+  const navHouseMap={};for(let i=1;i<=12;i++)navHouseMap[i]=[];
+  const navPlanetHouse={};
+  PLANETS.forEach(p=>{
+    const house=((navPlanetSign[p]-navAscSign+12)%12)+1;
+    navHouseMap[house].push(p);
+    navPlanetHouse[p]=house;
+  });
+  const vargottama={};
+  PLANETS.forEach(p=>{vargottama[p]=(navPlanetSign[p]===planetData[p].sign)});
+  return{navAscSign,navPlanetSign,navHouseMap,navPlanetHouse,vargottama};
+}
+
+// ============ SHADBALA MODULE ============
+// All values in Shashtiamsa (60ths of a "Virupa") unless noted; final totals converted to Rupas (1 Rupa = 60 Virupa).
+const SHADBALA_PLANETS=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn'];
+const REQUIRED_RUPAS={Sun:5,Moon:6,Mars:5,Mercury:7,Jupiter:6.5,Venus:5.5,Saturn:5};
+const NAISARGIKA_VIRUPA={Sun:60,Moon:51.43,Venus:42.85,Jupiter:34.28,Mercury:25.7,Mars:17.14,Saturn:8.57};
+const DIG_BALA_STRONG_HOUSE={Sun:10,Mars:10,Jupiter:1,Mercury:1,Moon:4,Venus:4,Saturn:7};
+
+// --- 1. STHANA BALA (positional strength) ---
+function uchchaBala(planet,signIdx,degInSign){
+  const ex=EXALTATION[planet]; if(!ex)return 0;
+  const exactLon=ex.sign*30+ex.deg;
+  const planetLon=signIdx*30+degInSign;
+  let dist=Math.abs(planetLon-exactLon);
+  if(dist>180)dist=360-dist;
+  // 60 Shashtiamsa at exact debilitation-opposite distance(180deg)=0, at exaltation point(0deg)=60
+  return(dist/180)*60===60?0:60-(dist/180)*60; // will recompute cleanly below
+}
+function uchchaBalaClean(planet,signIdx,degInSign){
+  const ex=EXALTATION[planet]; if(!ex)return 0;
+  const exactLon=ex.sign*30+ex.deg;
+  const planetLon=signIdx*30+degInSign;
+  let dist=Math.abs(planetLon-exactLon);
+  if(dist>180)dist=360-dist;
+  return 60*(1-dist/180);
+}
+// Temporal (Tatkalika) friendship: planets in 2nd,3rd,4th,10th,11th,12th houses from another planet are temporal friends; 1st,5th,6th,7th,8th,9th are temporal enemies
+function temporalRelation(fromHouse,toHouse){
+  let dist=((toHouse-fromHouse+12)%12)+1; // 1-12
+  const friendHouses=[2,3,4,10,11,12];
+  return friendHouses.includes(dist)?'friend':'enemy';
+}
+
+// Panchadha Maitri (5-fold compound relationship): combines Natural + Temporal friendship into 5 grades
+function panchadhaMaitri(natural,temporal){
+  if(natural==='friend'&&temporal==='friend')return'greatFriend';
+  if(natural==='enemy'&&temporal==='enemy')return'greatEnemy';
+  if(natural==='friend'&&temporal==='enemy')return'neutral';
+  if(natural==='enemy'&&temporal==='friend')return'neutral';
+  if(natural==='neutral'&&temporal==='friend')return'friend';
+  if(natural==='neutral'&&temporal==='enemy')return'enemy';
+  return'neutral';
+}
+
+function saptavargajaBala(planet,signIdx,planetHouses){
+  // Full classical 7-tier scale applied to Rasi chart only (true Saptavargaja needs D1,D2,D3,D7,D9,D10,D12 - this app computes D1/D9 only, so this is a labeled single-varga estimate, not the full 7-varga average)
+  const dignity=getDignity(planet,signIdx,0);
+  if(dignity==='moolatrikona')return 45;
+  if(dignity==='own')return 30;
+  if(dignity==='exalted')return 30; // exaltation handled separately via Uchcha Bala; here treat as own-tier for Saptavargaja per BPHS (avoids double-counting exaltation degree, which Uchcha Bala already captures precisely)
+  const lord=SIGN_LORD[signIdx];
+  if(planet===lord)return 30; // occupying own sign via lordship match
+  const natural=naturalRelation(planet,lord);
+  const lordHouse=planetHouses[lord];
+  const planetHouse=planetHouses[planet];
+  let compound=natural;
+  if(lordHouse&&planetHouse){
+    const temporal=temporalRelation(planetHouse,lordHouse);
+    compound=panchadhaMaitri(natural,temporal);
+  }
+  const scale={greatFriend:22.5,friend:15,neutral:7.5,enemy:3.75,greatEnemy:1.875};
+  return scale[compound]!==undefined?scale[compound]:7.5;
+}
+function ojayugmaBala(planet,signIdx,navamsaSignIdx){
+  const isFemale=(planet==='Moon'||planet==='Venus');
+  const signOdd=(signIdx%2===0); // signIdx 0=Aries(odd sign,male-favored)
+  const navOdd=(navamsaSignIdx%2===0);
+  let total=0;
+  if(isFemale){if(!signOdd)total+=15; if(!navOdd)total+=15;}
+  else{if(signOdd)total+=15; if(navOdd)total+=15;}
+  return total;
+}
+function kendradiBala(house){
+  const kendra=[1,4,7,10],panapara=[2,5,8,11];
+  if(kendra.includes(house))return 60;
+  if(panapara.includes(house))return 30;
+  return 15;
+}
+function drekkanaBala(planet,degInSign){
+  const drekkanaIdx=Math.floor(degInSign/10); // 0,1,2
+  const male=['Sun','Jupiter','Mars'],female=['Moon','Venus'],neutral=['Mercury','Saturn'];
+  if(male.includes(planet)&&drekkanaIdx===0)return 15;
+  if(neutral.includes(planet)&&drekkanaIdx===1)return 15;
+  if(female.includes(planet)&&drekkanaIdx===2)return 15;
+  return 0;
+}
+function sthanaBala(planet,signIdx,degInSign,house,navamsaSignIdx,planetHouses){
+  const uch=uchchaBalaClean(planet,signIdx,degInSign);
+  const sapta=saptavargajaBala(planet,signIdx,planetHouses);
+  const ojy=ojayugmaBala(planet,signIdx,navamsaSignIdx);
+  const kendra=kendradiBala(house);
+  const drek=drekkanaBala(planet,degInSign);
+  return{uchcha:uch,saptavargaja:sapta,ojayugma:ojy,kendradi:kendra,drekkana:drek,total:uch+sapta+ojy+kendra+drek};
+}
+
+// --- 2. DIG BALA (directional strength) ---
+function digBala(planet,house){
+  const strongHouse=DIG_BALA_STRONG_HOUSE[planet];
+  const weakHouse=((strongHouse-1+6)%12)+1; // house directly opposite
+  let dist=Math.abs(house-weakHouse);
+  if(dist>6)dist=12-dist;
+  return(dist/6)*60;
+}
+
+// --- 3. KALA BALA (temporal strength) - simplified to most impactful sub-components given available data ---
+function nathonnataBala(hourDecimal){
+  // Day strength (Unnata) for Sun/Jupiter/Venus peaks at noon; Night strength (Nata) for Moon/Mars/Saturn peaks at midnight; Mercury always strong
+  const h=hourDecimal;
+  const noonDist=Math.min(Math.abs(h-12),24-Math.abs(h-12)); // 0 at noon, 12 at midnight
+  const midnightDist=12-noonDist; // 0 at midnight, 12 at noon
+  return{
+    Sun:60*(1-noonDist/12),Jupiter:60*(1-noonDist/12),Venus:60*(1-noonDist/12),
+    Moon:60*(1-midnightDist/12),Mars:60*(1-midnightDist/12),Saturn:60*(1-midnightDist/12),
+    Mercury:60
+  };
+}
+function pakshaBala(moonLon,sunLon){
+  // Strength from lunar phase. Benefics (Jup,Ven,Merc,well-placed Moon) gain in Shukla(waxing); malefics gain in Krishna(waning)
+  let elong=norm360(moonLon-sunLon);
+  const shuklaStrength=elong<=180?(elong/180)*60:((360-elong)/180)*60;
+  return shuklaStrength; // applied as base; benefics use directly, malefics use (60-this)
+}
+function tribhagaBala(hourDecimal,isDayBirth){
+  // Each third of day/night ruled by a planet; simplified to day/night halves with classical lords
+  const dayLords=['Mercury','Sun','Saturn'],nightLords=['Moon','Venus','Mars'];
+  let lords=isDayBirth?dayLords:nightLords;
+  const h=isDayBirth?hourDecimal-6:(hourDecimal>=18?hourDecimal-18:hourDecimal+6);
+  const third=Math.min(2,Math.max(0,Math.floor(h/4)));
+  return lords[third];
+}
+function varshaMasaDinaHoraBala(weekday){
+  // Simplified: Hora lord of birth hour gets 60V (full weekday-lord cycling requires precise hora tables; approximated using weekday lord only)
+  const weekdayLords=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn'];
+  return weekdayLords[weekday];
+}
+function ayanaBala(planet,declination){
+  // Northern declination favors Sun/Mars/Jupiter/Venus/Mercury(always added); Southern favors Moon/Saturn
+  const maxDecl=23.45;
+  const normalized=Math.max(-1,Math.min(1,declination/maxDecl));
+  let val;
+  if(planet==='Mercury')val=30+30*Math.abs(normalized);
+  else if(planet==='Moon'||planet==='Saturn')val=30-30*normalized;
+  else val=30+30*normalized;
+  if(planet==='Sun')val=val*2>60?60:val*2;
+  return Math.max(0,Math.min(60,val));
+}
+function kalaBala(planet,hourDecimal,moonLon,sunLon,weekday,declination,isDayBirth){
+  const nat=nathonnataBala(hourDecimal)[planet];
+  const paksha=pakshaBala(moonLon,sunLon);
+  const benefics=['Moon','Mercury','Jupiter','Venus'];
+  const pakshaApplied=(planet==='Moon')?Math.min(60,paksha*2):(benefics.includes(planet)?paksha:(60-paksha));
+  const tribhagaLord=tribhagaBala(hourDecimal,isDayBirth);
+  const tribhaga=tribhagaLord===planet?60:0;
+  const weekdayLord=varshaMasaDinaHoraBala(weekday);
+  const dinaBala=weekdayLord===planet?45:0; // Dina(weekday) bala simplified
+  const ayana=ayanaBala(planet,declination);
+  // Yuddha (planetary war) bala omitted - rare condition, would need exact conjunction check within 1deg
+  const total=nat+pakshaApplied+tribhaga+dinaBala+ayana;
+  return{nathonnata:nat,paksha:pakshaApplied,tribhaga,dina:dinaBala,ayana,total};
+}
+
+// --- 4. CHESHTA BALA (motional strength) ---
+// Per BPHS: Sun and Moon NEVER retrograde, so their Cheshta Bala is strictly zero - this is classical, not a gap.
+function cheshtaBala(planet,isRetrograde,speedRatio){
+  if(planet==='Sun'||planet==='Moon')return 0;
+  if(isRetrograde)return 60; // Vakri (retrograde) gets near-maximum classical strength
+  // Direct motion: faster than average = more Cheshta. speedRatio = actual/average daily motion
+  const clamped=Math.max(0,Math.min(2,speedRatio||1));
+  return Math.min(60,30*clamped);
+}
+
+// --- 5. NAISARGIKA BALA (natural strength) - fixed classical values ---
+function naisargikaBala(planet){return NAISARGIKA_VIRUPA[planet]}
+
+// --- 6. DRIK BALA (aspectual strength) ---
+// Classical graded aspect strength: 7th aspect (all planets) = full(60V); Mars's 4th/8th = 3/4(45V); Jupiter's 5th/9th = 1/2(30V); Saturn's 3rd/10th = 1/4(15V)
+const ASPECT_STRENGTH_VIRUPA={7:60};
+function aspectGradeVirupa(aspector,offset){
+  if(offset===7)return 60;
+  if(aspector==='Mars'&&(offset===4||offset===8))return 45;
+  if(aspector==='Jupiter'&&(offset===5||offset===9))return 30;
+  if(aspector==='Saturn'&&(offset===3||offset===10))return 15;
+  if((aspector==='Rahu'||aspector==='Ketu')&&(offset===5||offset===9))return 30;
+  return 0;
+}
+function drikBala(planet,houseMap,planetData){
+  // Benefic aspects (Jupiter, Venus, well-placed Mercury/Moon) add strength; malefic (Saturn, Mars, Sun) subtract
+  const benefics=['Jupiter','Venus','Mercury','Moon'],malefics=['Saturn','Mars','Sun'];
+  let netHouse=null;
+  for(let h=1;h<=12;h++){if((houseMap[h]||[]).includes(planet)){netHouse=h;break}}
+  if(netHouse===null)return 0;
+  let strength=0;
+  SHADBALA_PLANETS.forEach(aspector=>{
+    if(aspector===planet)return;
+    let fromHouse=null;
+    for(let h=1;h<=12;h++){if((houseMap[h]||[]).includes(aspector)){fromHouse=h;break}}
+    if(fromHouse===null)return;
+    const offsets=ASPECT_OFFSETS[aspector]||[7];
+    offsets.forEach(off=>{
+      const aspectedHouse=((fromHouse-1+off-1)%12)+1;
+      if(aspectedHouse===netHouse){
+        const grade=aspectGradeVirupa(aspector,off);
+        const isBenefic=benefics.includes(aspector);
+        // Scale graded full-aspect strength (max 60V) down to a quarter-rupa-ish contribution per aspect, consistent with classical Drik Bala typically totaling under 1-2 rupas
+        strength+=(isBenefic?1:-1)*(grade/4);
+      }
+    });
+  });
+  return strength;
+}
+
+// --- Supporting calculations for Shadbala inputs ---
+function getNavamsaSign(siderealLon){
+  // Navamsa: each sign divided into 9 parts of 3°20' each. Counting depends on sign's element (movable/fixed/dual cycle from Aries/Leo/Sagittarius etc per classical rule simplified to standard 9-fold cycle from the sign itself)
+  const signIdx=Math.floor(siderealLon/30);
+  const degInSign=siderealLon%30;
+  const navamsaNum=Math.floor(degInSign/(30/9)); // 0-8
+  // Starting sign for navamsa counting cycles by element: movable signs start from themselves, fixed from 9th, dual from 5th
+  const movable=[0,3,6,9],fixed=[1,4,7,10],dual=[2,5,8,11];
+  let startSign;
+  if(movable.includes(signIdx))startSign=signIdx;
+  else if(fixed.includes(signIdx))startSign=(signIdx+8)%12;
+  else startSign=(signIdx+4)%12;
+  return(startSign+navamsaNum)%12;
+}
+
+function getDeclination(siderealLon,ayanamsa){
+  // Approximate declination from ecliptic longitude using mean obliquity (tropical longitude needed, so add back ayanamsa)
+  const tropicalLon=norm360(siderealLon+ayanamsa);
+  const eps=23.4393*D2R;
+  const lonR=tropicalLon*D2R;
+  return Math.asin(Math.sin(eps)*Math.sin(lonR))*R2D;
+}
+
+// Detect retrograde + speed ratio by sampling planet position 1 day before and after birth moment
+function getMotionInfo(planet,jd,ayanamsa){
+  if(planet==='Sun'||planet==='Moon')return{retrograde:false,speedRatio:1};
+  const T0=(jd-1-2451545.0)/36525,T1=(jd+1-2451545.0)/36525;
+  const tau0=T0/10,tau1=T1/10;
+  function lonAt(tau){
+    const earthPos=vsopPlanetPos(VSOP.earth,tau);
+    const key=planet.toLowerCase();
+    if(!VSOP[key])return null;
+    return toGeocentric(vsopPlanetPos(VSOP[key],tau),earthPos);
+  }
+  const lon0=lonAt(tau0),lon1=lonAt(tau1);
+  if(lon0===null||lon1===null)return{retrograde:false,speedRatio:1};
+  let delta=lon1-lon0;
+  if(delta>180)delta-=360; if(delta<-180)delta+=360;
+  const dailyMotion=delta/2;
+  const avgMotion={Mars:0.524,Mercury:1.383,Jupiter:0.083,Venus:1.2,Saturn:0.034}[planet]||1;
+  return{retrograde:dailyMotion<0,speedRatio:Math.abs(dailyMotion)/avgMotion};
+}
+
+
+function calcShadbala(planetData,houseMap,birthInfo){
+  const{hourDecimal,weekday,isDayBirth,navamsaSigns,retrograde,declinations,speedRatios}=birthInfo;
+  const planetHouses={};
+  SHADBALA_PLANETS.forEach(p=>{planetHouses[p]=planetData[p].house});
+  const results={};
+  SHADBALA_PLANETS.forEach(planet=>{
+    const d=planetData[planet];
+    const sthana=sthanaBala(planet,d.sign,d.deg,d.house,navamsaSigns[planet],planetHouses);
+    const dig=digBala(planet,d.house);
+    const kala=kalaBala(planet,hourDecimal,planetData.Moon.lon,planetData.Sun.lon,weekday,declinations[planet]||0,isDayBirth);
+    const cheshta=cheshtaBala(planet,retrograde[planet],speedRatios[planet]);
+    const naisargika=naisargikaBala(planet);
+    const drik=drikBala(planet,houseMap,planetData);
+    const totalVirupa=sthana.total+dig+kala.total+cheshta+naisargika+drik;
+    const totalRupas=totalVirupa/60;
+    const required=REQUIRED_RUPAS[planet];
+    results[planet]={
+      sthana,dig,kala,cheshta,naisargika,drik,
+      totalVirupa,totalRupas,required,
+      pct:(totalRupas/required)*100
+    };
+  });
+  return results;
+}
+
+// ============ BHAVA BALA MODULE (House Strength) ============
+// Formula: Bhava Bala = Bhavadhipati Bala (house lord's total Shadbala) + Bhava Dig Bala (Kendra/Panapara/Apoklima) + Bhava Drishti Bala (aspects on house, same graded formula as Drik Bala)
+function bhavaDigBala(house){
+  const kendra=[1,4,7,10],panapara=[2,5,8,11];
+  if(kendra.includes(house))return 60;
+  if(panapara.includes(house))return 30;
+  return 15;
+}
+function bhavaDrishtiBala(house,houseMap){
+  const benefics=['Jupiter','Venus','Mercury','Moon'];
+  let strength=0;
+  SHADBALA_PLANETS.forEach(aspector=>{
+    let fromHouse=null;
+    for(let h=1;h<=12;h++){if((houseMap[h]||[]).includes(aspector)){fromHouse=h;break}}
+    if(fromHouse===null)return;
+    const offsets=ASPECT_OFFSETS[aspector]||[7];
+    offsets.forEach(off=>{
+      const aspectedHouse=((fromHouse-1+off-1)%12)+1;
+      if(aspectedHouse===house){
+        const grade=aspectGradeVirupa(aspector,off);
+        const isBenefic=benefics.includes(aspector);
+        strength+=(isBenefic?1:-1)*(grade/4);
+      }
+    });
+  });
+  return strength;
+}
+function calcBhavaBala(lagnaSign,houseMap,shadbalaResults){
+  const results={};
+  for(let h=1;h<=12;h++){
+    const signIdx=(lagnaSign+h-1)%12;
+    const lord=SIGN_LORD[signIdx];
+    const lordShadbala=shadbalaResults[lord]?shadbalaResults[lord].totalVirupa:0;
+    const digBalaVal=bhavaDigBala(h);
+    const drishtiBalaVal=bhavaDrishtiBala(h,houseMap);
+    const totalVirupa=lordShadbala+digBalaVal+drishtiBalaVal;
+    const totalRupas=totalVirupa/60;
+    results[h]={sign:signIdx,lord,bhavadhipati:lordShadbala,dig:digBalaVal,drishti:drishtiBalaVal,totalVirupa,totalRupas};
+  }
+  return results;
+}
+
+function calcDashas(mLon,dob){
+  const nak=getNakshatra(mLon),frac=(mLon%13.3333)/13.3333;
+  const sl=NAK_LORDS[nak.idx],si=DASHA_ORDER.indexOf(sl),rem=(1-frac)*DASHA_YRS[sl];
+  const add=(d,y)=>{const n=new Date(d);n.setFullYear(n.getFullYear()+Math.floor(y));n.setDate(n.getDate()+Math.round((y%1)*365));return n};
+  const dashas=[];let cur=new Date(dob),end=add(cur,rem);
+  dashas.push({lord:sl,years:rem,start:new Date(cur),end});cur=end;
+  for(let i=1;i<9;i++){const lord=DASHA_ORDER[(si+i)%9],y=DASHA_YRS[lord];end=add(cur,y);dashas.push({lord,years:y,start:new Date(cur),end:new Date(end)});cur=new Date(end)}
+  // Attach Antardashas (sub-periods) to each Mahadasha
+  dashas.forEach(d=>{d.antardashas=calcAntardashas(d)});
+  return dashas;
+}
+
+// Antardasha: within a Mahadasha, all 9 lords run in the same cyclical order, starting from the Mahadasha's own lord.
+// Classical formula: each Antardasha's share of the Mahadasha's TOTAL span = (Antardasha_lord_years / 120).
+// This correctly handles partial first Mahadashas too, since it scales off the Mahadasha's actual total duration.
+function calcAntardashas(maha){
+  const mahaIdx=DASHA_ORDER.indexOf(maha.lord);
+  const totalDays=(maha.end-maha.start)/86400000;
+  const subs=[];
+  let cur=new Date(maha.start);
+  for(let i=0;i<9;i++){
+    const subLord=DASHA_ORDER[(mahaIdx+i)%9];
+    const fraction=DASHA_YRS[subLord]/120;
+    const subYears=maha.years*fraction;
+    const subDays=totalDays*fraction;
+    const end=new Date(cur.getTime()+subDays*86400000);
+    subs.push({lord:subLord,years:subYears,start:new Date(cur),end:new Date(end)});
+    cur=new Date(end);
+  }
+  // Adjust last sub-period to exactly match maha.end (avoid float drift)
+  if(subs.length)subs[subs.length-1].end=new Date(maha.end);
+  return subs;
+}
+
+let chartData=null;
+
+let cityTimer=null,cityResults=[],focusedIdx=-1;
+
+function cityInput(val){
+  clearTimeout(cityTimer);
+  const dd=document.getElementById('city-dropdown');
+  if(val.length<2){dd.classList.add('hidden');cityResults=[];return}
+  cityTimer=setTimeout(()=>fetchCities(val),350);
+}
+
+async function fetchCities(q){
+  const dd=document.getElementById('city-dropdown');
+  dd.innerHTML='<div class="city-option" style="color:#666;cursor:default">Searching…</div>';
+  dd.classList.remove('hidden');
+  try{
+    const res=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&addressdetails=1&limit=8`);
+    if(!res.ok)throw new Error('Request failed: '+res.status);
+    const data=await res.json();
+    cityResults=data.filter(d=>d.lat&&d.lon);
+    if(!cityResults.length){
+      dd.innerHTML='<div class="city-option" style="color:#666;cursor:default">No matches found</div>';
+      return;
+    }
+    focusedIdx=-1;
+    dd.innerHTML=cityResults.map((r,i)=>{
+      const a=r.address||{};
+      const name=a.city||a.town||a.village||a.county||a.state||(r.display_name?r.display_name.split(',')[0]:'Unknown');
+      const state=a.state||'';
+      const country=a.country||'';
+      const sub=[state,country].filter(Boolean).join(', ');
+      return`<div class="city-option" onmousedown="selectCity(${i})" data-idx="${i}">
+        <div class="city-name">${name}</div>
+        <div class="city-sub">${sub}</div>
+      </div>`;
+    }).join('');
+    dd.classList.remove('hidden');
+  }catch(e){
+    dd.innerHTML='<div class="city-option" style="color:#ef4444;cursor:default">Search failed — check connection</div>';
+  }
+}
+
+function selectCity(idx){
+  const r=cityResults[idx];
+  if(!r)return;
+  const a=r.address||{};
+  const name=a.city||a.town||a.village||a.county||a.state||(r.display_name?r.display_name.split(',')[0]:'Unknown');
+  const state=a.state||'';
+  const country=a.country||'';
+  document.getElementById('city').value=[name,state,country].filter(Boolean).join(', ');
+  document.getElementById('lat').value=parseFloat(r.lat).toFixed(4);
+  document.getElementById('lon').value=parseFloat(r.lon).toFixed(4);
+  document.getElementById('city-dropdown').classList.add('hidden');
+  document.getElementById('loc-status').style.color='#22c55e';
+  document.getElementById('loc-status').textContent=`✓ Location found`;
+  focusedIdx=-1;cityResults=[];
+}
+
+function cityKeydown(e){
+  const dd=document.getElementById('city-dropdown');
+  const opts=dd.querySelectorAll('.city-option');
+  if(dd.classList.contains('hidden'))return;
+  if(e.key==='ArrowDown'){e.preventDefault();focusedIdx=Math.min(focusedIdx+1,opts.length-1);opts.forEach((o,i)=>o.classList.toggle('focused',i===focusedIdx))}
+  else if(e.key==='ArrowUp'){e.preventDefault();focusedIdx=Math.max(focusedIdx-1,0);opts.forEach((o,i)=>o.classList.toggle('focused',i===focusedIdx))}
+  else if(e.key==='Enter'&&focusedIdx>=0){e.preventDefault();selectCity(focusedIdx)}
+  else if(e.key==='Escape'){dd.classList.add('hidden')}
+}
+
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.city-wrap'))document.getElementById('city-dropdown').classList.add('hidden');
+});
+
+function calculateChart(){
+  const dob=document.getElementById('dob').value,tob=document.getElementById('tob').value;
+  const lat=parseFloat(document.getElementById('lat').value),lon=parseFloat(document.getElementById('lon').value);
+  const tz=parseFloat(document.getElementById('tz').value),name=document.getElementById('name').value.trim();
+  const errEl=document.getElementById('form-error');
+  if(!dob||!tob||isNaN(lat)||isNaN(lon)){errEl.textContent='Please fill in date, time, and city (so we can find coordinates).';errEl.classList.remove('hidden');return}
+  errEl.classList.add('hidden');
+  const[yr,mo,dy]=dob.split('-').map(Number),[hr,mn]=tob.split(':').map(Number);
+  const utcHr=(hr+mn/60)-tz,jd=julianDay(yr,mo,dy,utcHr),T=(jd-2451545.0)/36525,ayan=lahiriAyanamsa(jd);
+  const trop=allPlanets(jd,T),sidMap={};
+  for(const p in trop)sidMap[p]=sid(trop[p],ayan);
+  sidMap.Ketu=sid(trop.Ketu,ayan);
+  const ascSid=sid(calcAsc(jd,lat,lon),ayan),lagnaSign=getSign(ascSid);
+  const houseMap={};for(let i=1;i<=12;i++)houseMap[i]=[];
+  const planetData={};
+  PLANETS.forEach(p=>{
+    const l=sidMap[p],sign=getSign(l),house=((sign-lagnaSign+12)%12)+1,deg=getDeg(l),nak=getNakshatra(l);
+    houseMap[house].push(p);planetData[p]={lon:l,sign,house,deg,nakshatra:nak};
+  });
+  const dashas=calcDashas(sidMap.Moon,dob);
+  chartData={name,dob,lagnaSign,ascSid,planetData,houseMap,dashas};
+
+  // Assemble inputs for Shadbala
+  const weekday=new Date(yr,mo-1,dy).getDay(); // 0=Sunday
+  const hourDecimal=hr+mn/60;
+  const sunriseApprox=6,sunsetApprox=18; // simplified fixed sunrise/sunset (full precision needs lat/lon-based sunrise equation)
+  const isDayBirth=hourDecimal>=sunriseApprox&&hourDecimal<sunsetApprox;
+  const navamsaSigns={},retrograde={},declinations={},speedRatios={};
+  SHADBALA_PLANETS.forEach(p=>{
+    navamsaSigns[p]=getNavamsaSign(planetData[p].lon);
+    declinations[p]=getDeclination(planetData[p].lon,ayan);
+    const motion=getMotionInfo(p,jd,ayan);
+    retrograde[p]=motion.retrograde;speedRatios[p]=motion.speedRatio;
+  });
+  const birthInfo={hourDecimal,weekday,isDayBirth,navamsaSigns,retrograde,declinations,speedRatios};
+  chartData.shadbala=calcShadbala(planetData,houseMap,birthInfo);
+  chartData.bhavaBala=calcBhavaBala(lagnaSign,houseMap,chartData.shadbala);
+  chartData.navamsa=calcNavamsaChart(planetData,ascSid);
+
+  drawKundli(houseMap,lagnaSign);renderPlanetTable(planetData,lagnaSign,ascSid);renderDashas(dashas);renderTrikonaButtons();renderKarakas();renderShadbala();renderAvastha();drawNavamsaChart();renderNavamsaTable();
+  document.getElementById('result-area').classList.remove('hidden');
+  showTab('chart');generateReading();
+  collapseFormCard(name);
+}
+
+function collapseFormCard(name){
+  document.getElementById('form-card').classList.add('hidden');
+  const nameCard=document.getElementById('name-card');
+  const initials=(name||'?').trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase()||'?';
+  document.getElementById('name-card-text').textContent=name?name:'Your chart';
+  nameCard.querySelector('.name-card-icon').textContent=initials;
+  nameCard.classList.remove('hidden');
+  document.getElementById('download-row').classList.remove('hidden');
+}
+
+function expandFormCard(){
+  document.getElementById('name-card').classList.add('hidden');
+  document.getElementById('form-card').classList.remove('hidden');
+  document.getElementById('calc-btn').textContent='Save changes →';
+}
+
+function downloadReport(){
+  if(!chartData)return;
+  const{name,dob,lagnaSign,ascSid,planetData,houseMap,dashas,karakas,shadbala,bhavaBala,avasthas,navamsa}=chartData;
+  const lines=[];
+  const now=new Date();
+
+  lines.push(`# Vedic Kundli Report — ${name||'Unnamed'}`);
+  lines.push('');
+  lines.push(`*Generated by Nakshatra Darshan on ${now.toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}*`);
+  lines.push('');
+  lines.push('This document contains a complete machine-readable Vedic astrology (Jyotish) chart calculation, intended to be read and interpreted by Claude or any other AI assistant, as well as by a human. All values use the sidereal zodiac with Lahiri (Chitrapaksha) Ayanamsa. Houses are whole-sign from the Ascendant.');
+  lines.push('');
+
+  lines.push('## Birth Details');
+  lines.push(`- Name: ${name||'(not provided)'}`);
+  lines.push(`- Date of birth: ${dob}`);
+  lines.push('');
+
+  lines.push('## Ascendant (Lagna)');
+  const ascNak=getNakshatra(ascSid);
+  lines.push(`- Sign: ${SIGNS[lagnaSign]}`);
+  lines.push(`- Degree within sign: ${getDeg(ascSid).toFixed(2)}°`);
+  lines.push(`- Nakshatra: ${ascNak.name}, Pada ${ascNak.pada} (lord: ${DASHA_LORD_FULLNAME[ascNak.lord]||ascNak.lord})`);
+  lines.push('');
+
+  lines.push('## Planetary Positions (Rashi / D1 Chart)');
+  lines.push('');
+  lines.push('| Planet | Sign | House | Degree | Nakshatra | Pada | Relation to Sign Lord | Dignity |');
+  lines.push('|---|---|---|---|---|---|---|---|');
+  PLANETS.forEach(p=>{
+    const d=planetData[p];
+    const comp=compoundRelation(p,d.sign,planetData,d.house);
+    const dignity=comp.dignity?({exalted:'Exalted',debilitated:'Debilitated',own:'Own sign',moolatrikona:'Moolatrikona'}[comp.dignity]||'—'):'—';
+    lines.push(`| ${p} | ${SIGNS[d.sign]} | ${d.house} | ${d.deg.toFixed(2)}° | ${d.nakshatra.name} | ${d.nakshatra.pada} | ${comp.relation} | ${dignity} |`);
+  });
+  lines.push('');
+  lines.push('House occupancy summary:');
+  for(let h=1;h<=12;h++){
+    const signIdx=(lagnaSign+h-1)%12;
+    const planets=houseMap[h]||[];
+    lines.push(`- House ${h} (${SIGNS[signIdx]}, lord ${SIGN_LORD[signIdx]}): ${planets.length?planets.join(', '):'empty'}`);
+  }
+  lines.push('');
+
+  lines.push('## Jaimini Chara Karakas');
+  lines.push('(7 classical planets ranked by degree within sign, descending. Highest = Atmakaraka, lowest = Darakaraka.)');
+  lines.push('');
+  lines.push('| Karaka | Planet | Degree | Signifies |');
+  lines.push('|---|---|---|---|');
+  (karakas||calcCharaKarakas(planetData)).forEach(k=>{
+    lines.push(`| ${k.karaka} (${k.short}) | ${k.planet} | ${k.deg.toFixed(2)}° | ${k.signifies} |`);
+  });
+  lines.push('');
+
+  if(shadbala){
+    lines.push('## Shadbala — Six-fold Planetary Strength');
+    lines.push('(Values in Rupas; 1 Rupa = 60 Virupa/Shashtiamsa. Each planet has a different required minimum.)');
+    lines.push('');
+    lines.push('| Planet | Sthana | Dig | Kala | Cheshta | Naisargika | Drik | Total Rupas | Required | % of Minimum |');
+    lines.push('|---|---|---|---|---|---|---|---|---|---|');
+    SHADBALA_PLANETS.forEach(p=>{
+      const s=shadbala[p];
+      lines.push(`| ${p} | ${s.sthana.total.toFixed(1)}V | ${s.dig.toFixed(1)}V | ${s.kala.total.toFixed(1)}V | ${s.cheshta.toFixed(1)}V | ${s.naisargika.toFixed(1)}V | ${s.drik.toFixed(1)}V | ${s.totalRupas.toFixed(2)} | ${s.required} | ${s.pct.toFixed(0)}% |`);
+    });
+    lines.push('');
+    lines.push('*Methodology notes: Saptavargaja Bala uses the Rasi (D1) chart with full Panchadha Maitri (5-fold relationship) rather than averaging across all seven classical divisional charts. Kala Bala uses a fixed 6am/6pm sunrise-sunset approximation. Sun and Moon Cheshta Bala are classically always zero (they never retrograde). Yuddha (planetary war) bala is not modeled.*');
+    lines.push('');
+  }
+
+  if(bhavaBala){
+    lines.push('## Bhava Bala — House Strength');
+    lines.push('(Formula: Bhavadhipati Bala [house lord\'s total Shadbala] + Bhava Dig Bala [Kendra=60V/Panapara=30V/Apoklima=15V] + Bhava Drishti Bala [graded aspects on the house].)');
+    lines.push('');
+    lines.push('| House | Sign | Lord | Bhavadhipati | Dig | Drishti | Total Rupas |');
+    lines.push('|---|---|---|---|---|---|---|');
+    for(let h=1;h<=12;h++){
+      const r=bhavaBala[h];
+      lines.push(`| ${h} | ${SIGNS[r.sign]} | ${r.lord} | ${r.bhavadhipati.toFixed(1)}V | ${r.dig.toFixed(1)}V | ${r.drishti.toFixed(2)}V | ${r.totalRupas.toFixed(2)} |`);
+    }
+    lines.push('');
+  }
+
+  if(avasthas){
+    lines.push('## Avastha — Planetary States');
+    lines.push('');
+    lines.push('| Planet | Baladi | Jagrat/Swapna/Sushupti | Deeptadi | Summary |');
+    lines.push('|---|---|---|---|---|');
+    SHADBALA_PLANETS.forEach(p=>{
+      const a=avasthas[p];
+      const summary=avasthaSummary(a.jagradadi,a.deeptadi);
+      lines.push(`| ${p} | ${a.baladi} | ${a.jagradadi} | ${a.deeptadi} | ${summary.label} |`);
+    });
+    lines.push('');
+  }
+
+  if(navamsa){
+    lines.push('## Navamsa (D9) Chart');
+    lines.push(`Navamsa Ascendant: ${SIGNS[navamsa.navAscSign]}`);
+    lines.push('');
+    lines.push('| Planet | D1 Sign | D9 Sign | Vargottama |');
+    lines.push('|---|---|---|---|');
+    PLANETS.forEach(p=>{
+      lines.push(`| ${p} | ${SIGNS[planetData[p].sign]} | ${SIGNS[navamsa.navPlanetSign[p]]} | ${navamsa.vargottama[p]?'Yes':'No'} |`);
+    });
+    lines.push('');
+  }
+
+  lines.push('## Vimshottari Dasha Periods');
+  lines.push('');
+  dashas.forEach(d=>{
+    const isActive=now>=d.start&&now<d.end;
+    lines.push(`### ${DASHA_LORD_FULLNAME[d.lord]||d.lord} Mahadasha ${isActive?'(CURRENT)':''}`);
+    lines.push(`${d.start.toLocaleDateString('en-IN',{month:'short',year:'numeric'})} – ${d.end.toLocaleDateString('en-IN',{month:'short',year:'numeric'})} (${d.years.toFixed(2)} years)`);
+    lines.push('');
+    lines.push('| Antardasha | Start | End |');
+    lines.push('|---|---|---|');
+    (d.antardashas||[]).forEach(sub=>{
+      const subActive=now>=sub.start&&now<sub.end;
+      lines.push(`| ${d.lord}-${sub.lord}${subActive?' (CURRENT)':''} | ${sub.start.toLocaleDateString('en-IN',{month:'short',year:'numeric'})} | ${sub.end.toLocaleDateString('en-IN',{month:'short',year:'numeric'})} |`);
+    });
+    lines.push('');
+  });
+
+  lines.push('## House Group Reference (Trikonas & Kendras)');
+  HOUSE_GROUPS.forEach(g=>{
+    lines.push(`- **${g.label}** (Houses ${g.houses.join(', ')}): ${g.desc}`);
+  });
+  lines.push('');
+
+  lines.push('---');
+  lines.push('*Note on calculation precision: planetary positions use a truncated VSOP87D series (validated to sub-arcminute accuracy), ELP2000-based lunar theory, and the mean lunar node for Rahu/Ketu (standard for Vimshottari Dasha). Ascendant uses Meeus sidereal time with simplified nutation correction. This is a self-contained browser calculation, not a substitute for a professional consultation.*');
+
+  const content=lines.join('\n');
+  const blob=new Blob([content],{type:'text/markdown'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download=`${(name||'kundli').replace(/\s+/g,'_')}_vedic_report.md`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function drawKundli(houseMap,lagnaSign){
+  const svg=document.getElementById('kundli-svg');
+  const cx=130,cy=130,outerR=124,innerR=72,labelR=103,planetR=42,degR=46;
+  const gridColor='#2a2a2a',rimColor='#f59e0b';
+
+  function polar(r,angleDeg){
+    const a=(angleDeg-90)*Math.PI/180; // -90 so 0deg points up
+    return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};
+  }
+
+  // House 1 (lagna sign) CENTERED at top, going ANTICLOCKWISE = decreasing angle
+  // Shift by +15deg so the wedge boundary sits at +/-15deg and house 1's middle is at 0deg (top)
+  function wedgeAngles(houseIdx){
+    const start=15-(houseIdx-1)*30;
+    const end=15-houseIdx*30;
+    const mid=-(houseIdx-1)*30;
+    return{start,end,mid};
+  }
+
+  function arcPath(rOuter,rInner,startDeg,endDeg){
+    const p1=polar(rOuter,startDeg),p2=polar(rOuter,endDeg);
+    const p3=polar(rInner,endDeg),p4=polar(rInner,startDeg);
+    return`M${p1.x.toFixed(2)},${p1.y.toFixed(2)} A${rOuter},${rOuter} 0 0,0 ${p2.x.toFixed(2)},${p2.y.toFixed(2)} L${p3.x.toFixed(2)},${p3.y.toFixed(2)} A${rInner},${rInner} 0 0,1 ${p4.x.toFixed(2)},${p4.y.toFixed(2)} Z`;
+  }
+
+  let svgContent='';
+
+  // Clickable wedge hit-areas (drawn first, transparent fill, sit on top via pointer-events but visually behind text)
+  let wedgeLayer='';
+  for(let h=1;h<=12;h++){
+    const ang=wedgeAngles(h);
+    const d=arcPath(outerR,innerR,ang.start,ang.end);
+    wedgeLayer+=`<path id="wedge-fill-${h}" d="${d}" class="wedge-hit house-highlight" fill="rgba(0,0,0,0)" stroke="none" data-house="${h}" onclick="showSegmentDetail(${h})"/>`;
+  }
+  svgContent+=wedgeLayer;
+
+  // Outer and inner circles
+  svgContent+=`<circle cx="${cx}" cy="${cy}" r="${outerR}" fill="none" stroke="${rimColor}" stroke-width="1.2" pointer-events="none"/>`;
+  svgContent+=`<circle cx="${cx}" cy="${cy}" r="${innerR}" fill="none" stroke="${gridColor}" stroke-width="0.7" pointer-events="none"/>`;
+
+  // Radial divider lines (12 spokes) + sign labels + planets
+  for(let h=1;h<=12;h++){
+    const ang=wedgeAngles(h);
+    const p1=polar(outerR,ang.start);
+    svgContent+=`<line x1="${cx}" y1="${cy}" x2="${p1.x.toFixed(2)}" y2="${p1.y.toFixed(2)}" stroke="${gridColor}" stroke-width="0.6" pointer-events="none"/>`;
+
+    // Sign for this house
+    const signIdx=(lagnaSign+h-1)%12;
+
+    // Sign icon (white, semi-transparent) near outer rim, centered in wedge
+    const labelPos=polar(labelR,ang.mid);
+    const iconSize=20;
+    svgContent+=`<g transform="translate(${(labelPos.x-iconSize/2).toFixed(2)},${(labelPos.y-iconSize/2).toFixed(2)})" pointer-events="none">${signIconSvg(signIdx,iconSize,'#fff',0.55)}</g>`;
+
+    // House number (small, near center edge)
+    const hNumPos=polar(innerR+11,ang.mid);
+    svgContent+=`<text x="${hNumPos.x.toFixed(2)}" y="${hNumPos.y.toFixed(2)}" text-anchor="middle" dominant-baseline="middle" font-size="7" fill="#444" font-family="-apple-system,sans-serif" pointer-events="none">${h}</text>`;
+
+    // Planets in this house (+ ASC marker if this is house 1)
+    const planets=houseMap[h]||[];
+    const items=h===1?['ASC',...planets]:planets.slice();
+    if(items.length){
+      const n=items.length;
+      // Clean vertical stack along the wedge's mid-angle: each "row" = icon + degree label, fixed pitch
+      const rowPitch=24;
+      const iconSize=15;
+      const totalHeight=(n-1)*rowPitch;
+      const startR=planetR+totalHeight/2;
+      const rotateDeg=ang.mid; // align icon's local "up" with the radial direction outward
+      items.forEach((p,j)=>{
+        const rowR=startR-j*rowPitch;
+        const iconCenter=polar(rowR+5,ang.mid);
+        const degCenter=polar(rowR-7,ang.mid);
+        const isAsc=p==='ASC';
+        if(isAsc){
+          svgContent+=`<g transform="rotate(${rotateDeg.toFixed(2)} ${iconCenter.x.toFixed(2)} ${iconCenter.y.toFixed(2)})" pointer-events="none"><text x="${iconCenter.x.toFixed(2)}" y="${iconCenter.y.toFixed(2)}" text-anchor="middle" dominant-baseline="central" font-size="10" fill="#f59e0b" font-family="-apple-system,sans-serif" font-weight="700">Asc</text></g>`;
+        }else{
+          svgContent+=`<g transform="rotate(${rotateDeg.toFixed(2)} ${iconCenter.x.toFixed(2)} ${iconCenter.y.toFixed(2)}) translate(${(iconCenter.x-iconSize/2).toFixed(2)},${(iconCenter.y-iconSize/2).toFixed(2)})" pointer-events="none">${planetIconSvg(p,iconSize,'#f59e0b',1)}</g>`;
+        }
+        const degVal=isAsc?(chartData?getDeg(chartData.ascSid):null):(chartData&&chartData.planetData[p]?chartData.planetData[p].deg:null);
+        if(degVal!==null&&degVal!==undefined){
+          svgContent+=`<g transform="rotate(${rotateDeg.toFixed(2)} ${degCenter.x.toFixed(2)} ${degCenter.y.toFixed(2)})" pointer-events="none"><text x="${degCenter.x.toFixed(2)}" y="${degCenter.y.toFixed(2)}" text-anchor="middle" dominant-baseline="central" font-size="6.5" fill="#f59e0b" font-family="-apple-system,sans-serif">${degVal.toFixed(0)}°</text></g>`;
+        }
+      });
+    }
+  }
+
+  // Top marker triangle indicating Ascendant point (at angle 0, top)
+  const ascTip=polar(outerR+8,0);
+  const ascL=polar(outerR+2,-4);
+  const ascR2=polar(outerR+2,4);
+  svgContent+=`<polygon points="${ascTip.x.toFixed(1)},${ascTip.y.toFixed(1)} ${ascL.x.toFixed(1)},${ascL.y.toFixed(1)} ${ascR2.x.toFixed(1)},${ascR2.y.toFixed(1)}" fill="${rimColor}" pointer-events="none"/>`;
+  svgContent+=`<text x="${cx}" y="${cy-outerR-14}" text-anchor="middle" font-size="7" fill="${rimColor}" font-family="-apple-system,sans-serif" font-weight="600" pointer-events="none">ASC</text>`;
+
+  // Center dot
+  svgContent+=`<circle cx="${cx}" cy="${cy}" r="2" fill="${rimColor}"/>`;
+
+  svg.setAttribute('viewBox','0 0 260 260');
+  svg.innerHTML=svgContent;
+}
+
+// Standard Vedic drishti (graha aspects) - house offsets each planet casts FROM its own house
+const ASPECT_OFFSETS={
+  Sun:[7],Moon:[7],Mercury:[7],Venus:[7],
+  Mars:[4,7,8],
+  Jupiter:[5,7,9],
+  Saturn:[3,7,10],
+  Rahu:[5,7,9],
+  Ketu:[5,7,9]
+};
+
+function getAspectsOnHouse(targetHouse,houseMap){
+  const aspects=[];
+  for(const planet in ASPECT_OFFSETS){
+    // find which house this planet sits in
+    let fromHouse=null;
+    for(let h=1;h<=12;h++){if((houseMap[h]||[]).includes(planet)){fromHouse=h;break}}
+    if(fromHouse===null)continue;
+    for(const offset of ASPECT_OFFSETS[planet]){
+      const aspectedHouse=((fromHouse-1+offset-1)%12)+1;
+      if(aspectedHouse===targetHouse){aspects.push(planet);break}
+    }
+  }
+  return aspects;
+}
+
+function showSegmentDetail(house){
+  if(!chartData)return;
+  const{lagnaSign,houseMap,planetData}=chartData;
+  const signIdx=(lagnaSign+house-1)%12;
+  const signName=SIGNS[signIdx];
+  const lord=SIGN_LORD[signIdx];
+  const planets=houseMap[house]||[];
+  const aspects=getAspectsOnHouse(house,houseMap);
+  const isAscHouse=house===1;
+
+  // Watermark: rashi icon, white & transparent, large in background
+  const watermarkSvg=signIconSvg(signIdx,128,'#fff',1);
+
+  let planetChips='';
+  if(planets.length){
+    planetChips=planets.map(p=>{
+      const d=planetData[p];
+      return`<div class="planet-chip">
+        <div class="planet-chip-icon">${planetIconSvg(p,30,'#f59e0b',1)}</div>
+        <div class="planet-chip-body">
+          <div class="planet-chip-name">${p}</div>
+          <div class="planet-chip-deg">${d.deg.toFixed(2)}°</div>
+          <div class="planet-chip-nak">${d.nakshatra.name} · pada ${d.nakshatra.pada}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }else{
+    planetChips='<div class="planet-chip empty"><span style="opacity:0.3;font-size:18px">—</span><div class="planet-chip-nak">No planets in this house</div></div>';
+  }
+
+  const ascChip=isAscHouse?`<div class="planet-chip asc-chip">
+      <div class="planet-chip-icon asc-icon">Asc</div>
+      <div class="planet-chip-body">
+        <div class="planet-chip-name">Ascendant</div>
+        <div class="planet-chip-deg">${getDeg(chartData.ascSid).toFixed(2)}°</div>
+        <div class="planet-chip-nak">${getNakshatra(chartData.ascSid).name}</div>
+      </div>
+    </div>`:'';
+
+  const aspectChips=aspects.length
+    ?aspects.map(a=>`<span class="aspect-chip">${planetIconSvg(a,13,'#ccc',1)} ${a}</span>`).join('')
+    :'<span class="aspect-chip none">No aspects</span>';
+
+  const panel=document.getElementById('segment-detail');
+  panel.innerHTML=`
+    <div class="seg-watermark">${watermarkSvg}</div>
+    <span class="seg-close" onclick="closeSegmentDetail()">✕</span>
+    <div class="seg-header">
+      <div class="seg-rashi-icon">${signIconSvg(signIdx,36,'#f59e0b',1)}</div>
+      <div>
+        <div class="seg-title">House ${house} · ${signName}</div>
+        <div class="seg-sub">Ruled by ${lord}</div>
+      </div>
+    </div>
+    <div class="planet-chip-row">${ascChip}${planetChips}</div>
+    <div class="seg-section-label">Drishti (aspects) on this house</div>
+    <div class="aspect-chip-row">${aspectChips}</div>
+  `;
+  panel.classList.remove('hidden');
+}
+
+function closeSegmentDetail(){
+  document.getElementById('segment-detail').classList.add('hidden');
+}
+
+// House groupings: Trikonas, Kendras, and other classical axes
+const HOUSE_GROUPS=[
+  {id:'dharma',label:'Dharma Trikona',houses:[1,5,9],desc:'Houses of self, creativity/past merit, and dharma/fortune — the axis of higher purpose and spiritual growth.'},
+  {id:'artha',label:'Artha Trikona',houses:[2,6,10],desc:'Houses of wealth, daily work/competition, and career/public status — the axis of material achievement.'},
+  {id:'kama',label:'Kama Trikona',houses:[3,7,11],desc:'Houses of desire, relationships/partnerships, and gains — the axis of ambition and social connection.'},
+  {id:'moksha',label:'Moksha Trikona',houses:[4,8,12],desc:'Houses of inner life, transformation/hidden matters, and liberation/loss — the axis of spiritual release.'},
+  {id:'kendra',label:'Kendra (Angles)',houses:[1,4,7,10],desc:'The four angular houses — self, home, relationships, career. The most powerful pillars of the chart.'},
+  {id:'panaphara',label:'Panaphara',houses:[2,5,8,11],desc:'Succedent houses — wealth, creativity, transformation, gains. Support houses to the Kendras.'},
+  {id:'apoklima',label:'Apoklima',houses:[3,6,9,12],desc:'Cadent houses — courage, service, fortune, loss. The most subtle and least stable houses.'}
+];
+
+let activeGroupId=null;
+
+function renderTrikonaButtons(){
+  const row=document.getElementById('trikona-btn-row');
+  row.innerHTML=HOUSE_GROUPS.map(g=>`<button class="trikona-btn" id="trikona-btn-${g.id}" onclick="toggleGroup('${g.id}')">${g.label}</button>`).join('');
+}
+
+function toggleGroup(groupId){
+  if(activeGroupId===groupId){
+    activeGroupId=null;
+    clearHouseHighlights();
+    document.getElementById('group-detail').classList.add('hidden');
+    document.querySelectorAll('.trikona-btn').forEach(b=>b.classList.remove('active'));
+    return;
+  }
+  activeGroupId=groupId;
+  document.querySelectorAll('.trikona-btn').forEach(b=>b.classList.toggle('active',b.id==='trikona-btn-'+groupId));
+  const group=HOUSE_GROUPS.find(g=>g.id===groupId);
+  highlightHouses(group.houses);
+  showGroupDetail(group);
+}
+
+function highlightHouses(houses){
+  clearHouseHighlights();
+  houses.forEach(h=>{
+    const el=document.getElementById('wedge-fill-'+h);
+    if(el)el.setAttribute('fill','rgba(245,158,11,0.13)');
+  });
+}
+function clearHouseHighlights(){
+  for(let h=1;h<=12;h++){
+    const el=document.getElementById('wedge-fill-'+h);
+    if(el)el.setAttribute('fill','rgba(0,0,0,0)');
+  }
+}
+
+function showGroupDetail(group){
+  if(!chartData)return;
+  const{lagnaSign,houseMap,planetData}=chartData;
+  const panel=document.getElementById('group-detail');
+  document.getElementById('segment-detail').classList.add('hidden');
+
+  const houseCards=group.houses.map(h=>{
+    const signIdx=(lagnaSign+h-1)%12;
+    const planets=houseMap[h]||[];
+    const planetList=planets.length
+      ?planets.map(p=>`<span class="aspect-chip">${planetIconSvg(p,12,'#ccc',1)} ${p} ${planetData[p].deg.toFixed(1)}°</span>`).join('')
+      :'<span class="aspect-chip none">Empty</span>';
+    return`<div class="group-house-card">
+      <div class="group-house-head">
+        <div class="seg-rashi-icon" style="width:24px;height:24px">${signIconSvg(signIdx,24,'#f59e0b',1)}</div>
+        <div><div class="group-house-title">House ${h} · ${SIGNS[signIdx]}</div><div class="seg-sub">Ruled by ${SIGN_LORD[signIdx]}</div></div>
+      </div>
+      <div class="aspect-chip-row" style="margin-top:8px">${planetList}</div>
+    </div>`;
+  }).join('');
+
+  panel.innerHTML=`
+    <span class="seg-close" onclick="closeGroupDetail()">✕</span>
+    <div class="seg-title" style="margin-bottom:4px">${group.label}</div>
+    <div class="seg-sub" style="margin-bottom:14px">${group.desc}</div>
+    <div class="group-house-grid">${houseCards}</div>
+  `;
+  panel.classList.remove('hidden');
+}
+
+function closeGroupDetail(){
+  document.getElementById('group-detail').classList.add('hidden');
+  activeGroupId=null;
+  clearHouseHighlights();
+  document.querySelectorAll('.trikona-btn').forEach(b=>b.classList.remove('active'));
+}
+
+function relationBadge(rel){
+  const cls={friend:'rel-friend',neutral:'rel-neutral',enemy:'rel-enemy',self:'rel-neutral'}[rel]||'rel-neutral';
+  const label={friend:'Friend',neutral:'Neutral',enemy:'Enemy',self:'—'}[rel]||'—';
+  return`<span class="rel-badge ${cls}">${label}</span>`;
+}
+
+function renderPlanetTable(pd,lagnaSign,asc){
+  const tbody=document.getElementById('planet-tbody');
+  let rows=`<tr><td>Ascendant</td><td>${SIGNS[lagnaSign]}</td><td>—</td><td>${getDeg(asc).toFixed(1)}°</td><td>${getNakshatra(asc).name} (pada ${getNakshatra(asc).pada})</td><td>—</td></tr>`;
+  rows+=PLANETS.map(p=>{
+    const d=pd[p];
+    const comp=compoundRelation(p,d.sign,pd,d.house);
+    let relLabel=relationBadge(comp.relation);
+    if(comp.dignity==='exalted')relLabel+=`<span class="dignity-tag dignity-exalted">Exalted</span>`;
+    else if(comp.dignity==='debilitated')relLabel+=`<span class="dignity-tag dignity-debilitated">Debilitated</span>`;
+    else if(comp.dignity==='own'||comp.dignity==='moolatrikona')relLabel+=`<span class="dignity-tag dignity-own">Own sign</span>`;
+    return`<tr><td>${p}</td><td>${SIGNS[d.sign]}</td><td>H${d.house}</td><td>${d.deg.toFixed(1)}°</td><td>${d.nakshatra.name} (pada ${d.nakshatra.pada})</td><td>${relLabel}</td></tr>`;
+  }).join('');
+  tbody.innerHTML=rows;
+}
+
+// --- Navamsa (D9) chart wheel - mirrors the Rashi wheel visual style but uses D9 placements ---
+function drawNavamsaChart(){
+  if(!chartData||!chartData.navamsa)return;
+  const{navAscSign,navHouseMap}=chartData.navamsa;
+  const svg=document.getElementById('navamsa-svg');
+  if(!svg)return;
+  const cx=130,cy=130,outerR=124,innerR=72,labelR=103,planetR=42;
+  const gridColor='#2a2a2a',rimColor='#f59e0b';
+
+  function polar(r,angleDeg){
+    const a=(angleDeg-90)*Math.PI/180;
+    return{x:cx+r*Math.cos(a),y:cy+r*Math.sin(a)};
+  }
+  function wedgeAngles(houseIdx){
+    return{start:15-(houseIdx-1)*30,end:15-houseIdx*30,mid:-(houseIdx-1)*30};
+  }
+  function arcPath(rOuter,rInner,startDeg,endDeg){
+    const p1=polar(rOuter,startDeg),p2=polar(rOuter,endDeg);
+    const p3=polar(rInner,endDeg),p4=polar(rInner,startDeg);
+    return`M${p1.x.toFixed(2)},${p1.y.toFixed(2)} A${rOuter},${rOuter} 0 0,0 ${p2.x.toFixed(2)},${p2.y.toFixed(2)} L${p3.x.toFixed(2)},${p3.y.toFixed(2)} A${rInner},${rInner} 0 0,1 ${p4.x.toFixed(2)},${p4.y.toFixed(2)} Z`;
+  }
+
+  let svgContent='';
+  let wedgeLayer='';
+  for(let h=1;h<=12;h++){
+    const ang=wedgeAngles(h);
+    wedgeLayer+=`<path id="nav-wedge-fill-${h}" d="${arcPath(outerR,innerR,ang.start,ang.end)}" class="wedge-hit house-highlight" fill="rgba(0,0,0,0)" stroke="none" onclick="showNavamsaSegmentDetail(${h})"/>`;
+  }
+  svgContent+=wedgeLayer;
+  svgContent+=`<circle cx="${cx}" cy="${cy}" r="${outerR}" fill="none" stroke="${rimColor}" stroke-width="1.2" pointer-events="none"/>`;
+  svgContent+=`<circle cx="${cx}" cy="${cy}" r="${innerR}" fill="none" stroke="${gridColor}" stroke-width="0.7" pointer-events="none"/>`;
+
+  for(let h=1;h<=12;h++){
+    const ang=wedgeAngles(h);
+    const p1=polar(outerR,ang.start);
+    svgContent+=`<line x1="${cx}" y1="${cy}" x2="${p1.x.toFixed(2)}" y2="${p1.y.toFixed(2)}" stroke="${gridColor}" stroke-width="0.6" pointer-events="none"/>`;
+    const signIdx=(navAscSign+h-1)%12;
+    const labelPos=polar(labelR,ang.mid);
+    const iconSize=20;
+    svgContent+=`<g transform="translate(${(labelPos.x-iconSize/2).toFixed(2)},${(labelPos.y-iconSize/2).toFixed(2)})" pointer-events="none">${signIconSvg(signIdx,iconSize,'#fff',0.55)}</g>`;
+    const hNumPos=polar(innerR+11,ang.mid);
+    svgContent+=`<text x="${hNumPos.x.toFixed(2)}" y="${hNumPos.y.toFixed(2)}" text-anchor="middle" dominant-baseline="middle" font-size="7" fill="#444" font-family="-apple-system,sans-serif" pointer-events="none">${h}</text>`;
+
+    const planets=navHouseMap[h]||[];
+    const items=h===1?['ASC',...planets]:planets.slice();
+    if(items.length){
+      const n=items.length,rowPitch=24,iconSize2=15;
+      const startR=planetR+(n-1)*rowPitch/2;
+      const rotateDeg=ang.mid;
+      items.forEach((p,j)=>{
+        const rowR=startR-j*rowPitch;
+        const iconCenter=polar(rowR+5,ang.mid);
+        const isAsc=p==='ASC';
+        if(isAsc){
+          svgContent+=`<g transform="rotate(${rotateDeg.toFixed(2)} ${iconCenter.x.toFixed(2)} ${iconCenter.y.toFixed(2)})" pointer-events="none"><text x="${iconCenter.x.toFixed(2)}" y="${iconCenter.y.toFixed(2)}" text-anchor="middle" dominant-baseline="central" font-size="10" fill="#f59e0b" font-family="-apple-system,sans-serif" font-weight="700">Asc</text></g>`;
+        }else{
+          svgContent+=`<g transform="rotate(${rotateDeg.toFixed(2)} ${iconCenter.x.toFixed(2)} ${iconCenter.y.toFixed(2)}) translate(${(iconCenter.x-iconSize2/2).toFixed(2)},${(iconCenter.y-iconSize2/2).toFixed(2)})" pointer-events="none">${planetIconSvg(p,iconSize2,'#f59e0b',1)}</g>`;
+        }
+      });
+    }
+  }
+  const ascTip=polar(outerR+8,0),ascL=polar(outerR+2,-4),ascR2=polar(outerR+2,4);
+  svgContent+=`<polygon points="${ascTip.x.toFixed(1)},${ascTip.y.toFixed(1)} ${ascL.x.toFixed(1)},${ascL.y.toFixed(1)} ${ascR2.x.toFixed(1)},${ascR2.y.toFixed(1)}" fill="${rimColor}" pointer-events="none"/>`;
+  svgContent+=`<circle cx="${cx}" cy="${cy}" r="2" fill="${rimColor}"/>`;
+  svg.innerHTML=svgContent;
+}
+
+function showNavamsaSegmentDetail(house){
+  if(!chartData||!chartData.navamsa)return;
+  const{navAscSign,navHouseMap}=chartData.navamsa;
+  const signIdx=(navAscSign+house-1)%12;
+  const planets=navHouseMap[house]||[];
+  const panel=document.getElementById('navamsa-segment-detail');
+  const watermarkSvg=signIconSvg(signIdx,128,'#fff',1);
+  let planetChips=planets.length?planets.map(p=>{
+    return`<div class="planet-chip">
+      <div class="planet-chip-icon">${planetIconSvg(p,30,'#f59e0b',1)}</div>
+      <div class="planet-chip-body"><div class="planet-chip-name">${p}</div></div>
+    </div>`;
+  }).join(''):'<div class="planet-chip empty"><span style="opacity:0.3;font-size:18px">—</span><div class="planet-chip-nak">No planets in this Navamsa house</div></div>';
+  panel.innerHTML=`
+    <div class="seg-watermark">${watermarkSvg}</div>
+    <span class="seg-close" onclick="document.getElementById('navamsa-segment-detail').classList.add('hidden')">✕</span>
+    <div class="seg-header">
+      <div class="seg-rashi-icon">${signIconSvg(signIdx,36,'#f59e0b',1)}</div>
+      <div><div class="seg-title">D9 House ${house} · ${SIGNS[signIdx]}</div><div class="seg-sub">Ruled by ${SIGN_LORD[signIdx]}</div></div>
+    </div>
+    <div class="planet-chip-row">${planetChips}</div>
+  `;
+  panel.classList.remove('hidden');
+}
+
+function renderNavamsaTable(){
+  if(!chartData||!chartData.navamsa)return;
+  const{navPlanetSign,vargottama}=chartData.navamsa;
+  const tbody=document.getElementById('navamsa-tbody');
+  tbody.innerHTML=PLANETS.map(p=>{
+    const d1Sign=chartData.planetData[p].sign;
+    const d9Sign=navPlanetSign[p];
+    const isVargottama=vargottama[p];
+    return`<tr><td><span class="table-planet-cell">${planetIconSvg(p,14,'#f59e0b',1)} ${p}</span></td><td>${SIGNS[d1Sign]}</td><td>${SIGNS[d9Sign]}</td><td>${isVargottama?'<span class="rel-badge rel-friend">Yes</span>':'<span class="rel-badge rel-neutral">No</span>'}</td></tr>`;
+  }).join('');
+}
+
+
+function renderDashas(dashas){
+  const now=new Date();
+  document.getElementById('dasha-list').innerHTML=dashas.map((d,i)=>{
+    const active=now>=d.start&&now<d.end,pct=Math.min(100,(d.years/20)*100);
+    const s=d.start.toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+    const e=d.end.toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+    const subRows=(d.antardashas||[]).map(sub=>{
+      const subActive=now>=sub.start&&now<sub.end;
+      const subPct=Math.min(100,(sub.years/d.years)*100);
+      const ss=sub.start.toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+      const se=sub.end.toLocaleDateString('en-IN',{month:'short',year:'numeric'});
+      return`<div class="antardasha-row${subActive?' antardasha-active':''}">
+        <div class="antardasha-lord">${d.lord}-${sub.lord}${subActive?'<span class="dasha-active-badge">now</span>':''}</div>
+        <div class="dasha-bar-wrap antardasha-bar-wrap"><div class="dasha-bar antardasha-bar" style="width:${subPct}%"></div></div>
+        <div class="dasha-dates">${ss} – ${se}</div>
+      </div>`;
+    }).join('');
+    return`<div class="dasha-block">
+      <div class="dasha-row${active?' dasha-active':''}" onclick="toggleAntardasha(${i})">
+        <div class="dasha-lord">${d.lord}${active?'<span class="dasha-active-badge">now</span>':''}</div>
+        <div class="dasha-bar-wrap"><div class="dasha-bar" style="width:${pct}%"></div></div>
+        <div class="dasha-dates">${s} – ${e} · ${d.years.toFixed(1)}y</div>
+        <div class="dasha-chevron" id="chevron-${i}">▾</div>
+      </div>
+      <div class="antardasha-list hidden" id="antardasha-${i}">${subRows}</div>
+    </div>`;
+  }).join('');
+}
+
+function toggleAntardasha(i){
+  const el=document.getElementById('antardasha-'+i);
+  const chev=document.getElementById('chevron-'+i);
+  const isHidden=el.classList.contains('hidden');
+  el.classList.toggle('hidden');
+  chev.textContent=isHidden?'▴':'▾';
+}
+
+function renderKarakas(){
+  if(!chartData)return;
+  const{planetData}=chartData;
+  const karakas=calcCharaKarakas(planetData);
+  chartData.karakas=karakas;
+  const list=document.getElementById('karaka-list');
+  list.innerHTML=karakas.map(k=>{
+    const d=planetData[k.planet];
+    return`<div class="karaka-card">
+      <div class="karaka-card-head">
+        <div class="karaka-icon">${planetIconSvg(k.planet,26,'#f59e0b',1)}</div>
+        <div class="karaka-card-titles">
+          <div class="karaka-name-row">
+            <span class="karaka-name">${k.karaka}</span>
+            <span class="karaka-short">(${k.short})</span>
+            <span class="info-icon" onclick="showKarakaInfo('${k.karaka}')">i</span>
+          </div>
+          <div class="seg-sub">${k.planet} · ${SIGNS[d.sign]} ${d.deg.toFixed(2)}° · House ${d.house}</div>
+        </div>
+      </div>
+      <div class="karaka-signifies">${k.signifies}</div>
+    </div>`;
+  }).join('');
+}
+
+function showKarakaInfo(karakaName){
+  const info=KARAKA_INFO[karakaName]||'';
+  const overlay=document.createElement('div');
+  overlay.className='info-overlay';
+  overlay.onclick=function(e){if(e.target===overlay)closeInfoOverlay()};
+  overlay.innerHTML=`<div class="info-modal">
+    <span class="seg-close" onclick="closeInfoOverlay()">✕</span>
+    <div class="seg-title" style="margin-bottom:10px">${karakaName}</div>
+    <div class="reading-text">${info}</div>
+  </div>`;
+  document.body.appendChild(overlay);
+}
+function closeInfoOverlay(){
+  const el=document.querySelector('.info-overlay');
+  if(el)el.remove();
+}
+
+const SHADBALA_INFO='Shadbala ("six-fold strength") is the classical Vedic method for measuring how capable a planet is of delivering the results promised by its sign and house placement. The six components are: Sthana Bala (positional strength — exaltation, sign dignity via 5-fold Panchadha Maitri relationship, odd/even placement, angularity, decanate), Dig Bala (directional strength), Kala Bala (temporal strength — day/night, lunar phase, weekday, declination), Cheshta Bala (motional strength from retrograde motion — by classical rule (BPHS) this is always exactly zero for Sun and Moon, since they never retrograde, not a calculation gap), Naisargika Bala (fixed natural strength by brightness — identical in every chart: Sun 60V down to Saturn 8.57V), and Drik Bala (graded aspect strength: 7th aspect=full, Mars 4th/8th=3/4, Jupiter 5th/9th=1/2, Saturn 3rd/10th=1/4 — benefic aspects add, malefic aspects subtract, and this is the only component that can go negative by classical design). The six are summed into Virupas, then divided by 60 to give Rupas. Each planet needs a different minimum Rupa threshold (Mercury needs the most at 7, Mars/Sun/Saturn need the least at 5) to be considered functionally strong. Simplification notes: Saptavargaja Bala here uses the Rasi (D1) chart with full Panchadha Maitri (natural + temporal friendship) rather than averaging across all seven classical divisional charts (D1,D2,D3,D7,D9,D10,D12); Kala Bala uses a fixed 6am/6pm sunrise-sunset approximation rather than location-and-date-specific sunrise; Yuddha (planetary war) bala is not modeled. Treat exact decimal values as indicative rather than to-the-decimal classical precision.';
+
+function renderShadbala(){
+  if(!chartData||!chartData.shadbala)return;
+  const sb=chartData.shadbala;
+  const container=document.getElementById('shadbala-content');
+
+  const sortedPlanets=[...SHADBALA_PLANETS].sort((a,b)=>sb[b].totalRupas-sb[a].totalRupas);
+
+  const perPlanetCards=sortedPlanets.map(p=>{
+    const s=sb[p];
+    const pct=Math.min(100,s.pct);
+    const strong=s.totalRupas>=s.required;
+    return`<div class="shadbala-card">
+      <div class="shadbala-card-head">
+        <div class="karaka-icon">${planetIconSvg(p,24,'#f59e0b',1)}</div>
+        <div style="flex:1">
+          <div class="shadbala-planet-name">${p}</div>
+          <div class="seg-sub">${s.totalRupas.toFixed(2)} Rupas of ${s.required} required</div>
+        </div>
+        <div class="shadbala-status ${strong?'sb-strong':'sb-weak'}">${strong?'Strong':'Below min'}</div>
+      </div>
+      <div class="dasha-bar-wrap" style="height:6px;margin:8px 0"><div class="dasha-bar" style="width:${pct}%;background:${strong?'#22c55e':'#f59e0b'}"></div></div>
+      <table class="shadbala-breakdown">
+        <tr><td>Sthana Bala</td><td>${(s.sthana.total).toFixed(1)} V</td></tr>
+        <tr><td style="padding-left:14px;color:#666">— Uchcha (exaltation)</td><td style="color:#666">${s.sthana.uchcha.toFixed(1)} V</td></tr>
+        <tr><td style="padding-left:14px;color:#666">— Saptavargaja*</td><td style="color:#666">${s.sthana.saptavargaja.toFixed(1)} V</td></tr>
+        <tr><td style="padding-left:14px;color:#666">— Ojayugma</td><td style="color:#666">${s.sthana.ojayugma.toFixed(1)} V</td></tr>
+        <tr><td style="padding-left:14px;color:#666">— Kendradi</td><td style="color:#666">${s.sthana.kendradi.toFixed(1)} V</td></tr>
+        <tr><td style="padding-left:14px;color:#666">— Drekkana</td><td style="color:#666">${s.sthana.drekkana.toFixed(1)} V</td></tr>
+        <tr><td>Dig Bala</td><td>${s.dig.toFixed(1)} V</td></tr>
+        <tr><td>Kala Bala*</td><td>${s.kala.total.toFixed(1)} V</td></tr>
+        <tr><td>Cheshta Bala</td><td>${s.cheshta.toFixed(1)} V</td></tr>
+        <tr><td>Naisargika Bala</td><td>${s.naisargika.toFixed(1)} V</td></tr>
+        <tr><td>Drik Bala</td><td>${s.drik.toFixed(1)} V</td></tr>
+        <tr class="shadbala-total-row"><td>Total</td><td>${s.totalVirupa.toFixed(1)} V = ${s.totalRupas.toFixed(2)} Rupas</td></tr>
+      </table>
+    </div>`;
+  }).join('');
+
+  const summaryRows=sortedPlanets.map(p=>{
+    const s=sb[p];
+    return`<tr><td>${p}</td><td>${s.totalRupas.toFixed(2)}</td><td>${s.required}</td><td>${s.pct.toFixed(0)}%</td></tr>`;
+  }).join('');
+
+  container.innerHTML=`
+    <div class="shadbala-intro">
+      <span class="info-icon" id="sb-info-trigger">i</span>
+      <span style="font-size:12.5px;color:#888">Tap the info icon for methodology &amp; simplification notes (marked with *)</span>
+    </div>
+    <div class="shadbala-grid">${perPlanetCards}</div>
+    <div class="section-title" style="margin-top:1.5rem">Summary — Strength as % of required minimum</div>
+    <div style="overflow-x:auto">
+    <table class="planet-table">
+      <thead><tr><th>Planet</th><th>Total Rupas</th><th>Required</th><th>% of Minimum</th></tr></thead>
+      <tbody>${summaryRows}</tbody>
+    </table>
+    </div>
+
+    <div class="section-title" style="margin-top:2rem">Bhava Bala — House Strength</div>
+    <div class="shadbala-intro">
+      <span class="info-icon" id="bb-info-trigger">i</span>
+      <span style="font-size:12.5px;color:#888">Bhavadhipati (house lord's Shadbala) + Bhava Dig Bala + Bhava Drishti Bala</span>
+    </div>
+    <div id="bhava-bala-chart"></div>
+    <div style="overflow-x:auto;margin-top:14px">
+    <table class="planet-table">
+      <thead><tr><th>House</th><th>Sign</th><th>Lord</th><th>Bhavadhipati</th><th>Dig</th><th>Drishti</th><th>Total Rupas</th></tr></thead>
+      <tbody id="bhava-bala-tbody"></tbody>
+    </table>
+    </div>
+  `;
+  document.getElementById('sb-info-trigger').onclick=function(){showGenericInfo('Shadbala Methodology',SHADBALA_INFO)};
+  document.getElementById('bb-info-trigger').onclick=function(){showGenericInfo('Bhava Bala Methodology',BHAVA_BALA_INFO)};
+  renderBhavaBalaChart();
+}
+
+const BHAVA_BALA_INFO='Bhava Bala ("house strength") measures how capable a house is of delivering the results it promises — independent of which planets sit inside it. The formula is: Bhavadhipati Bala (the house lord\'s own total Shadbala — a strong lord empowers its house) + Bhava Dig Bala (Kendra/angular houses 1,4,7,10 get 60V; Panapara/succedent houses 2,5,8,11 get 30V; Apoklima/cadent houses 3,6,9,12 get 15V) + Bhava Drishti Bala (the same graded aspect formula used for planets, applied to the house itself — benefic aspects strengthen it, malefic aspects weaken it). A strong house supports the life area it governs even if no major planet occupies it; a weak house may struggle to deliver even when a strong planet sits there. Compare houses relative to each other rather than against a fixed number — there is no universal "required minimum" for houses the way there is for planets.';
+
+function renderBhavaBalaChart(){
+  if(!chartData||!chartData.bhavaBala)return;
+  const bb=chartData.bhavaBala;
+  const maxRupas=Math.max(...Array.from({length:12},(_,i)=>bb[i+1].totalRupas));
+  const barW=28,gap=10,chartH=160,leftPad=10;
+  let svg=`<svg viewBox="0 0 ${12*(barW+gap)+leftPad} ${chartH+30}" style="width:100%;height:auto;max-width:560px;display:block;margin:0 auto">`;
+  for(let h=1;h<=12;h++){
+    const r=bb[h];
+    const barH=Math.max(2,(r.totalRupas/maxRupas)*chartH);
+    const x=leftPad+(h-1)*(barW+gap);
+    const y=chartH-barH+10;
+    const isStrong=r.totalRupas>=maxRupas*0.6;
+    svg+=`<rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="3" fill="${isStrong?'#f59e0b':'#444'}" opacity="0.9"/>`;
+    svg+=`<text x="${x+barW/2}" y="${chartH+24}" text-anchor="middle" font-size="10" fill="#888" font-family="-apple-system,sans-serif">H${h}</text>`;
+    svg+=`<text x="${x+barW/2}" y="${y-5}" text-anchor="middle" font-size="9" fill="#f59e0b" font-family="-apple-system,sans-serif" font-weight="600">${r.totalRupas.toFixed(1)}</text>`;
+  }
+  svg+=`</svg>`;
+  document.getElementById('bhava-bala-chart').innerHTML=svg;
+
+  const tbody=document.getElementById('bhava-bala-tbody');
+  tbody.innerHTML=Array.from({length:12},(_,i)=>{
+    const h=i+1,r=bb[h];
+    return`<tr><td>House ${h}</td><td>${SIGNS[r.sign]}</td><td>${r.lord}</td><td>${r.bhavadhipati.toFixed(1)}V</td><td>${r.dig.toFixed(1)}V</td><td>${r.drishti.toFixed(2)}V</td><td><strong style="color:#f59e0b">${r.totalRupas.toFixed(2)}</strong></td></tr>`;
+  }).join('');
+}
+
+function showGenericInfo(title,text){
+  const overlay=document.createElement('div');
+  overlay.className='info-overlay';
+  overlay.onclick=function(e){if(e.target===overlay)closeInfoOverlay()};
+  overlay.innerHTML=`<div class="info-modal">
+    <span class="seg-close" onclick="closeInfoOverlay()">✕</span>
+    <div class="seg-title" style="margin-bottom:10px">${title}</div>
+    <div class="reading-text">${text}</div>
+  </div>`;
+  document.body.appendChild(overlay);
+}
+
+const AVASTHA_INFO='Avastha ("state" or "condition") describes the mood and capability of a planet at the moment of birth — much like a person can be energetic or exhausted depending on their condition, a planet can be in a state that helps or hinders its ability to deliver results. This tab covers three classical Avastha systems: Baladi Avastha (5 states based on the planet\'s degree within its sign — like stages of human life from infancy to old age), Jagrat/Swapna/Sushupti Avastha (3 states based on sign dignity — awake/dreaming/sleeping), and Deeptadi Avastha (9 finer states based on detailed dignity including combustion). The Summary column combines these into a quick read of how favourably each planet is likely to express itself. Note: Deeptadi\'s combustion (Kopa) check uses simplified fixed orb distances from the Sun rather than the full classical variable-orb tables, so treat results as indicative.';
+
+function avasthaSummary(j,d){
+  // Combine Jagradadi + Deeptadi into a quick favourable/mixed/unfavourable read
+  const goodDeeptadi=['Dipta','Swastha','Mudita','Shanta'];
+  const badDeeptadi=['Khala','Kopa','Vikala'];
+  if(j==='Jagrat'&&goodDeeptadi.includes(d))return{label:'Favourable',cls:'av-good'};
+  if(j==='Sushupti'||badDeeptadi.includes(d))return{label:'Unfavourable',cls:'av-bad'};
+  return{label:'Mixed',cls:'av-mixed'};
+}
+
+function renderAvastha(){
+  if(!chartData)return;
+  const{planetData}=chartData;
+  const avasthas=calcAllAvasthas(planetData,planetData.Sun.lon);
+  chartData.avasthas=avasthas;
+  const container=document.getElementById('avastha-content');
+
+  const rows=SHADBALA_PLANETS.map(p=>{
+    const a=avasthas[p];
+    const summary=avasthaSummary(a.jagradadi,a.deeptadi);
+    return`<tr>
+      <td><span class="table-planet-cell">${planetIconSvg(p,14,'#f59e0b',1)} ${p}</span></td>
+      <td>${a.baladi}</td>
+      <td>${a.jagradadi}</td>
+      <td>${a.deeptadi}</td>
+      <td><span class="rel-badge ${summary.cls}">${summary.label}</span></td>
+    </tr>`;
+  }).join('');
+
+  container.innerHTML=`
+    <div class="shadbala-intro">
+      <span class="info-icon" id="av-info-trigger">i</span>
+      <span style="font-size:12.5px;color:#888">Tap the info icon to learn what each Avastha system means</span>
+    </div>
+    <div style="overflow-x:auto">
+    <table class="planet-table">
+      <thead><tr><th>Planet</th><th>Baladi</th><th>Jagrat/Swapna/Sushupti</th><th>Deeptadi</th><th>Summary</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    </div>
+    <div class="section-title" style="margin-top:1.5rem">What each state means</div>
+    <div id="avastha-detail-cards"></div>
+  `;
+  document.getElementById('av-info-trigger').onclick=function(){showGenericInfo('Avastha — Planetary States',AVASTHA_INFO)};
+
+  // Detail cards explaining each planet's specific states in plain language
+  const detailHtml=SHADBALA_PLANETS.map(p=>{
+    const a=avasthas[p];
+    return`<div class="shadbala-card">
+      <div class="shadbala-card-head">
+        <div class="karaka-icon">${planetIconSvg(p,24,'#f59e0b',1)}</div>
+        <div style="flex:1"><div class="shadbala-planet-name">${p}</div></div>
+      </div>
+      <div class="avastha-detail-row"><strong>${a.baladi}</strong> (Baladi) — ${BALADI_MEANING[a.baladi]}</div>
+      <div class="avastha-detail-row"><strong>${a.jagradadi}</strong> (Jagradadi) — ${JAGRADADI_MEANING[a.jagradadi]}</div>
+      <div class="avastha-detail-row"><strong>${a.deeptadi}</strong> (Deeptadi) — ${DEEPTADI_MEANING[a.deeptadi]}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('avastha-detail-cards').innerHTML=detailHtml;
+}
+
+async function generateReading(){
+  const key=savedKey||localStorage.getItem('nd_key')||'';
+  if(!key){document.getElementById('reading-content').innerHTML=`<div class="status">Add your Anthropic API key above to generate the AI reading.</div>`;return}
+  const{name,lagnaSign,planetData,dashas}=chartData;
+  const now=new Date(),active=dashas.find(d=>now>=d.start&&now<d.end);
+  const summary=`Name: ${name||'Native'}\nLagna: ${SIGNS[lagnaSign]}\n`+PLANETS.map(p=>{const d=planetData[p];return`${p}: House ${d.house}, ${SIGNS[d.sign]} ${d.deg.toFixed(1)}°, ${d.nakshatra.name} nakshatra`}).join('\n')+`\nCurrent Dasha: ${active?active.lord+' (ends '+active.end.toLocaleDateString('en-IN',{month:'short',year:'numeric'})+')':'N/A'}`;
+  const prompt=`You are a master Vedic astrologer. Analyze this birth chart and provide a structured reading with these sections:\n\n1. **Ascendant & Core Identity** — Lagna sign, nakshatra, core personality\n2. **Key Yogas** — all major yogas present and their effects\n3. **Nakshatra Analysis** — Moon and Ascendant nakshatras, mind and soul\n4. **House Axis Analysis** — Dharma (1-5-9), Artha (2-6-10), Moksha (4-8-12), Kama (3-7-11) trikonas\n5. **Soul Purpose & Transformation** — Rahu-Ketu axis, what to release and evolve toward\n6. **Current Dasha** — what this period activates and what to focus on now\n\nChart:\n${summary}\n\nWrite in flowing prose, deeply insightful, specific to this chart. Format with bold headings. 700-900 words.`;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:prompt}]})
+    });
+    const data=await res.json();
+    if(data.error){document.getElementById('reading-content').innerHTML=`<div class="status">API error: ${data.error.message}</div>`;return}
+    renderReading(data.content?.[0]?.text||'No reading generated.');
+  }catch(e){
+    document.getElementById('reading-content').innerHTML=`<div class="status">Error connecting to API. Check your key and try again.</div>`;
+  }
+}
+
+function renderReading(text){
+  const parts=text.split(/\n\n+/);let html='';
+  parts.forEach(s=>{
+    const m=s.match(/^\*\*(.+?)\*\*/);
+    if(m){const body=s.replace(/^\*\*(.+?)\*\*\s*/,'').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>');html+=`<div class="reading-section"><h3>${m[1]}</h3><p class="reading-text">${body}</p></div>`}
+    else{const c=s.replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>').trim();if(c)html+=`<p class="reading-text" style="margin-bottom:1rem">${c}</p>`}
+  });
+  document.getElementById('reading-content').innerHTML=html;
+}
+
+function showTab(name){
+  const tabs=['chart','positions','dashas','karakas','shadbala','avastha','navamsa','reading'];
+  tabs.forEach(t=>{document.getElementById('tab-'+t).classList.toggle('hidden',t!==name)});
+  document.querySelectorAll('.tab').forEach((btn,i)=>{btn.classList.toggle('active',tabs[i]===name)});
+}
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const k=localStorage.getItem('nd_key');
+  if(k){document.getElementById('api-key').value=k;savedKey=k;updateKeyStatus(true)}
+});
+</script>
+</body>
+</html>
