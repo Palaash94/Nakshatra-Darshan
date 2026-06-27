@@ -86,22 +86,6 @@ function houseLordOf(houseNum,lagnaSign){
 }
 function isBenefic(planet){return['Jupiter','Venus','Mercury','Moon'].includes(planet)}
 
-// Combustion check (Asta): a planet too close to the Sun is classically held to have its independent
-// strength overwhelmed. Orbs match Phaladeepika/BPHS as commonly cited (Moon 12, Mars 17, Mercury 14,
-// Jupiter 11, Venus 10, Saturn 15 degrees) - the same table used by the Avastha (Deeptadi/Kopa) module.
-// Note: this uses the standard (non-retrograde) orb throughout as a deliberate simplification, since
-// retrograde status isn't threaded into this module; retrograde Mercury/Venus combust at a slightly
-// tighter orb in some classical sources, so this errs very slightly generous in borderline cases.
-const COMBUSTION_ORBS={Moon:12,Mars:17,Mercury:14,Jupiter:11,Venus:10,Saturn:15};
-function isCombust(planet,planetData){
-  if(planet==='Sun'||planet==='Rahu'||planet==='Ketu')return false; // Sun can't combust itself; nodes are shadow points, exempt classically
-  const orb=COMBUSTION_ORBS[planet];
-  if(!orb)return false;
-  let elong=Math.abs(norm360(planetData[planet].lon-planetData.Sun.lon));
-  if(elong>180)elong=360-elong;
-  return elong<orb;
-}
-
 // ---- helper: is a planet "strong" here (own/exalted/moolatrikona, or in kendra/trikona, decent dignity) ----
 function dignityScore(planet,planetData){
   const d=planetData[planet];
@@ -129,13 +113,11 @@ function detectMahapurushaYogas(planetData,lagnaSign){
     const dig=getDignity(def.planet,d.sign,d.deg);
     const inKendra=KENDRA_HOUSES.includes(d.house);
     if(inKendra&&(dig==='own'||dig==='exalted'||dig==='moolatrikona')){
-      let strength=dig==='exalted'?92:dig==='moolatrikona'?85:78;
-      const combust=isCombust(def.planet,planetData);
-      if(combust)strength-=22;
+      const strength=dig==='exalted'?92:dig==='moolatrikona'?85:78;
       results.push({
         name:def.name,category:'yoga',
-        strength,strengthLabel:strength>=85?'Very strong':strength>=60?'Strong':'Weakened by combustion',
-        formation:`${def.planet} is ${dig==='exalted'?'exalted':dig==='moolatrikona'?'in its Moolatrikona':'in its own sign'} (${SIGNS[d.sign]}) while posited in House ${d.house}, a Kendra (angular house). This is one of the five classical Panch Mahapurusha Yogas, formed only when one of these five planets is both dignified and angular.${combust?` However, ${def.planet} is also combust here (too close to the Sun), which classical texts say significantly mutes a yoga even when the underlying placement is technically present.`:''}`,
+        strength,strengthLabel:strength>=85?'Very strong':'Strong',
+        formation:`${def.planet} is ${dig==='exalted'?'exalted':dig==='moolatrikona'?'in its Moolatrikona':'in its own sign'} (${SIGNS[d.sign]}) while posited in House ${d.house}, a Kendra (angular house). This is one of the five classical Panch Mahapurusha Yogas, formed only when one of these five planets is both dignified and angular.`,
         signifies:def.signifies,
         planetsInvolved:[def.planet]
       });
@@ -151,70 +133,39 @@ function detectGajakesari(planetData){
   if(isKendraFrom(moonHouse,jupHouse)){
     const moonD=planetData.Moon,jupD=planetData.Jupiter;
     const moonDig=getDignity('Moon',moonD.sign,moonD.deg),jupDig=getDignity('Jupiter',jupD.sign,jupD.deg);
-    const jupCombust=isCombust('Jupiter',planetData);
-    const maleficsOnJup=getAspectsOnHouseGeneric(jupHouse,planetData).filter(p=>['Saturn','Mars','Rahu','Ketu'].includes(p));
-    const jupHasMaleficCompany=(houseMatesOf('Jupiter',planetData)).some(p=>['Saturn','Mars','Rahu','Ketu'].includes(p));
-
     let strength=70;
     if(jupDig==='exalted'||jupDig==='own')strength+=15;
     if(moonDig==='exalted'||moonDig==='own')strength+=10;
-    if(moonDig==='debilitated'||jupDig==='debilitated')strength-=28;
-    if(jupCombust)strength-=22;
-    if(maleficsOnJup.length||jupHasMaleficCompany)strength-=12;
-    strength=Math.max(15,Math.min(95,strength));
-
-    const caveats=[];
-    if(jupDig==='debilitated')caveats.push('Jupiter is debilitated here, which classical sources describe as turning this into a "paper yoga" — technically present but largely unable to deliver its promise unless Neechabhanga (debilitation cancellation) conditions also apply');
-    if(jupCombust)caveats.push('Jupiter is also combust (too close to the Sun), which significantly mutes its independent strength');
-    if(maleficsOnJup.length)caveats.push(`Jupiter is aspected by ${maleficsOnJup.join(' and ')}, a classical weakening factor`);
-    if(jupHasMaleficCompany&&!maleficsOnJup.length)caveats.push('Jupiter shares its house with a malefic planet, which classical texts hold constrains its results');
-
+    if(moonDig==='debilitated'||jupDig==='debilitated')strength-=20;
+    strength=Math.max(30,Math.min(95,strength));
     return{
       name:'Gajakesari Yoga',category:'yoga',
-      strength,strengthLabel:strength>=75?'Strong':strength>=50?'Moderate':strength>=30?'Mild':'Present but heavily weakened',
-      formation:`Jupiter (House ${jupHouse}) stands in a Kendra position relative to the Moon (House ${moonHouse}) — the two are angular to one another. This is the classical condition for Gajakesari Yoga, named for the elephant (Gaja) and lion (Kesari): two powerful, fearless creatures.${caveats.length?' However: '+caveats.join('; ')+'.':' Jupiter carries reasonable dignity here with no major affliction, allowing the yoga to express closer to its classical promise.'}`,
-      signifies:'Intelligence, eloquence, a respected reputation, good fortune, and the ability to overcome obstacles with composure. Natives often gain recognition through wisdom or public standing. Results are strongest during the Dasha or Antardasha of Jupiter or the Moon, and — as with all yogas — the chart-wide context (the planets\' overall dignity, aspects, and the active Dasha) determines how visibly this manifests in life.',
+      strength,strengthLabel:strength>=75?'Strong':strength>=50?'Moderate':'Mild',
+      formation:`Jupiter (House ${jupHouse}) stands in a Kendra position relative to the Moon (House ${moonHouse}) — the two are angular to one another. This is the classical condition for Gajakesari Yoga, named for the elephant (Gaja) and lion (Kesari): two powerful, fearless creatures.`,
+      signifies:'Intelligence, eloquence, a respected reputation, good fortune, and the ability to overcome obstacles with composure. Natives often gain recognition through wisdom or public standing.',
       planetsInvolved:['Moon','Jupiter']
     };
   }
   return null;
 }
-function houseMatesOf(planet,planetData){
-  const house=houseOf(planet,planetData);
-  return PLANETS.filter(p=>p!==planet&&houseOf(p,planetData)===house);
-}
 
 // ---------------- BUDHADITYA YOGA ----------------
-// Sun-Mercury conjunction. Classical sources are emphatic that combustion is the deciding factor here:
-// Mercury is never more than 28 degrees from the Sun, so this conjunction is common (~1/3 of charts),
-// but most of those have Mercury within its 14-degree combustion orb, muting the yoga's promise.
+// Sun-Mercury conjunction (and Mercury not combust-weak / not too close which would be Vishti)
 function detectBudhaditya(planetData){
   if(planetsConjunct('Sun','Mercury',planetData)){
     const sunD=planetData.Sun,merD=planetData.Mercury;
-    let closeOrb=Math.abs(norm360(sunD.lon-merD.lon));
-    if(closeOrb>180)closeOrb=360-closeOrb;
-    const merCombust=isCombust('Mercury',planetData);
+    const orb=Math.abs(sunD.lon-merD.lon);
+    const closeOrb=Math.min(orb,360-orb);
+    let strength=65;
     const merDig=getDignity('Mercury',merD.sign,merD.deg);
-    const maleficsPresent=houseMatesOf('Sun',planetData).some(p=>['Saturn','Rahu','Ketu'].includes(p));
-
-    let strength=58;
-    if(merDig==='own'||merDig==='exalted'||merDig==='moolatrikona')strength+=18;
-    if(merDig==='debilitated')strength-=20;
-    if(merCombust)strength-=26;
-    if(KENDRA_HOUSES.includes(houseOf('Sun',planetData))||TRIKONA_HOUSES.includes(houseOf('Sun',planetData)))strength+=8;
-    if(maleficsPresent)strength-=8;
-    strength=Math.max(15,Math.min(88,strength));
-
-    const caveats=[];
-    if(merCombust)caveats.push(`Mercury is combust at this distance (within its classical 14° orb), which most sources treat as the single deciding factor for this yoga — combust Budhaditya is often described as a "paper yoga" whose intellectual promise rarely manifests at full strength`);
-    if(merDig==='debilitated')caveats.push('Mercury is debilitated here, further constraining the yoga');
-    if(maleficsPresent)caveats.push('a malefic shares the house, which classical texts say can divert this combination toward Pitra Dosha-like themes rather than its usual benefic promise');
-
+    if(merDig==='own'||merDig==='exalted'||merDig==='moolatrikona')strength+=20;
+    if(closeOrb<3)strength-=10; // very tight conjunction can mean combustion, slightly reduces independent expression
+    strength=Math.max(35,Math.min(90,strength));
     return{
       name:'Budhaditya Yoga',category:'yoga',
-      strength,strengthLabel:strength>=70?'Strong':strength>=45?'Moderate':merCombust?'Present but largely suppressed (combust)':'Mild',
-      formation:`Sun and Mercury are conjunct in House ${houseOf('Sun',planetData)} (${SIGNS[sunD.sign]}), separated by roughly ${closeOrb.toFixed(1)}°. Since Mercury never strays more than 28° from the Sun, this conjunction itself is fairly common — what determines whether it functions as a genuine yoga is almost entirely whether Mercury falls within its combustion orb.${caveats.length?' Here: '+caveats.join('; ')+'.':' Mercury is clear of combustion at this distance, giving the yoga room to express its classical promise.'}`,
-      signifies:'Sharp analytical intelligence, strong communication skills, and an aptitude for administration, strategy, or scholarship when the yoga is genuinely active. Especially favourable for academic, analytical, or public-facing careers, with results concentrated in Sun or Mercury Dasha/Antardasha periods.',
+      strength,strengthLabel:strength>=75?'Strong':strength>=50?'Moderate':'Mild',
+      formation:`Sun and Mercury are conjunct in House ${houseOf('Sun',planetData)} (${SIGNS[sunD.sign]}), separated by roughly ${closeOrb.toFixed(1)}°. Since Mercury never strays far from the Sun, this is a fairly common but still meaningful combination when the house and sign support it.`,
+      signifies:'Sharp analytical intelligence, strong communication skills, and an aptitude for administration, strategy, or scholarship. Especially favourable for academic, analytical, or public-facing careers.',
       planetsInvolved:['Sun','Mercury']
     };
   }
@@ -455,58 +406,29 @@ function detectAllYogas(planetData,lagnaSign,houseMap){
 // ---------------- MANGAL (KUJA) DOSHA ----------------
 // Mars in houses 1,2,4,7,8,12 from the Lagna (some schools also check from Moon and Venus)
 const MANGAL_DOSHA_HOUSES=[1,2,4,7,8,12];
-function detectMangalDosha(planetData,lagnaSign){
+function detectMangalDosha(planetData){
   const marsHouseFromLagna=houseOf('Mars',planetData);
   const moonHouse=houseOf('Moon',planetData);
-  const venusHouse=houseOf('Venus',planetData);
   const marsHouseFromMoon=houseDistance(moonHouse,marsHouseFromLagna);
-  const marsHouseFromVenus=houseDistance(venusHouse,marsHouseFromLagna);
   const fromLagna=MANGAL_DOSHA_HOUSES.includes(marsHouseFromLagna);
   const fromMoon=MANGAL_DOSHA_HOUSES.includes(marsHouseFromMoon);
-  const fromVenus=MANGAL_DOSHA_HOUSES.includes(marsHouseFromVenus);
-  if(!fromLagna&&!fromMoon&&!fromVenus)return null;
-
+  if(!fromLagna&&!fromMoon)return null;
+  // Cancellation checks (simplified, classical): Mars in own sign or exalted; Mars aspected/conjunct Jupiter; Mars in Aries/Scorpio (own) in certain houses
   const marsD=planetData.Mars;
   const marsDig=getDignity('Mars',marsD.sign,marsD.deg);
   const cancellations=[];
-
-  // 1. Mars in own sign (Aries/Scorpio), exaltation (Capricorn), or debilitation (Cancer) - a planet
-  // that is either fully dignified or too weak to assert itself is classically held not to cause the dosha.
-  if(marsDig==='own'||marsDig==='exalted')cancellations.push(`Mars is in ${marsDig==='own'?'its own sign':'exaltation'} (${SIGNS[marsD.sign]}), expressing its disciplined rather than disruptive nature`);
-  else if(marsDig==='debilitated')cancellations.push(`Mars is debilitated (${SIGNS[marsD.sign]}), too weak here to assert the aggressive influence the dosha depends on`);
-
-  // 2. Yogakaraka exception: for Cancer and Leo ascendants, Mars rules both a Kendra and a Trikona house,
-  // making it a functional benefic for that chart - classical texts hold the dosha does not apply here.
-  if(lagnaSign===3||lagnaSign===4){ // Cancer=3, Leo=4 (0-indexed)
-    const marsRulesKendra=KENDRA_HOUSES.some(h=>houseLordOf(h,lagnaSign)==='Mars');
-    const marsRulesTrikona=TRIKONA_HOUSES.some(h=>houseLordOf(h,lagnaSign)==='Mars');
-    if(marsRulesKendra&&marsRulesTrikona)cancellations.push(`for ${SIGNS[lagnaSign]} Ascendant, Mars rules both a Kendra and a Trikona house (Yogakaraka), making it a functional benefic for this chart rather than a source of affliction`);
-  }
-
-  // 3. Jupiter's conjunction or aspect on Mars - the classical "great benefic tempers the warrior" rule.
+  if(marsDig==='own'||marsDig==='exalted')cancellations.push(`Mars is in ${marsDig==='own'?'its own sign':'exaltation'} (${SIGNS[marsD.sign]}), which significantly softens the dosha`);
   const jupAspectsMars=getAspectsOnHouseGeneric(marsHouseFromLagna,planetData).includes('Jupiter');
-  if(jupAspectsMars||planetsConjunct('Mars','Jupiter',planetData))cancellations.push('Jupiter conjoins or aspects Mars, classically said to temper its aggressive tendencies with wisdom and restraint');
-
-  // 4. Mars in the 12th house is the mildest of the six dosha houses in most classical treatments.
-  if(marsHouseFromLagna===12)cancellations.push('Mars in the 12th house is considered the mildest of the six classical Mangal Dosha placements');
-
-  // 5. Mars in the 2nd house in a sign of Mercury (Gemini/Virgo) is held by some schools to be cancelled,
-  // since Mercury's gentle, communicative rulership softens Mars's harshness there.
-  if(marsHouseFromLagna===2&&(marsD.sign===2||marsD.sign===5))cancellations.push('Mars in the 2nd house falls in a sign ruled by gentle Mercury, which some classical schools hold softens this particular placement');
-
-  let strength=55;
-  if(fromLagna)strength+=12;
-  if(fromMoon)strength+=8;
-  if(fromVenus)strength+=5;
-  strength-=cancellations.length*14;
-  strength=Math.max(12,Math.min(85,strength));
-
-  const refPoints=[fromLagna?'Ascendant':null,fromMoon?'Moon':null,fromVenus?'Venus':null].filter(Boolean);
+  if(jupAspectsMars||planetsConjunct('Mars','Jupiter',planetData))cancellations.push('Jupiter conjoins or aspects Mars, which is a classical mitigating factor');
+  if(MANGAL_DOSHA_HOUSES.includes(7)&&marsHouseFromLagna===12)cancellations.push('Mars in the 12th house is considered among the milder Mangal Dosha placements');
+  let strength=fromLagna&&fromMoon?78:fromLagna?65:55;
+  strength-=cancellations.length*15;
+  strength=Math.max(15,strength);
   return{
     name:'Mangal Dosha (Kuja Dosha)',category:'dosha',
-    strength,strengthLabel:strength>=55?'Significant':strength>=30?'Mild':'Largely cancelled',
-    formation:`Mars is placed in House ${marsHouseFromLagna} from the ${refPoints.join(', ')} — one of the six houses (1, 2, 4, 7, 8, 12) classically used to assess Mangal Dosha, primarily examined for marital compatibility and timing.${cancellations.length?' However: '+cancellations.join('; ')+'.':' No major classical cancellation factors are present in this chart.'}`,
-    signifies:'Traditionally associated with friction, delay, or intensity in marriage and partnerships — more a matter of compatibility and timing than an absolute affliction. Classical texts list over a dozen cancellation conditions (this reading checks several of the most consistently cited ones), and many traditions also hold the dosha auto-cancels when both partners in a match share it, or weakens considerably after the late twenties.',
+    strength,strengthLabel:strength>=60?'Significant':strength>=35?'Mild':'Largely cancelled',
+    formation:`Mars is placed in House ${marsHouseFromLagna} from the Ascendant${fromMoon?` and House ${marsHouseFromMoon} from the Moon`:''} — one of the six houses (1, 2, 4, 7, 8, 12) classically used to assess Mangal Dosha, primarily examined for marital compatibility and timing.${cancellations.length?' However: '+cancellations.join('; ')+'.':' No major classical cancellation factors are present in this chart.'}`,
+    signifies:'Traditionally associated with friction, delay, or intensity in marriage and partnerships — more a matter of compatibility and timing than an absolute affliction. Many classical texts note it is auto-cancelled when both partners share a similar dosha, and its effects soften considerably after the late twenties.',
     planetsInvolved:['Mars']
   };
 }
@@ -524,90 +446,47 @@ function getAspectsOnHouseGeneric(targetHouse,planetData){
 }
 
 // ---------------- KAAL SARP DOSHA ----------------
-// All seven classical planets fall within the houses spanned by Rahu and Ketu on one side (no planet outside the Rahu-Ketu axis).
-// 12 named types exist based on which house Rahu occupies from the Ascendant.
-const KAAL_SARP_TYPES=['Anant','Kulik','Vasuki','Shankhapal','Padma','Mahapadma','Takshak','Karkotak','Shankhanaad','Patak','Vishdhar','Sheshnag'];
+// All seven classical planets fall within the houses spanned by Rahu and Ketu on one side (no planet outside the Rahu-Ketu axis)
 function detectKaalSarpDosha(planetData){
   const rahuLon=planetData.Rahu.lon,ketuLon=planetData.Ketu.lon;
   const sevenPlanets=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn'];
+  // Check if all 7 planets fall in the 180° arc starting from Rahu going to Ketu
   const inArc=(lon,start,end)=>{
     const norm=(x)=>((x%360)+360)%360;
     const s=norm(start),e=norm(end),l=norm(lon);
     if(s<e)return l>=s&&l<=e;
     return l>=s||l<=e;
   };
-  const oneSideCount=sevenPlanets.filter(p=>inArc(planetData[p].lon,rahuLon,ketuLon)).length;
-  const otherSideCount=sevenPlanets.filter(p=>inArc(planetData[p].lon,ketuLon,rahuLon)).length;
-  const allOneSide=oneSideCount===7,allOtherSide=otherSideCount===7;
-  // Partial Kaal Sarp: exactly 6 of 7 planets hemmed, one breaking the axis - classically a markedly weaker, "Anshik" form
-  const partialOneSide=oneSideCount===6,partialOtherSide=otherSideCount===6;
-  if(!allOneSide&&!allOtherSide&&!partialOneSide&&!partialOtherSide)return null;
-
-  const headFirst=allOneSide||partialOneSide;
-  const isPartial=!allOneSide&&!allOtherSide;
-  const rahuHouse=houseOf('Rahu',planetData);
-  const typeName=KAAL_SARP_TYPES[(rahuHouse-1+12)%12];
-
-  let strength=isPartial?42:70;
+  const allOneSide=sevenPlanets.every(p=>inArc(planetData[p].lon,rahuLon,ketuLon));
+  const allOtherSide=sevenPlanets.every(p=>inArc(planetData[p].lon,ketuLon,rahuLon));
+  if(!allOneSide&&!allOtherSide)return null;
+  const headFirst=allOneSide;
+  let strength=70;
+  // Partial cancellation: if any planet is very close (within a few degrees) to Rahu/Ketu itself, count as borderline
   return{
-    name:isPartial?`Kaal Sarp Dosha (Partial — ${typeName})`:`Kaal Sarp Dosha (${typeName})`,
-    category:'dosha',
-    strength,strengthLabel:isPartial?'Mild (partial)':'Significant',
-    formation:isPartial
-      ?`Six of the seven classical planets fall within the ${headFirst?'Rahu-to-Ketu':'Ketu-to-Rahu'} half of the zodiac, with one planet breaking the enclosure. This is classically read as "Anshik" (partial) Kaal Sarp Dosha — present in form, but markedly weaker than the full configuration since the nodal axis does not fully hem in every planet. Rahu's placement in House ${rahuHouse} would give this the name ${typeName} Kaal Sarp if the enclosure were complete.`
-      :`All seven classical planets fall within the ${headFirst?'Rahu-to-Ketu':'Ketu-to-Rahu'} half of the zodiac, with no planet on the opposite side of the Rahu-Ketu axis. This is the classical definition of Kaal Sarp Dosha. With Rahu in House ${rahuHouse}, this is the ${typeName} type, one of twelve named varieties — each said to colour a different area of life (this one ${typeName==='Takshak'?'most affecting marriage and partnerships':typeName==='Shankhanaad'?'most affecting career and authority':typeName==='Padma'?'most affecting children and creativity':'most affecting the houses Rahu touches'}).`,
-    signifies:'A theme of delay followed by sudden, often dramatic turns — recurring obstacles in early life that frequently resolve into unusual strength or success later, especially after Rahu or Ketu\'s own Dasha periods. It is worth noting Kaal Sarp Dosha does not appear in foundational texts like Brihat Parashara Hora Shastra and is a later addition to the tradition — many modern Jyotishis treat it as a useful but non-canonical interpretive lens rather than a scripturally fixed affliction, best read as a karmic, transformational undertone.',
+    name:'Kaal Sarp Dosha',category:'dosha',
+    strength,strengthLabel:'Significant',
+    formation:`All seven classical planets fall within the ${headFirst?'Rahu-to-Ketu':'Ketu-to-Rahu'} half of the zodiac, with no planet on the opposite side of the Rahu-Ketu axis. This is the classical definition of Kaal Sarp Dosha — the "axis" formed by the lunar nodes encloses every other planet.`,
+    signifies:'A theme of delay followed by sudden, often dramatic turns — recurring obstacles in early life that frequently resolve into unusual strength or success later, especially after Rahu or Ketu\'s own Dasha periods. Modern classical scholarship is divided on how strictly this should be weighted; it is best read as a karmic, transformational undertone rather than a fixed misfortune.',
     planetsInvolved:['Rahu','Ketu']
   };
 }
 
 // ---------------- KEMADRUMA DOSHA ----------------
-// Classical (BPHS) definition: no planet (Rahu/Ketu excluded; some schools also exclude Sun) in the
-// 2nd or 12th house from the Moon. Many well-attested cancellation conditions exist - this checks several.
+// No planets (other than Sun) in the 2nd or 12th house from the Moon, and Moon is not in a Kendra, and not conjunct/aspected by other planets
 function detectKemadrumaDosha(planetData){
   const moonHouse=houseOf('Moon',planetData);
   const secondFromMoon=((moonHouse)%12)+1;
   const twelfthFromMoon=((moonHouse-2+12)%12)+1;
-  // BPHS excludes Sun, Rahu, Ketu from the planets that can "support" the Moon for this specific check
-  const supportingPlanets=PLANETS.filter(p=>p!=='Moon'&&p!=='Sun'&&p!=='Rahu'&&p!=='Ketu');
-  const planetsAdjacent=supportingPlanets.filter(p=>{const h=houseOf(p,planetData);return h===secondFromMoon||h===twelfthFromMoon});
-  if(planetsAdjacent.length>0)return null; // base condition not met - a planet flanks the Moon
-
-  const moonD=planetData.Moon;
-  const moonDig=getDignity('Moon',moonD.sign,moonD.deg);
-  const cancellations=[];
-
-  // 1. Moon conjunct any other planet in its own house (distinct from the 2nd/12th adjacency check above)
-  const conjunctPlanets=supportingPlanets.filter(p=>houseOf(p,planetData)===moonHouse);
-  if(conjunctPlanets.length>0)cancellations.push(`the Moon is conjunct ${conjunctPlanets.join(' and ')} in the same house, providing direct planetary company`);
-
-  // 2. Moon in a Kendra from the Lagna
-  if(KENDRA_HOUSES.includes(moonHouse))cancellations.push('the Moon occupies a Kendra house from the Ascendant, gaining strength from this central position');
-
-  // 3. Moon in own sign (Cancer) or exaltation (Taurus)
-  if(moonDig==='own'||moonDig==='exalted')cancellations.push(`the Moon is in ${moonDig==='own'?'its own sign (Cancer)':'exaltation (Taurus)'}, which substantially strengthens it against isolation`);
-
-  // 4. Any planet aspecting the Moon (not just adjacent by house) - classical aspect check
-  const aspectingPlanets=getAspectsOnHouseGeneric(moonHouse,planetData).filter(p=>p!=='Rahu'&&p!=='Ketu');
-  if(aspectingPlanets.length>0)cancellations.push(`the Moon receives an aspect from ${aspectingPlanets.join(' and ')}, which classically mitigates the isolation`);
-
-  // 5. A benefic (Jupiter or Venus) placed in a Kendra counted from the Moon itself (not the Lagna)
-  const benefics=['Jupiter','Venus'];
-  const beneficsInKendraFromMoon=benefics.filter(p=>{
-    const dist=houseDistance(moonHouse,houseOf(p,planetData));
-    return KENDRA_HOUSES.includes(dist);
-  });
-  if(beneficsInKendraFromMoon.length>0)cancellations.push(`${beneficsInKendraFromMoon.join(' and ')} occupies a Kendra position counted from the Moon itself, lending grounding support`);
-
-  if(cancellations.length>0){
-    return null; // any one of these well-attested classical conditions is treated as a full cancellation (Bhanga)
-  }
-
+  const others=PLANETS.filter(p=>p!=='Moon'&&p!=='Sun'&&p!=='Rahu'&&p!=='Ketu');
+  const planetsNear=others.filter(p=>{const h=houseOf(p,planetData);return h===secondFromMoon||h===twelfthFromMoon||h===moonHouse});
+  if(planetsNear.length>0)return null; // any classical planet adjacent to or with Moon cancels this
+  if(KENDRA_HOUSES.includes(moonHouse))return null; // Moon in Kendra is itself a mitigating/cancelling factor in most schools
   return{
     name:'Kemadruma Dosha',category:'dosha',
     strength:50,strengthLabel:'Mild',
-    formation:`The Moon (House ${moonHouse}) has no planet in the houses immediately before or after it (its classical "flanking" positions), is not conjunct another planet, receives no aspect, has no benefic in a Kendra from itself, and is not itself in a Kendra house or in own/exaltation dignity — the full classical definition of an isolated Moon with none of the well-known cancellation conditions present.`,
-    signifies:'A tendency toward emotional self-reliance, periods of feeling unsupported, or fluctuating circumstances early in life — particularly during Moon-related Dasha periods. Classical texts describe this as one of the most heavily-cancelled doshas in the system (most charts with the raw configuration also satisfy at least one mitigating condition), and even when present without cancellation, many traditions read it as converting to an indicator of hard-won self-reliance and resilience rather than fixed misfortune.',
+    formation:`The Moon (House ${moonHouse}) has no other classical planet in the houses immediately before or after it, nor conjunct it, and is not placed in a Kendra house — the classical definition of an "isolated" Moon.`,
+    signifies:'A tendency toward emotional self-reliance, periods of feeling unsupported, or fluctuating circumstances — particularly during Moon-related Dasha periods. Classical texts note this dosha is heavily moderated by the Moon\'s own dignity and any aspects it receives, so it should be read as a tendency rather than a fixed outcome.',
     planetsInvolved:['Moon']
   };
 }
@@ -658,9 +537,9 @@ function detectPitraDosha(planetData){
   return null;
 }
 
-function detectAllDoshas(planetData,lagnaSign){
+function detectAllDoshas(planetData){
   const all=[];
-  const md=detectMangalDosha(planetData,lagnaSign);if(md)all.push(md);
+  const md=detectMangalDosha(planetData);if(md)all.push(md);
   const ks=detectKaalSarpDosha(planetData);if(ks)all.push(ks);
   const kd=detectKemadrumaDosha(planetData);if(kd)all.push(kd);
   const gc=detectGuruChandalDosha(planetData);if(gc)all.push(gc);

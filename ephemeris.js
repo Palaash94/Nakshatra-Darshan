@@ -84,15 +84,15 @@ const SIGN_ICON_PATHS=[
 ];
 const SIGN_EXTRA_CIRCLE=[null,{cx:12,cy:15,r:6},null,null,{cx:9,cy:7,r:3.2},null,null,null,null,null,null,null];
 const PLANET_ICON_PATHS={
-  Sun:{circle:{cx:12,cy:12,r:3.6},path:'M12 2.5L12 5.2|M12 18.8L12 21.5|M2.5 12L5.2 12|M18.8 12L21.5 12|M5.3 5.3L7.2 7.2|M16.8 16.8L18.7 18.7|M18.7 5.3L16.8 7.2|M7.2 16.8L5.3 18.7'},
-  Moon:{fillPath:'M16 4a9.5 9.5 0 1 0 0 16 11 11 0 0 1 0-16z'},
-  Mars:{circle:{cx:9.5,cy:14.5,r:5.2},path:'M13.2 10.8L19.5 4.5M14.8 4.5h4.7v4.7'},
-  Mercury:{circle:{cx:12,cy:11.2,r:4.6},ring:{cx:12,cy:3.6,r:1.5},path:'M12 15.8v5.2|M9.2 19.6h5.6'},
-  Jupiter:{path:'M5.5 7.5c0-2.5 2-4.3 4.3-4.3s4 1.7 4 3.8c0 2-1.4 3.4-3.5 3.4H4.8|M10 2.6v18|M6.4 15.2h7.2'},
-  Venus:{fillCircle:{cx:12,cy:8.2,r:5.7},path:'M12 14.6v6.3|M8.8 18.1h6.4'},
-  Saturn:{circle:{cx:11,cy:13.5,r:5},ellipse:{cx:11,cy:13.5,rx:10,ry:2.4,rotate:-17}},
-  Rahu:{dot:{cx:12,cy:8,r:1.2},path:'M4 17.5c0-7.5 5-12.5 8-12.5s8 5 8 12.5|M4 17.5a4 4 0 0 0 4 4|M20 17.5a4 4 0 0 1-4 4'},
-  Ketu:{path:'M4 6.5c0 7.5 5 12.5 8 12.5s8-5 8-12.5|M4 6.5a4 4 0 0 1 4-4|M20 6.5a4 4 0 0 0-4-4|M12 19v3.5'}
+  Sun:{circle:{cx:12,cy:12,r:3.2},dot:{cx:12,cy:12,r:1},path:'M12 1.6L12 4.4|M12 19.6L12 22.4|M1.6 12L4.4 12|M19.6 12L22.4 12|M4.6 4.6L6.6 6.6|M17.4 17.4L19.4 19.4|M19.4 4.6L17.4 6.6|M6.6 17.4L4.6 19.4'},
+  Moon:{fillPath:'M15.5 3.5a9 9 0 1 0 0 17 10.5 10.5 0 0 1 0-17z'},
+  Mars:{circle:{cx:9,cy:15,r:5.3},path:'M13 11L20.5 3.5|M14.5 3.5h6v6'},
+  Mercury:{dot:{cx:12,cy:3,r:1.6},circle:{cx:12,cy:11,r:5},path:'M12 16v6|M8.7 20h6.6'},
+  Jupiter:{path:'M6 6c0-2.2 1.8-4 4-4s4 1.8 4 4-1.8 4-4 4H4|M10 2v20|M6 15h8'},
+  Venus:{fillCircle:{cx:12,cy:8.5,r:5.5},path:'M12 14.5v7|M8.5 18.3h7'},
+  Saturn:{circle:{cx:11,cy:13,r:5.5},ellipse:{cx:11,cy:13,rx:9.5,ry:3,rotate:-15}},
+  Rahu:{dot:{cx:12,cy:8.5,r:1.4},path:'M4 17c0-7.2 5-12 8-12s8 4.8 8 12|M4 17a4 4 0 0 0 4 4|M20 17a4 4 0 0 1-4 4'},
+  Ketu:{path:'M4 7c0 7.2 5 12 8 12s8-4.8 8-12|M4 7a4 4 0 0 1 4-4|M20 7a4 4 0 0 0-4-4|M12 19v4'}
 };
 
 function signIconSvg(signIdx,size,color,opacity){
@@ -107,13 +107,12 @@ function planetIconSvg(planet,size,color,opacity){
   const def=PLANET_ICON_PATHS[planet];
   if(!def)return'';
   let inner='';
-  if(def.ellipse)inner+=`<ellipse cx="${def.ellipse.cx}" cy="${def.ellipse.cy}" rx="${def.ellipse.rx}" ry="${def.ellipse.ry}" fill="none" stroke="${color}" stroke-width="${def.ellipse.strokeWidth||1.1}" transform="rotate(${def.ellipse.rotate} ${def.ellipse.cx} ${def.ellipse.cy})"/>`;
-  if(def.circle)inner+=`<circle cx="${def.circle.cx}" cy="${def.circle.cy}" r="${def.circle.r}" fill="none" stroke="${color}" stroke-width="${def.circle.strokeWidth||1.4}"/>`;
-  if(def.ring)inner+=`<circle cx="${def.ring.cx}" cy="${def.ring.cy}" r="${def.ring.r}" fill="none" stroke="${color}" stroke-width="${def.ring.strokeWidth||1.3}"/>`;
+  if(def.ellipse)inner+=`<ellipse cx="${def.ellipse.cx}" cy="${def.ellipse.cy}" rx="${def.ellipse.rx}" ry="${def.ellipse.ry}" fill="none" stroke="${color}" stroke-width="1.3" transform="rotate(${def.ellipse.rotate} ${def.ellipse.cx} ${def.ellipse.cy})"/>`;
+  if(def.circle)inner+=`<circle cx="${def.circle.cx}" cy="${def.circle.cy}" r="${def.circle.r}" fill="none" stroke="${color}" stroke-width="1.5"/>`;
   if(def.fillCircle)inner+=`<circle cx="${def.fillCircle.cx}" cy="${def.fillCircle.cy}" r="${def.fillCircle.r}" fill="${color}" stroke="none"/>`;
   if(def.fillPath)inner+=`<path d="${def.fillPath}" fill="${color}" stroke="none"/>`;
   if(def.dot)inner+=`<circle cx="${def.dot.cx}" cy="${def.dot.cy}" r="${def.dot.r}" fill="${color}" stroke="none"/>`;
-  if(def.path)inner+=def.path.split('|').map(d=>`<path d="${d}" stroke="${color}" stroke-width="1.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`).join('');
+  if(def.path)inner+=def.path.split('|').map(d=>`<path d="${d}" stroke="${color}" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`).join('');
   return`<svg width="${size}" height="${size}" viewBox="0 0 24 24" style="opacity:${opacity}">${inner}</svg>`;
 }
 const PLANETS=['Sun','Moon','Mars','Mercury','Jupiter','Venus','Saturn','Rahu','Ketu'];

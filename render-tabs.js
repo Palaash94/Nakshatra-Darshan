@@ -417,7 +417,7 @@ function renderYogasDoshas(){
   if(!chartData)return;
   const{planetData,lagnaSign,houseMap,dashas}=chartData;
   const yogas=detectAllYogas(planetData,lagnaSign,houseMap);
-  const doshas=detectAllDoshas(planetData,lagnaSign);
+  const doshas=detectAllDoshas(planetData);
   chartData.yogas=yogas;chartData.doshas=doshas;
   showYDSubtab(activeYDSubtab);
 }
@@ -741,7 +741,7 @@ async function generateReading(){
   const now=new Date(),active=dashas.find(d=>now>=d.start&&now<d.end);
   const activeAntar=active?(active.antardashas||[]).find(s=>now>=s.start&&now<s.end):null;
   const yogas=chartData.yogas||detectAllYogas(planetData,lagnaSign,houseMap);
-  const doshas=chartData.doshas||detectAllDoshas(planetData,lagnaSign);
+  const doshas=chartData.doshas||detectAllDoshas(planetData);
   const yogaSummary=yogas.length?yogas.map(y=>`${y.name} (${y.strengthLabel}): ${y.signifies}`).join('\n'):'None clearly detected.';
   const doshaSummary=doshas.length?doshas.map(ds=>`${ds.name} (${ds.strengthLabel}): ${ds.signifies}`).join('\n'):'None clearly detected.';
   const summary=`Name: ${name||'Native'}\nLagna: ${SIGNS[lagnaSign]}\n`+PLANETS.map(p=>{const d=planetData[p];return`${p}: House ${d.house}, ${SIGNS[d.sign]} ${d.deg.toFixed(1)}°, ${d.nakshatra.name} nakshatra`}).join('\n')+`\nCurrent Dasha: ${active?active.lord+(activeAntar?'-'+activeAntar.lord:'')+' (ends '+(activeAntar||active).end.toLocaleDateString('en-IN',{month:'short',year:'numeric'})+')':'N/A'}\n\nDetected Yogas:\n${yogaSummary}\n\nDetected Doshas:\n${doshaSummary}`;

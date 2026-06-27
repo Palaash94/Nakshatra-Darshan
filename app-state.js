@@ -92,8 +92,7 @@ function selectCityFor(suffix,idx){
   document.getElementById('lon-'+suffix).value=parseFloat(r.lon).toFixed(4);
   document.getElementById('city-dropdown-'+suffix).classList.add('hidden');
   document.getElementById('loc-status-'+suffix).style.color='#22c55e';
-  document.getElementById('loc-status-'+suffix).textContent='✓ Location found — timezone set automatically';
-  applyTimezoneToSelect('tz-'+suffix,a.country_code,parseFloat(r.lat),parseFloat(r.lon));
+  document.getElementById('loc-status-'+suffix).textContent='✓ Location found';
   focusedIdxMap[suffix]=-1;cityResultsMap[suffix]=[];
 }
 function cityKeydownFor(suffix,e){
@@ -272,8 +271,7 @@ function selectCity(idx){
   document.getElementById('lon').value=parseFloat(r.lon).toFixed(4);
   document.getElementById('city-dropdown').classList.add('hidden');
   document.getElementById('loc-status').style.color='#22c55e';
-  document.getElementById('loc-status').textContent=`✓ Location found — timezone set automatically`;
-  applyTimezoneToSelect('tz',a.country_code,parseFloat(r.lat),parseFloat(r.lon));
+  document.getElementById('loc-status').textContent=`✓ Location found`;
   focusedIdx=-1;cityResults=[];
 }
 
@@ -430,7 +428,7 @@ function downloadReport(){
   lines.push('');
 
   const ydYogas=yogas||detectAllYogas(planetData,lagnaSign,houseMap);
-  const ydDoshas=doshas||detectAllDoshas(planetData,lagnaSign);
+  const ydDoshas=doshas||detectAllDoshas(planetData);
   lines.push('## Yogas & Doshas');
   lines.push('(Classical planetary combinations detected from this chart. Strength is an indicative 0-100 estimate, not a precise classical measurement.)');
   lines.push('');
