@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nakshatra Darshan</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><g fill='%23f59e0b'><path d='M50 5 C51.8 22 53 26.5 50 34 C47 26.5 48.2 22 50 5 Z'/><path d='M50 95 C48.2 78 47 73.5 50 66 C53 73.5 51.8 78 50 95 Z'/><path d='M5 50 C22 48.2 26.5 47 34 50 C26.5 53 22 51.8 5 50 Z'/><path d='M95 50 C78 51.8 73.5 53 66 50 C73.5 47 78 48.2 95 50 Z'/><path d='M20 20 C30.5 26 33.5 29 38 39 C28 34.5 25 31.5 20 20 Z'/><path d='M80 80 C69.5 74 66.5 71 62 61 C72 65.5 75 68.5 80 80 Z'/><path d='M80 20 C74 30.5 71 33.5 61 38 C65.5 28 68.5 25 80 20 Z'/><path d='M20 80 C26 69.5 29 66.5 39 62 C34.5 72 31.5 75 20 80 Z'/></g><circle cx='50' cy='50' r='15.5' fill='%230a0a0a'/><path d='M54.5 36a14 14 0 1 0 0 28 17 17 0 0 1 0-28z' fill='%23f59e0b'/></svg>">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="app">
+
+  <div class="hero">
+    <div class="sun-icon">
+      <svg width="58" height="58" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="46" fill="none" stroke="#f59e0b" stroke-width="0.6" stroke-dasharray="1.4 3.4" opacity="0.4"/>
+        <g fill="#f59e0b">
+          <path d="M50 8 C51.6 23 52.7 27 50 34 C47.3 27 48.4 23 50 8 Z"/>
+          <path d="M50 92 C48.4 77 47.3 73 50 66 C52.7 73 51.6 77 50 92 Z"/>
+          <path d="M8 50 C23 48.4 27 47.3 34 50 C27 52.7 23 51.6 8 50 Z"/>
+          <path d="M92 50 C77 51.6 73 52.7 66 50 C73 47.3 77 48.4 92 50 Z"/>
+          <path d="M22 22 C31.5 27.5 34 30 38 39 C29 34.5 26.5 32 22 22 Z"/>
+          <path d="M78 78 C68.5 72.5 66 70 62 61 C71 65.5 73.5 68 78 78 Z"/>
+          <path d="M78 22 C73.5 31.5 71 34 62 38 C66.5 29 69 26.5 78 22 Z"/>
+          <path d="M22 78 C26.5 68.5 29 66 38 62 C33.5 71 31 73.5 22 78 Z"/>
+        </g>
+        <circle cx="50" cy="50" r="15" fill="#0a0a0a"/>
+        <path d="M54 37a13 13 0 1 0 0 26 16 16 0 0 1 0-26z" fill="#f59e0b"/>
+      </svg>
+    </div>
+    <h1>Nakshatra Darshan</h1>
+    <p>Enter your birth details for a full Jyotish reading — chart, nakshatras, yogas & soul purpose</p>
+  </div>
+
+  <div id="mode-select" class="mode-select">
+    <div class="mode-select-label">Choose your reading</div>
+    <div class="mode-cards">
+      <button class="mode-card" onclick="chooseMode('individual')">
+        <div class="mode-card-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="3.6"/>
+            <path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/>
+          </svg>
+        </div>
+        <div class="mode-card-title">Individual</div>
+        <div class="mode-card-desc">A complete birth chart for one person — Rashi Chakra, Dashas, Yogas, and a full Jyotish reading.</div>
+      </button>
+      <button class="mode-card" onclick="chooseMode('couple')">
+        <div class="mode-card-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="8.5" cy="7.5" r="3.2"/>
+            <circle cx="16" cy="8.5" r="2.7"/>
+            <path d="M3 20c0-3.6 2.5-6 5.5-6 2.2 0 4 1.2 4.8 3"/>
+            <path d="M13 17.2c.7-2 2.4-3.2 4.3-3.2 2.7 0 4.7 2.1 4.7 5"/>
+          </svg>
+        </div>
+        <div class="mode-card-title">Couple</div>
+        <div class="mode-card-desc">Two complete birth charts side by side — enter both partners' details and switch between them at any time.</div>
+      </button>
+    </div>
+  </div>
+
+  <div id="individual-mode" class="hidden">
+  <button class="mode-back-btn" onclick="backToModeSelect()">← Change reading type</button>
+
+  <div class="card">
+    <div class="section-title">Anthropic API Key (for AI reading)</div>
+    <div class="api-key-field">
+      <input type="password" id="api-key" placeholder="sk-ant-api03-...">
+      <button onclick="saveKey()">Save key</button>
+    </div>
+    <div id="key-status" class="key-status key-missing">No API key — chart will calculate but AI reading won't work</div>
+    <div style="font-size:12px;color:#555">Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> · Saved in your browser only, never shared</div>
+  </div>
+
+  <div class="card" id="form-card">
+    <div class="section-title">Birth details</div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="field"><label>Full name</label><input type="text" id="name" placeholder="Your name"></div>
+      <div class="field"><label>Date of birth</label><input type="date" id="dob"></div>
+    </div>
+    <div class="form-grid three" style="margin-bottom:12px">
+      <div class="field"><label>Time of birth</label><input type="time" id="tob"></div>
+      <div class="field city-wrap">
+        <label>City / Place</label>
+        <input type="text" id="city" placeholder="e.g. Mumbai" autocomplete="off" oninput="cityInput(this.value)" onkeydown="cityKeydown(event)">
+        <div class="city-dropdown hidden" id="city-dropdown"></div>
+      </div>
+      <div class="field"><label>Timezone offset</label>
+        <select id="tz">
+          <option value="-12">Baker Island −12</option>
+          <option value="-11">Samoa −11</option>
+          <option value="-10">Hawaii −10</option>
+          <option value="-9.5">Marquesas −9:30</option>
+          <option value="-9">Alaska −9</option>
+          <option value="-8">PST −8</option>
+          <option value="-7">MST −7</option>
+          <option value="-6">CST −6</option>
+          <option value="-5">EST −5</option>
+          <option value="-4">Atlantic/Caracas −4</option>
+          <option value="-3.5">Newfoundland −3:30</option>
+          <option value="-3">Brazil/Argentina −3</option>
+          <option value="-2">South Georgia −2</option>
+          <option value="-1">Azores −1</option>
+          <option value="0">UTC +0</option>
+          <option value="1">CET +1</option>
+          <option value="2">EET +2</option>
+          <option value="3">MSK +3</option>
+          <option value="3.5">Iran +3:30</option>
+          <option value="4">GST +4</option>
+          <option value="4.5">Afghanistan +4:30</option>
+          <option value="5">PKT +5</option>
+          <option value="5.5" selected>IST +5:30</option>
+          <option value="5.75">NPT +5:45</option>
+          <option value="6">BST +6</option>
+          <option value="6.5">Myanmar +6:30</option>
+          <option value="7">WIB +7</option>
+          <option value="8">CST +8</option>
+          <option value="8.75">Aus. Central West +8:45</option>
+          <option value="9">JST/KST +9</option>
+          <option value="9.5">ACST +9:30</option>
+          <option value="10">AEST +10</option>
+          <option value="10.5">Lord Howe +10:30</option>
+          <option value="11">Solomon Islands +11</option>
+          <option value="12">NZST +12</option>
+          <option value="12.75">Chatham +12:45</option>
+          <option value="13">Tonga +13</option>
+          <option value="14">Line Islands +14</option>
+        </select>
+      </div>
+    </div>
+    <input type="hidden" id="lat">
+    <input type="hidden" id="lon">
+    <div class="loc-status" id="loc-status"></div>
+    <div id="form-error" class="error hidden"></div>
+    <button class="btn-primary" id="calc-btn" onclick="calculateChart()">Generate my Kundli →</button>
+  </div>
+
+
+  </div>
+
+  <div id="couple-mode" class="hidden">
+  <button class="mode-back-btn" onclick="backToModeSelect()">← Change reading type</button>
+
+  <div class="card">
+    <div class="section-title">Anthropic API Key (for AI reading)</div>
+    <div class="api-key-field">
+      <input type="password" id="api-key-couple" placeholder="sk-ant-api03-...">
+      <button onclick="saveKeyCouple()">Save key</button>
+    </div>
+    <div id="key-status-couple" class="key-status key-missing">No API key — chart will calculate but AI reading won't work</div>
+    <div style="font-size:12px;color:#555">Get a free key at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> · Saved in your browser only, never shared</div>
+  </div>
+
+  <div class="card" id="couple-form-card">
+    <div class="couple-person-row">
+      <div class="couple-person-block">
+        <div class="couple-person-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>
+          Partner A
+        </div>
+        <div class="form-grid" style="margin-bottom:12px">
+          <div class="field"><label>Full name</label><input type="text" id="name-a" placeholder="Partner A's name"></div>
+          <div class="field"><label>Date of birth</label><input type="date" id="dob-a"></div>
+        </div>
+        <div class="form-grid" style="margin-bottom:12px">
+          <div class="field"><label>Time of birth</label><input type="time" id="tob-a"></div>
+          <div class="field city-wrap">
+            <label>City / Place</label>
+            <input type="text" id="city-a" placeholder="e.g. Mumbai" autocomplete="off" oninput="cityInputFor('a',this.value)" onkeydown="cityKeydownFor('a',event)">
+            <div class="city-dropdown hidden" id="city-dropdown-a"></div>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:12px"><label>Timezone offset</label>
+          <select id="tz-a">
+            <option value="-12">Baker Island −12</option>
+            <option value="-11">Samoa −11</option>
+            <option value="-10">Hawaii −10</option>
+            <option value="-9.5">Marquesas −9:30</option>
+            <option value="-9">Alaska −9</option>
+            <option value="-8">PST −8</option>
+            <option value="-7">MST −7</option>
+            <option value="-6">CST −6</option>
+            <option value="-5">EST −5</option>
+            <option value="-4">Atlantic/Caracas −4</option>
+            <option value="-3.5">Newfoundland −3:30</option>
+            <option value="-3">Brazil/Argentina −3</option>
+            <option value="-2">South Georgia −2</option>
+            <option value="-1">Azores −1</option>
+            <option value="0">UTC +0</option>
+            <option value="1">CET +1</option>
+            <option value="2">EET +2</option>
+            <option value="3">MSK +3</option>
+            <option value="3.5">Iran +3:30</option>
+            <option value="4">GST +4</option>
+            <option value="4.5">Afghanistan +4:30</option>
+            <option value="5">PKT +5</option>
+            <option value="5.5" selected>IST +5:30</option>
+            <option value="5.75">NPT +5:45</option>
+            <option value="6">BST +6</option>
+            <option value="6.5">Myanmar +6:30</option>
+            <option value="7">WIB +7</option>
+            <option value="8">CST +8</option>
+            <option value="8.75">Aus. Central West +8:45</option>
+            <option value="9">JST/KST +9</option>
+            <option value="9.5">ACST +9:30</option>
+            <option value="10">AEST +10</option>
+            <option value="10.5">Lord Howe +10:30</option>
+            <option value="11">Solomon Islands +11</option>
+            <option value="12">NZST +12</option>
+            <option value="12.75">Chatham +12:45</option>
+            <option value="13">Tonga +13</option>
+            <option value="14">Line Islands +14</option>
+          </select>
+        </div>
+        <input type="hidden" id="lat-a">
+        <input type="hidden" id="lon-a">
+        <div class="loc-status" id="loc-status-a"></div>
+      </div>
+
+      <div class="couple-divider"></div>
+
+      <div class="couple-person-block">
+        <div class="couple-person-label">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c0-4 3-6.5 7-6.5s7 2.5 7 6.5"/></svg>
+          Partner B
+        </div>
+        <div class="form-grid" style="margin-bottom:12px">
+          <div class="field"><label>Full name</label><input type="text" id="name-b" placeholder="Partner B's name"></div>
+          <div class="field"><label>Date of birth</label><input type="date" id="dob-b"></div>
+        </div>
+        <div class="form-grid" style="margin-bottom:12px">
+          <div class="field"><label>Time of birth</label><input type="time" id="tob-b"></div>
+          <div class="field city-wrap">
+            <label>City / Place</label>
+            <input type="text" id="city-b" placeholder="e.g. Mumbai" autocomplete="off" oninput="cityInputFor('b',this.value)" onkeydown="cityKeydownFor('b',event)">
+            <div class="city-dropdown hidden" id="city-dropdown-b"></div>
+          </div>
+        </div>
+        <div class="field" style="margin-bottom:12px"><label>Timezone offset</label>
+          <select id="tz-b">
+            <option value="-12">Baker Island −12</option>
+            <option value="-11">Samoa −11</option>
+            <option value="-10">Hawaii −10</option>
+            <option value="-9.5">Marquesas −9:30</option>
+            <option value="-9">Alaska −9</option>
+            <option value="-8">PST −8</option>
+            <option value="-7">MST −7</option>
+            <option value="-6">CST −6</option>
+            <option value="-5">EST −5</option>
+            <option value="-4">Atlantic/Caracas −4</option>
+            <option value="-3.5">Newfoundland −3:30</option>
+            <option value="-3">Brazil/Argentina −3</option>
+            <option value="-2">South Georgia −2</option>
+            <option value="-1">Azores −1</option>
+            <option value="0">UTC +0</option>
+            <option value="1">CET +1</option>
+            <option value="2">EET +2</option>
+            <option value="3">MSK +3</option>
+            <option value="3.5">Iran +3:30</option>
+            <option value="4">GST +4</option>
+            <option value="4.5">Afghanistan +4:30</option>
+            <option value="5">PKT +5</option>
+            <option value="5.5" selected>IST +5:30</option>
+            <option value="5.75">NPT +5:45</option>
+            <option value="6">BST +6</option>
+            <option value="6.5">Myanmar +6:30</option>
+            <option value="7">WIB +7</option>
+            <option value="8">CST +8</option>
+            <option value="8.75">Aus. Central West +8:45</option>
+            <option value="9">JST/KST +9</option>
+            <option value="9.5">ACST +9:30</option>
+            <option value="10">AEST +10</option>
+            <option value="10.5">Lord Howe +10:30</option>
+            <option value="11">Solomon Islands +11</option>
+            <option value="12">NZST +12</option>
+            <option value="12.75">Chatham +12:45</option>
+            <option value="13">Tonga +13</option>
+            <option value="14">Line Islands +14</option>
+          </select>
+        </div>
+        <input type="hidden" id="lat-b">
+        <input type="hidden" id="lon-b">
+        <div class="loc-status" id="loc-status-b"></div>
+      </div>
+    </div>
+    <div id="couple-form-error" class="error hidden"></div>
+    <button class="btn-primary" id="calc-btn-couple" onclick="calculateCoupleCharts()">Generate both Kundlis →</button>
+  </div>
+
+  <div class="card collapsed-name-card hidden" id="couple-name-card" onclick="expandCoupleFormCard()">
+    <span class="name-card-edit-spacer"></span>
+    <span class="name-card-center">
+      <span class="name-card-text" id="couple-name-card-text">Both charts ready</span>
+    </span>
+    <span class="name-card-edit">Edit →</span>
+  </div>
+
+  </div>
+
+  <div class="card collapsed-name-card hidden" id="name-card" onclick="expandFormCard()">
+    <span class="name-card-edit-spacer"></span>
+    <span class="name-card-center">
+      <span class="name-card-icon">${''}</span>
+      <span class="name-card-text" id="name-card-text">Your name</span>
+    </span>
+    <span class="name-card-edit">Edit →</span>
+  </div>
+
+  <div class="download-row hidden" id="download-row">
+    <button class="btn-download" onclick="downloadReport()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Download full report
+    </button>
+  </div>
+
+  <div id="result-area" class="hidden">
+    <div id="person-switcher" class="person-switcher hidden">
+      <button class="person-switch-btn active" id="switch-btn-a" onclick="switchActivePerson('a')">
+        <span class="person-switch-initial" id="switch-initial-a">A</span>
+        <span id="switch-name-a">Partner A</span>
+      </button>
+      <button class="person-switch-btn" id="switch-btn-b" onclick="switchActivePerson('b')">
+        <span class="person-switch-initial" id="switch-initial-b">B</span>
+        <span id="switch-name-b">Partner B</span>
+      </button>
+    </div>
+    <div class="card">
+      <div class="tab-row">
+        <button class="tab active" onclick="showTab('chart')">Chart</button>
+        <button class="tab" onclick="showTab('positions')">Positions</button>
+        <button class="tab" onclick="showTab('dashas')">Dashas</button>
+        <button class="tab" onclick="showTab('karakas')">Karakas</button>
+        <button class="tab" onclick="showTab('yogadosha')">Yogas &amp; Doshas</button>
+        <button class="tab" onclick="showTab('shadbala')">Shadbala</button>
+        <button class="tab" onclick="showTab('avastha')">Avastha</button>
+        <button class="tab" onclick="showTab('navamsa')">Navamsa</button>
+        <button class="tab" onclick="showTab('reading')">AI Reading</button>
+      </div>
+
+      <div id="tab-chart">
+        <div class="section-title">Rashi Chakra (click a segment, or a group below)</div>
+        <div class="trikona-btn-row" id="trikona-btn-row"></div>
+        <div class="kundli-center">
+          <svg class="kundli-svg" id="kundli-svg" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div id="personality-snapshot" class="personality-snapshot hidden"></div>
+        <div id="segment-detail" class="segment-detail hidden"></div>
+        <div id="group-detail" class="segment-detail hidden"></div>
+      </div>
+
+      <div id="tab-positions" class="hidden">
+        <div class="section-title">Panchang — the five pillars of birth time</div>
+        <div id="panchang-grid" class="panchang-grid"></div>
+
+        <div class="section-title" style="margin-top:22px">Birth Star Details</div>
+        <div id="nakshatra-koota-grid" class="koota-grid"></div>
+
+        <div class="section-title" style="margin-top:22px">Planetary positions</div>
+        <div style="overflow-x:auto">
+        <table class="planet-table">
+          <thead><tr><th>Planet</th><th>Sign</th><th>House</th><th>Degree</th><th>Nakshatra</th><th>Relation</th></tr></thead>
+          <tbody id="planet-tbody"></tbody>
+        </table>
+        </div>
+      </div>
+
+      <div id="tab-dashas" class="hidden">
+        <div class="section-title">Vimshottari Dasha periods</div>
+        <div id="dasha-list"></div>
+      </div>
+
+      <div id="tab-karakas" class="hidden">
+        <div class="section-title">Jaimini Chara Karakas (ranked by degree)</div>
+        <div id="karaka-list"></div>
+      </div>
+
+      <div id="tab-yogadosha" class="hidden">
+        <div class="section-title">Yogas &amp; Doshas — Planetary Combinations</div>
+        <div class="subtab-row">
+          <button class="subtab active" onclick="showYDSubtab('yogas')">Yogas</button>
+          <button class="subtab" onclick="showYDSubtab('doshas')">Doshas</button>
+        </div>
+        <div id="yd-content"></div>
+      </div>
+
+      <div id="tab-shadbala" class="hidden">
+        <div class="section-title">Shadbala — Six-fold Strength</div>
+        <div class="subtab-row">
+          <button class="subtab active" onclick="showShadbalaSubtab('planets')">Planets</button>
+          <button class="subtab" onclick="showShadbalaSubtab('houses')">Houses</button>
+          <button class="subtab" onclick="showShadbalaSubtab('ishtakashta')">Ishta vs Kashta</button>
+        </div>
+        <div id="shadbala-sub-planets"><div id="shadbala-content"></div></div>
+        <div id="shadbala-sub-houses" class="hidden"><div id="bhava-bala-content"></div></div>
+        <div id="shadbala-sub-ishtakashta" class="hidden"><div id="ishta-kashta-content"></div></div>
+      </div>
+
+      <div id="tab-avastha" class="hidden">
+        <div class="section-title">Avastha — Planetary States</div>
+        <div id="avastha-content"></div>
+      </div>
+
+      <div id="tab-navamsa" class="hidden">
+        <div class="section-title">Navamsa (D9) — Dharmamsa Chart</div>
+        <div id="navamsa-asc-card" class="navamsa-asc-card"></div>
+        <div class="kundli-center">
+          <svg class="kundli-svg" id="navamsa-svg" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div id="navamsa-segment-detail" class="segment-detail hidden"></div>
+        <div class="section-title" id="vargottama-section-header" style="margin-top:1.5rem">Vargottama Analysis <span class="info-icon" id="vargottama-info-trigger">i</span></div>
+        <div id="vargottama-summary"></div>
+        <div class="section-title" style="margin-top:1.5rem">Navamsa positions</div>
+        <div style="overflow-x:auto">
+        <table class="planet-table">
+          <thead><tr><th>Planet</th><th>D1 Sign</th><th>D9 Sign</th><th>Vargottama?</th></tr></thead>
+          <tbody id="navamsa-tbody"></tbody>
+        </table>
+        </div>
+      </div>
+
+      <div id="tab-reading" class="hidden">
+        <div id="reading-content">
+          <div class="status"><span class="spinner"></span>Generating your personalised reading…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:1.5rem 0 0.5rem;font-size:12px;color:#333">
+    Nakshatra Darshan · Powered by Jyotish wisdom & Claude AI
+  </div>
+</div>
+
+<script src="js/ephemeris.js"></script>
+<script src="js/vsop-data.js"></script>
+<script src="js/ephemeris-cont.js"></script>
+<script src="js/yogas-doshas-panchang.js"></script>
+<script src="js/shadbala-dashas.js"></script>
+<script src="js/timezone-lookup.js"></script>
+<script src="js/app-state.js"></script>
+<script src="js/render-chart.js"></script>
+<script src="js/render-tabs.js"></script>
+</body>
+</html>
