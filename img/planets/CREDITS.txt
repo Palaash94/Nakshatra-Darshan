@@ -1,0 +1,31 @@
+Image credits — planet photos used on the "You" tab
+All sourced from Wikimedia Commons.
+
+sun.jpg     - NASA / Solar Dynamics Observatory (AIA 304). Public domain (NASA work).
+              https://commons.wikimedia.org/wiki/File:The_Sun_by_the_Atmospheric_Imaging_Assembly_of_NASA%27s_Solar_Dynamics_Observatory_-_20100819.jpg
+
+moon.jpg    - Gregory H. Revera, "FullMoon2010". CC BY-SA 3.0.
+              https://commons.wikimedia.org/wiki/File:FullMoon2010.jpg
+
+mercury.png - Jcpag2012, "3D Mercury" (rendered from NASA MESSENGER data). CC BY-SA 4.0.
+              https://commons.wikimedia.org/wiki/File:3D_Mercury.png
+
+venus.png   - Jcpag2012, "3D Venus". CC BY-SA 4.0.
+              https://commons.wikimedia.org/wiki/File:3D_Venus.png
+
+mars.png    - Jcpag2012, "3D Mars". CC BY-SA 4.0.
+              https://commons.wikimedia.org/wiki/File:3D_Mars.png
+
+jupiter.png - Jcpag2012, "3D Jupiter". CC BY-SA 4.0.
+              https://commons.wikimedia.org/wiki/File:3D_Jupiter.png
+
+saturn.png  - Jcpag2012, "3D Saturn". CC BY-SA 4.0.
+              https://commons.wikimedia.org/wiki/File:3D_Saturn.png
+
+rahu.jpg    - Luc Viatour (www.Lucnix.be), total solar eclipse, France, 1999.
+              Stands in for Rahu (no physical body - a lunar node IS an eclipse point). CC BY-SA.
+              https://commons.wikimedia.org/wiki/File:Solar_eclipse_1999_4.jpg
+
+ketu.jpg    - Anne Dirkse (www.annedirkse.com), total lunar eclipse ("blood moon"), 2014.
+              Stands in for Ketu, same reasoning as Rahu above. CC BY-SA 4.0.
+              https://commons.wikimedia.org/wiki/File:Total_lunar_eclipse_-_full_eclipse_(blood_moon)_April_2014.jpg
